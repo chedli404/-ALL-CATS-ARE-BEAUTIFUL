@@ -34,7 +34,7 @@ const Hero = () => {
       >
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="md:w-1/2 text-left mb-8 md:mb-0">
-            <h2 className="font-display text-5xl text-white mb-4 tracking-wide">ALL CATS ARE BEAUTIFUL</h2>
+            <h2 className="font-display text-5xl text-white mb-4 tracking-wide -ml-12">ALL CATS ARE BEAUTIFUL</h2>
             <p className="max-w-xl text-lg text-gray-200">
               Le monde n'est plus qu'un écho du passé. Les grandes cités s'effondrent, rongées par le temps et la nature. Mais tout n'a pas disparu. Les chats survivent.
             </p>
