@@ -33,14 +33,14 @@ const Hero = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="md:w-1/2 text-left mb-12 md:mb-0">
-            <h2 className="font-display text-5xl text-white mb-8 tracking-wide -ml-12">ALL CATS ARE BEAUTIFUL</h2>
-            <p className="max-w-xl text-lg text-gray-200 mb-8">
+          <div className="md:w-1/2 text-left mb-24 md:mb-0">
+            <h2 className="font-display text-5xl text-white mb-16 tracking-wide -ml-12">ALL CATS ARE BEAUTIFUL</h2>
+            <p className="max-w-xl text-lg text-gray-200 mb-16">
               Le monde n'est plus qu'un écho du passé. Les grandes cités s'effondrent, rongées par le temps et la nature. Mais tout n'a pas disparu. Les chats survivent.
             </p>
           </div>
           
-          <div className="md:w-1/2 flex flex-col md:flex-row justify-end items-center space-y-6 md:space-y-0 md:space-x-6">
+          <div className="md:w-1/2 flex flex-col md:flex-row justify-end items-center space-y-12 md:space-y-0 md:space-x-12">
             <Link href="#world">
               <motion.button
                 whileHover={{ scale: 1.05 }}
