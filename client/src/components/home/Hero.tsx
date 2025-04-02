@@ -23,29 +23,30 @@ const Hero = () => {
           playsInline
           className="object-cover w-full h-full opacity-40"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-earth-dark/90"></div>
+        <div className="absolute inset-0 bg-gradient-dark"></div>
       </div>
       
       <motion.div 
-        className="container mx-auto px-4 z-10"
+        className="container z-10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="md:w-1/2 text-left mb-24 md:mb-0">
-            <h2 className="font-display text-5xl text-white mb-16 tracking-wide -ml-12">ALL CATS ARE BEAUTIFUL</h2>
+        <div className="flex flex-col md-flex-row justify-between items-center">
+          <div className="md-w-half text-left mb-24 md-mb-0">
+            <h2 className="font-display text-5xl text-white mb-16 tracking-wide -ml-12">
+              ALL CATS ARE BEAUTIFUL</h2>
             <p className="max-w-xl text-lg text-gray-200 mb-16">
               Le monde n'est plus qu'un écho du passé. Les grandes cités s'effondrent, rongées par le temps et la nature. Mais tout n'a pas disparu. Les chats survivent.
             </p>
           </div>
           
-          <div className="md:w-1/2 flex flex-col md:flex-row justify-end items-center space-y-12 md:space-y-0 md:space-x-12">
+          <div className="md-w-half flex flex-col md-flex-row justify-end items-center space-y-12 md-space-y-0 md-space-x-12">
             <Link href="#world">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full md:w-auto bg-technos hover:bg-technos/80 text-white font-display text-xl px-8 py-3 rounded-md transition-colors duration-300"
+                className="btn btn-primary w-full md-w-auto"
               >
                 DÉCOUVRIR L'UNIVERS
               </motion.button>
@@ -54,7 +55,7 @@ const Hero = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full md:w-auto bg-transparent border-2 border-white text-white hover:bg-white/10 font-display text-xl px-8 py-3 rounded-md transition-colors duration-300"
+                className="btn btn-outline w-full md-w-auto"
               >
                 LES PERSONNAGES
               </motion.button>
