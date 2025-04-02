@@ -3,72 +3,72 @@ import { Facebook, Twitter, Instagram, MessageSquare } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-black py-12">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-8 md:mb-0">
-            <div className="flex items-center justify-center md:justify-start">
-              <div className="w-12 h-12 bg-earth rounded-full flex items-center justify-center mr-4">
-                <span className="font-display text-xl text-gray-900">AC</span>
+    <footer className="footer">
+      <div className="footer-container">
+        <div className="footer-main-content">
+          <div className="footer-logo-section">
+            <div className="footer-logo-container">
+              <div className="footer-logo">
+                <span className="footer-logo-text">AC</span>
               </div>
-              <h3 className="font-display text-2xl text-white">ACAB</h3>
+              <h3 className="footer-title">ACAB</h3>
             </div>
-            <p className="text-gray-500 mt-2 text-center md:text-left">All Cats Are Beautiful - L'Héritage</p>
+            <p className="footer-tagline">All Cats Are Beautiful - L'Héritage</p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div>
-              <h4 className="font-display text-lg text-white mb-4">Univers</h4>
-              <ul className="space-y-2">
-                <li><Link href="/world" className="text-gray-400 hover:text-white transition-colors">Le Monde</Link></li>
-                <li><Link href="/tribes" className="text-gray-400 hover:text-white transition-colors">Tribus</Link></li>
-                <li><Link href="/characters" className="text-gray-400 hover:text-white transition-colors">Personnages</Link></li>
-                <li><Link href="/map" className="text-gray-400 hover:text-white transition-colors">Carte</Link></li>
+          <div className="footer-links-grid">
+            <div className="footer-links-column">
+              <h4 className="footer-column-title">Univers</h4>
+              <ul className="footer-links-list">
+                <li><Link href="/world" className="footer-link">Le Monde</Link></li>
+                <li><Link href="/tribes" className="footer-link">Tribus</Link></li>
+                <li><Link href="/characters" className="footer-link">Personnages</Link></li>
+                <li><Link href="/map" className="footer-link">Carte</Link></li>
               </ul>
             </div>
             
-            <div>
-              <h4 className="font-display text-lg text-white mb-4">Créations</h4>
-              <ul className="space-y-2">
-                <li><Link href="/legends" className="text-gray-400 hover:text-white transition-colors">BD & Animés</Link></li>
-                <li><Link href="/game" className="text-gray-400 hover:text-white transition-colors">Jeu de Société</Link></li>
-                <li><Link href="/artifacts" className="text-gray-400 hover:text-white transition-colors">Illustrations</Link></li>
-                <li><Link href="#" className="text-gray-400 hover:text-white transition-colors">Boutique</Link></li>
+            <div className="footer-links-column">
+              <h4 className="footer-column-title">Créations</h4>
+              <ul className="footer-links-list">
+                <li><Link href="/legends" className="footer-link">BD & Animés</Link></li>
+                <li><Link href="/game" className="footer-link">Jeu de Société</Link></li>
+                <li><Link href="/artifacts" className="footer-link">Illustrations</Link></li>
+                <li><Link href="#" className="footer-link">Boutique</Link></li>
               </ul>
             </div>
             
-            <div>
-              <h4 className="font-display text-lg text-white mb-4">Projet</h4>
-              <ul className="space-y-2">
-                <li><Link href="#" className="text-gray-400 hover:text-white transition-colors">À Propos</Link></li>
-                <li><Link href="#" className="text-gray-400 hover:text-white transition-colors">Équipe</Link></li>
-                <li><Link href="#" className="text-gray-400 hover:text-white transition-colors">Blog</Link></li>
-                <li><Link href="#" className="text-gray-400 hover:text-white transition-colors">Contact</Link></li>
+            <div className="footer-links-column">
+              <h4 className="footer-column-title">Projet</h4>
+              <ul className="footer-links-list">
+                <li><Link href="#" className="footer-link">À Propos</Link></li>
+                <li><Link href="#" className="footer-link">Équipe</Link></li>
+                <li><Link href="#" className="footer-link">Blog</Link></li>
+                <li><Link href="#" className="footer-link">Contact</Link></li>
               </ul>
             </div>
             
-            <div>
-              <h4 className="font-display text-lg text-white mb-4">Suivez-nous</h4>
-              <div className="flex space-x-4">
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  <Instagram className="h-5 w-5" />
+            <div className="footer-links-column">
+              <h4 className="footer-column-title">Suivez-nous</h4>
+              <div className="social-icons-container">
+                <a href="#" className="social-icon-link">
+                  <Instagram className="social-icon" />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  <Twitter className="h-5 w-5" />
+                <a href="#" className="social-icon-link">
+                  <Twitter className="social-icon" />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  <Facebook className="h-5 w-5" />
+                <a href="#" className="social-icon-link">
+                  <Facebook className="social-icon" />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  <MessageSquare className="h-5 w-5" />
+                <a href="#" className="social-icon-link">
+                  <MessageSquare className="social-icon" />
                 </a>
               </div>
             </div>
           </div>
         </div>
         
-        <div className="mt-12 pt-8 border-t border-gray-800">
-          <p className="text-gray-600 text-center text-sm">
+        <div className="footer-copyright-section">
+          <p className="copyright-text">
             © 2023 ACAB - All Cats Are Beautiful. Tous droits réservés. <br />
             Projet par Zied Belaifa, Zied Ouerda & Sarra Bdiri.
           </p>

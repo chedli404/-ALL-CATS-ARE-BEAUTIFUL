@@ -13,29 +13,25 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 bg-black/80 backdrop-blur-md z-50 border-b border-earth/20">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center">
-              <div className="w-10 h-10 bg-earth rounded-full flex items-center justify-center mr-3">
-                <span className="font-display text-lg text-gray-900">AC</span>
+    <nav className="navbar">
+      <div className="navbar-container">
+        <div className="navbar-content">
+          <div className="navbar-logo-container">
+            <Link href="/" className="navbar-logo-link">
+              <div className="navbar-logo">
+                <span className="logo-text">AC</span>
               </div>
-              <span className="font-display text-xl text-white">ACAB</span>
+              <span className="navbar-title">ACAB</span>
             </Link>
           </div>
           
-          <div className="hidden md:block">
-            <div className="flex items-center space-x-4">
+          <div className="navbar-links-desktop">
+            <div className="navbar-links-list">
               {NAV_LINKS.map((link) => (
                 <Link 
                   key={link.href} 
                   href={link.href}
-                  className={`${
-                    location === link.href 
-                      ? "text-white" 
-                      : "text-gray-300 hover:text-white"
-                  } px-3 py-2 rounded-md text-sm font-medium transition-colors`}
+                  className={`navbar-link ${location === link.href ? "navbar-link-active" : "navbar-link-inactive"}`}
                 >
                   {link.label}
                 </Link>
@@ -43,13 +39,13 @@ const Navbar = () => {
             </div>
           </div>
           
-          <div className="md:hidden">
+          <div className="navbar-menu-mobile">
             <button 
               type="button" 
-              className="text-gray-400 hover:text-white"
+              className="navbar-menu-button"
               onClick={toggleMenu}
             >
-              <Menu className="h-6 w-6" />
+              <Menu className="menu-icon" />
             </button>
           </div>
         </div>

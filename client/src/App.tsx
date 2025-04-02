@@ -14,9 +14,9 @@ import NotFound from "@/pages/not-found";
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen bg-earth-dark">
+    <div className="app-container">
       <Navbar />
-      <main className="flex-grow">
+      <main className="main-content">
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/characters" component={Characters} />
