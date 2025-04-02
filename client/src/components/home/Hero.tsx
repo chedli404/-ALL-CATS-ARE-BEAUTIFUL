@@ -27,51 +27,39 @@ const Hero = () => {
       </div>
       
       <motion.div 
-        className="container mx-auto px-4 z-10 text-center"
+        className="container mx-auto px-4 z-10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="flex justify-center mb-6">
-          <div className="relative w-40 h-40">
-            <div className="absolute inset-0 bg-earth rounded-full flex items-center justify-center">
-              <h1 className="font-display text-6xl tracking-wide text-gray-900">
-                <span className="block text-7xl">AC</span>
-                <span className="block -mt-4 text-7xl">AB</span>
-              </h1>
-            </div>
-            <div className="absolute -bottom-2 left-0 w-full text-center">
-              <div className="inline-block bg-black/80 px-3 py-1 rounded-full">
-                <span className="text-white text-xs font-tech tracking-wider">L'HÉRITAGE</span>
-              </div>
-            </div>
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="md:w-1/2 text-left mb-8 md:mb-0">
+            <h2 className="font-display text-5xl text-white mb-4 tracking-wide">ALL CATS ARE BEAUTIFUL</h2>
+            <p className="max-w-xl text-lg text-gray-200">
+              Le monde n'est plus qu'un écho du passé. Les grandes cités s'effondrent, rongées par le temps et la nature. Mais tout n'a pas disparu. Les chats survivent.
+            </p>
           </div>
-        </div>
-        
-        <h2 className="font-display text-4xl text-white mt-6 mb-4 tracking-wide">ALL CATS ARE BEAUTIFUL</h2>
-        <p className="max-w-3xl mx-auto text-lg text-gray-200 mb-8">
-          Le monde n'est plus qu'un écho du passé. Les grandes cités s'effondrent, rongées par le temps et la nature. Mais tout n'a pas disparu. Les chats survivent.
-        </p>
-        
-        <div className="mt-12">
-          <Link href="#world">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-block bg-technos hover:bg-technos/80 text-white font-display text-xl px-8 py-3 rounded-md transition-colors duration-300 mr-4"
-            >
-              DÉCOUVRIR L'UNIVERS
-            </motion.button>
-          </Link>
-          <Link href="/characters">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-block bg-transparent border-2 border-white text-white hover:bg-white/10 font-display text-xl px-8 py-3 rounded-md transition-colors duration-300"
-            >
-              LES PERSONNAGES
-            </motion.button>
-          </Link>
+          
+          <div className="md:w-1/2 flex flex-col md:flex-row justify-end items-center space-y-4 md:space-y-0 md:space-x-4">
+            <Link href="#world">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full md:w-auto bg-technos hover:bg-technos/80 text-white font-display text-xl px-8 py-3 rounded-md transition-colors duration-300"
+              >
+                DÉCOUVRIR L'UNIVERS
+              </motion.button>
+            </Link>
+            <Link href="/characters">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full md:w-auto bg-transparent border-2 border-white text-white hover:bg-white/10 font-display text-xl px-8 py-3 rounded-md transition-colors duration-300"
+              >
+                LES PERSONNAGES
+              </motion.button>
+            </Link>
+          </div>
         </div>
       </motion.div>
       
