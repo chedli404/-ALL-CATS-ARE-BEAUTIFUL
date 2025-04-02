@@ -1,6 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { storage } from "./mongoStorage";
 import { z } from "zod";
 import { 
   insertUserSchema, 
@@ -11,7 +11,7 @@ import {
   insertVoteSchema,
   insertPollSchema,
   insertVoteOptionSchema
-} from "@shared/schema";
+} from "../shared/mongoSchema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Characters routes
@@ -26,7 +26,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/characters/:id", async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
+      const id = req.params.id;
       const character = await storage.getCharacter(id);
       
       if (!character) {
@@ -51,7 +51,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/tribes/:id", async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
+      const id = req.params.id;
       const tribe = await storage.getTribe(id);
       
       if (!tribe) {
@@ -96,7 +96,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/polls/:id", async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
+      const id = req.params.id;
       const poll = await storage.getPoll(id);
       
       if (!poll) {
@@ -126,9 +126,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Failed to create vote" });
     }
   });
-
-  // Initialize data
-  await storage.initializeData();
   
   const httpServer = createServer(app);
 
