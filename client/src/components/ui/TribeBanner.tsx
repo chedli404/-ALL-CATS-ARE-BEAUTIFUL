@@ -33,81 +33,136 @@ const TribeBanner = ({ name, description, color, strengths, icon, delay = 0 }: T
     }
   };
 
-  const renderIcon = () => {
-    switch (icon) {
-      case "compass":
-        return <Compass className="w-12 h-12 text-white" />;
-      case "circle-dot":
-        return <CircleDot className="w-12 h-12 text-white" />;
-      case "zap":
-        return <Zap className="w-12 h-12 text-white" />;
-      case "layers":
-        return <Layers className="w-12 h-12 text-white" />;
-      default:
-        return <CircleDot className="w-12 h-12 text-white" />;
+  const getBannerBackground = () => {
+    if (name === "NOMADES") {
+      return "bg-[#1c7f5f] from-[#1c7f5f]/80 to-[#1c7f5f]";
+    } else if (name === "ANCIENS") {
+      return "bg-[#e5ab47] from-[#e5ab47]/80 to-[#e5ab47]";
+    } else if (name === "TECHNOS") {
+      return "bg-[#c73e3a] from-[#c73e3a]/80 to-[#c73e3a]";
     }
+    return "";
+  };
+
+  const getSymbolColor = () => {
+    if (name === "NOMADES") {
+      return "#5ecfc1"; // Light teal for Nomades symbol
+    } else if (name === "ANCIENS") {
+      return "#f8d77e"; // Light yellow for Anciens symbol
+    } else if (name === "TECHNOS") {
+      return "#ff6259"; // Light red for Technos symbol
+    }
+    return "white";
+  };
+
+  const getSymbol = () => {
+    if (name === "NOMADES") {
+      return (
+        <svg viewBox="0 0 100 100" className="w-16 h-16">
+          <circle cx="50" cy="50" r="40" fill={getSymbolColor()} />
+          <path d="M30 30 L70 70 M30 70 L70 30 M50 20 L50 80 M20 50 L80 50" stroke="black" strokeWidth="5" fill="none" />
+        </svg>
+      );
+    } else if (name === "ANCIENS") {
+      return (
+        <svg viewBox="0 0 100 100" className="w-16 h-16">
+          <circle cx="50" cy="50" r="40" fill={getSymbolColor()} />
+          <path d="M50 25 L50 75 M35 55 C35 70, 65 70, 65 55" stroke="black" strokeWidth="5" fill="none" />
+          <circle cx="50" cy="35" r="3" fill="black" />
+        </svg>
+      );
+    } else if (name === "TECHNOS") {
+      return (
+        <svg viewBox="0 0 100 100" className="w-16 h-16">
+          <circle cx="50" cy="50" r="40" fill={getSymbolColor()} />
+          <path d="M40 25 L60 75 M30 45 L70 45" stroke="black" strokeWidth="5" fill="none" />
+        </svg>
+      );
+    }
+    return <CircleDot className="w-16 h-16 text-white" />;
   };
 
   return (
     <motion.div 
-      className="tribe-banner p-6 rounded-lg shadow-lg"
-      style={{ 
-        backgroundColor: color,
-        clipPath: "polygon(0% 0%, 100% 0%, 95% 100%, 5% 100%)"
-      }}
+      className="tribe-banner flex flex-col items-center max-w-xs mx-auto h-full"
       ref={ref}
       variants={fadeIn}
       initial="hidden"
       animate={controls}
     >
-      <div className="flex justify-center mb-4">
-        <div className="w-20 h-20 bg-earth-dark/20 rounded-full flex items-center justify-center">
-          {renderIcon()}
-        </div>
+      <div className="tribe-name-banner w-full text-center py-2 mb-1 bg-gray-800">
+        <h3 className="font-display text-2xl text-white">{name}</h3>
       </div>
       
-      <h3 className="font-display text-3xl text-white text-center mb-3">{name}</h3>
-      
-      <div className="text-center mb-4">
-        <div className="inline-flex">
-          {[1, 2, 3, 4, 5].map((_, i) => (
-            <span 
+      <div 
+        className={`banner-body relative w-full pt-6 pb-12 px-4 ${getBannerBackground()} bg-gradient-to-b`}
+        style={{ 
+          clipPath: "polygon(0% 0%, 100% 0%, 95% 96%, 5% 96%, 0% 100%)",
+          boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+          minHeight: "340px"
+        }}
+      >
+        <div className="flex justify-center mb-6">
+          <div className="rounded-full p-1 border-2 border-gray-800/40 bg-gray-900/10">
+            {getSymbol()}
+          </div>
+        </div>
+        
+        <div className="banner-sunrays w-32 h-8 mx-auto mb-4">
+          <svg viewBox="0 0 100 40" className="w-full h-full">
+            <path d="M10 30 L50 5 L90 30" 
+                  stroke={name === "TECHNOS" ? "#ff6259" : name === "ANCIENS" ? "#f8d77e" : "#5ecfc1"} 
+                  strokeWidth="2" 
+                  fill="none" />
+            <circle cx="50" cy="30" r="5" 
+                    fill={name === "TECHNOS" ? "#ff6259" : name === "ANCIENS" ? "#f8d77e" : "#5ecfc1"} />
+          </svg>
+        </div>
+        
+        <div className="banner-description mb-6">
+          <p className={`text-sm text-center ${name === "ANCIENS" ? "text-gray-800" : "text-gray-100"}`}>
+            {description.length > 120 ? description.substring(0, 120) + "..." : description}
+          </p>
+        </div>
+        
+        <ul className={`space-y-1 mt-4 text-sm ${name === "ANCIENS" ? "text-gray-800" : "text-gray-100"}`}>
+          {strengths.map((strength, index) => (
+            <li key={index} className="flex items-center">
+              <span className="w-5 text-center">
+                {index === 0 ? (
+                  <Compass className="h-3 w-3 inline" />
+                ) : index === 1 ? (
+                  <Layers className="h-3 w-3 inline" />
+                ) : (
+                  <Zap className="h-3 w-3 inline" />
+                )}
+              </span>
+              <span className="ml-2 text-xs">{strength}</span>
+            </li>
+          ))}
+        </ul>
+        
+        <div className="banner-tassels absolute bottom-0 left-0 right-0 h-3 flex justify-center">
+          {[...Array(7)].map((_, i) => (
+            <div 
               key={i} 
-              className="h-3.5 w-1.5 mx-0.5 inline-block"
-              style={{ backgroundColor: name === "NOMADES" ? "#E3A947" : "#8C7F6D" }}
-            ></span>
+              className="tassel mx-1 w-1 h-6"
+              style={{ 
+                backgroundColor: name === "NOMADES" ? "#5ecfc1" : 
+                               name === "ANCIENS" ? "#f8d77e" : "#ff6259",
+                transform: "translateY(3px)"
+              }}
+            ></div>
           ))}
         </div>
       </div>
       
-      <p className={`${name === "ANCIENS" ? "text-gray-900" : "text-gray-100"} mb-6`}>
-        {description}
-      </p>
-      
-      <ul className={`space-y-2 ${name === "ANCIENS" ? "text-gray-800" : "text-gray-200"}`}>
-        {strengths.map((strength, index) => (
-          <li key={index} className="flex items-center">
-            <span className="w-6 text-center">
-              {index === 0 ? (
-                <Compass className="h-4 w-4 inline" />
-              ) : index === 1 ? (
-                <Layers className="h-4 w-4 inline" />
-              ) : (
-                <Zap className="h-4 w-4 inline" />
-              )}
-            </span>
-            <span className="ml-2">{strength}</span>
-          </li>
-        ))}
-      </ul>
-      
-      <div className="mt-6 text-center">
+      <div className="mt-4 text-center">
         <button 
-          className={`inline-block ${
-            name === "ANCIENS" 
-              ? "bg-earth-dark/20 hover:bg-earth-dark/30 text-gray-900" 
-              : "bg-white/10 hover:bg-white/20 text-white"
-          } font-display px-4 py-2 rounded transition-colors duration-300`}
+          className={`inline-block font-display px-4 py-1 text-sm rounded transition-colors duration-300
+            ${name === "NOMADES" ? "bg-[#1c7f5f] hover:bg-[#1c7f5f]/80 text-white" : 
+              name === "ANCIENS" ? "bg-[#e5ab47] hover:bg-[#e5ab47]/80 text-gray-800" : 
+              "bg-[#c73e3a] hover:bg-[#c73e3a]/80 text-white"}`}
         >
           DÉCOUVRIR
         </button>

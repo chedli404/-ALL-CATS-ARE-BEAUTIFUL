@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { TRIBES_DATA } from "@/lib/constants";
 import { Tribe } from "@/types";
 import TribeBanner from "@/components/ui/TribeBanner";
-import { Compass, CircleDot, Zap } from "lucide-react";
+import { Compass, CircleDot, Zap, Map, Book, Settings, Users } from "lucide-react";
 
 const Tribes = () => {
   // In a real implementation, this would fetch from the API
@@ -32,35 +32,68 @@ const Tribes = () => {
     }
   };
 
-  const renderTribeIcon = (icon: string) => {
-    switch (icon) {
-      case "compass":
-        return <Compass className="h-6 w-6" />;
-      case "circle-dot":
-        return <CircleDot className="h-6 w-6" />;
-      case "zap":
-        return <Zap className="h-6 w-6" />;
+  const getTribeIconComponent = (tribeName: string) => {
+    switch (tribeName) {
+      case "NOMADES":
+        return <Compass className="h-6 w-6 text-[#5ecfc1]" />;
+      case "ANCIENS":
+        return <Book className="h-6 w-6 text-[#f8d77e]" />;
+      case "TECHNOS":
+        return <Zap className="h-6 w-6 text-[#ff6259]" />;
       default:
         return <CircleDot className="h-6 w-6" />;
     }
   };
 
+  const getTribeBackgroundImage = (tribeName: string) => {
+    switch (tribeName) {
+      case "NOMADES":
+        return "bg-gradient-to-br from-[#1c7f5f]/80 to-[#1c7f5f]";
+      case "ANCIENS":
+        return "bg-gradient-to-br from-[#e5ab47]/80 to-[#e5ab47]";
+      case "TECHNOS":
+        return "bg-gradient-to-br from-[#c73e3a]/80 to-[#c73e3a]";
+      default:
+        return "bg-gray-800";
+    }
+  };
+
+  const getTribeTextColor = (tribeName: string) => {
+    return tribeName === "ANCIENS" ? "text-gray-800" : "text-white";
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-earth to-earth-dark py-24">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 py-12">
       <div className="container mx-auto px-4">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
+          className="relative"
         >
+          {/* Background Image with Banner Art */}
+          <div className="absolute inset-0 opacity-10 pointer-events-none">
+            <img 
+              src="/attached_assets/1.pdf-image-004.jpg" 
+              alt="ACAB Tribe Banners" 
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+          
           <motion.h1 
-            className="font-display text-5xl mb-6 text-center"
+            className="font-display text-5xl mb-3 text-center text-white"
             variants={itemVariants}
           >
             LES TRIBUS
           </motion.h1>
+          
+          <motion.div 
+            className="w-20 h-1 bg-gradient-to-r from-[#1c7f5f] via-[#e5ab47] to-[#c73e3a] mx-auto mb-6"
+            variants={itemVariants}
+          ></motion.div>
+          
           <motion.p 
-            className="text-gray-700 max-w-3xl mx-auto text-center mb-16"
+            className="text-gray-300 max-w-3xl mx-auto text-center mb-16"
             variants={itemVariants}
           >
             Après la disparition de l'humanité, les chats survivants se sont organisés en tribus distinctes, chacune avec sa propre vision du monde et son approche face à l'héritage humain.
@@ -69,158 +102,168 @@ const Tribes = () => {
           {isLoading ? (
             <div className="text-center py-12">
               <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
-              <p className="text-gray-700 mt-4">Chargement des tribus...</p>
+              <p className="text-gray-300 mt-4">Chargement des tribus...</p>
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-                {tribes.map((tribe, index) => (
-                  <TribeBanner 
-                    key={tribe.id}
-                    name={tribe.name}
-                    description={tribe.description}
-                    color={tribe.color}
-                    strengths={tribe.strengths}
-                    icon={tribe.icon}
-                    delay={0.1 * index}
-                  />
-                ))}
+              {/* Main Tribe Banners Section */}
+              <div className="relative z-10">
+                <img 
+                  src="/attached_assets/1.pdf-image-004.jpg" 
+                  alt="ACAB Tribe Banners" 
+                  className="w-full max-w-4xl mx-auto rounded-lg shadow-2xl mb-12 md:mb-16"
+                />
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 md:mb-24 max-w-5xl mx-auto">
+                  {tribes.map((tribe, index) => (
+                    <TribeBanner 
+                      key={tribe.id}
+                      name={tribe.name}
+                      description={tribe.description}
+                      color={tribe.color}
+                      strengths={tribe.strengths}
+                      icon={tribe.icon}
+                      delay={0.1 * index}
+                    />
+                  ))}
+                </div>
               </div>
               
-              <motion.div variants={itemVariants}>
-                <h2 className="font-display text-3xl mb-8 text-center">CULTURE ET ORGANISATION</h2>
+              {/* Tribe Details Section */}
+              <motion.div variants={itemVariants} className="mt-8 mb-16">
+                <h2 className="font-display text-3xl mb-10 text-center text-white">CULTURE ET TERRITOIRE</h2>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-                  <div className="bg-white/10 p-6 rounded-lg shadow-lg">
-                    <h3 className="font-display text-2xl mb-4 flex items-center">
-                      <Compass className="h-6 w-6 mr-2 text-nomades" />
-                      <span>Les Nomades</span>
-                    </h3>
-                    <p className="mb-4">
-                      Refusant toute forme de sédentarité, les Nomades parcourent le monde post-apocalyptique en petits groupes familiaux. Sans territoire fixe, ils traversent les zones les plus dangereuses, guidés par un instinct de survie extraordinaire.
-                    </p>
-                    <p className="mb-4">
-                      Leur organisation sociale est souple, basée sur les compétences plus que sur une hiérarchie figée. Les décisions importantes sont prises collectivement lors de rassemblements appelés "Cercles", où chaque voix compte.
-                    </p>
-                    <p>
-                      Pour les Nomades, la véritable richesse réside dans l'expérience accumulée et dans la découverte de nouveaux territoires. Ils sont les messagers du monde, transportant nouvelles et objets rares entre les différentes tribus.
-                    </p>
-                    
-                    <div className="mt-6 pt-6 border-t border-earth-dark/30">
-                      <h4 className="font-display text-lg mb-2">Rituels et traditions</h4>
-                      <ul className="list-disc pl-5 space-y-1">
-                        <li>La cérémonie du "Premier Pas" quand un chaton est prêt à voyager</li>
-                        <li>L'échange des routes, où sont partagées les découvertes de l'année</li>
-                        <li>Le tatouage des territoires, marquant sur leur pelage les zones explorées</li>
-                      </ul>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-white/10 p-6 rounded-lg shadow-lg">
-                    <h3 className="font-display text-2xl mb-4 flex items-center">
-                      <CircleDot className="h-6 w-6 mr-2 text-anciens" />
-                      <span>Les Anciens</span>
-                    </h3>
-                    <p className="mb-4">
-                      Gardiens de la mémoire, les Anciens ont choisi de préserver et transmettre l'histoire du monde. Ils ont établi leurs communautés dans d'anciennes bibliothèques et musées, protégeant les savoirs du passé.
-                    </p>
-                    <p className="mb-4">
-                      Leur société est structurée autour d'un conseil des sages, dirigé par le plus ancien et le plus sage d'entre eux. Chaque membre a une responsabilité spécifique : archiviste, conteur, guérisseur ou diplomate.
-                    </p>
-                    <p>
-                      Les Anciens croient en l'harmonie avec la nature et considèrent que les erreurs de l'humanité ne doivent pas être répétées. Ils cultivent des jardins médicinaux et vivent en symbiose avec leur environnement.
-                    </p>
-                    
-                    <div className="mt-6 pt-6 border-t border-earth-dark/30">
-                      <h4 className="font-display text-lg mb-2">Rituels et traditions</h4>
-                      <ul className="list-disc pl-5 space-y-1">
-                        <li>La veillée des histoires, où sont racontés les récits du passé</li>
-                        <li>La transmission du savoir, rituel d'apprentissage intergénérationnel</li>
-                        <li>Le cercle d'équinoxe, célébration du cycle de la nature</li>
-                      </ul>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-white/10 p-6 rounded-lg shadow-lg md:col-span-2">
-                    <h3 className="font-display text-2xl mb-4 flex items-center">
-                      <Zap className="h-6 w-6 mr-2 text-technos" />
-                      <span>Les Technos</span>
-                    </h3>
-                    <p className="mb-4">
-                      Fascinés par les technologies humaines, les Technos se sont installés dans les ruines des métropoles. Ils expérimentent, réparent et réinventent les anciennes machines, créant un mode de vie unique mêlant instinct félin et innovation technologique.
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <p className="mb-4">
-                          Leur hiérarchie est basée sur les connaissances techniques et l'innovation. Les "Éveilleurs" sont les leaders respectés pour leur capacité à réactiver les anciennes technologies. Sous leur direction, différentes guildes spécialisées travaillent sur des projets spécifiques.
-                        </p>
-                        <p>
-                          Les Technos croient que la maîtrise des technologies est la clé de la survie et du progrès. Ils cherchent à comprendre pourquoi l'humanité a disparu tout en exploitant ses créations.
-                        </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-16">
+                  {tribes.map((tribe) => (
+                    <div 
+                      key={`details-${tribe.id}`} 
+                      className={`${getTribeBackgroundImage(tribe.name)} p-6 rounded-lg shadow-xl`}
+                    >
+                      <div className="flex items-center mb-4">
+                        {getTribeIconComponent(tribe.name)}
+                        <h3 className={`font-display text-2xl ml-3 ${getTribeTextColor(tribe.name)}`}>
+                          {tribe.name}
+                        </h3>
                       </div>
-                      <div>
-                        <h4 className="font-display text-lg mb-2">Rituels et traditions</h4>
-                        <ul className="list-disc pl-5 space-y-1">
-                          <li>L'éveil, cérémonie où une nouvelle technologie est activée</li>
-                          <li>Le grand partage, échange de connaissances entre guildes</li>
-                          <li>La quête des artefacts, expéditions organisées dans les zones inexplorées</li>
-                          <li>Le challenge de l'Innovateur, compétition annuelle de création</li>
+                      
+                      <div className={`tribe-details mb-4 ${getTribeTextColor(tribe.name)} opacity-90`}>
+                        <div className="flex items-center mb-3">
+                          <Map className="h-4 w-4 mr-2" />
+                          <span className="font-medium">
+                            {tribe.name === "NOMADES" ? "Territoire: Non défini, en mouvement constant" : 
+                             tribe.name === "ANCIENS" ? "Territoire: Forêts et anciennes bibliothèques" : 
+                             "Territoire: Ruines technologiques"}
+                          </span>
+                        </div>
+                        
+                        <div className="flex items-center mb-3">
+                          <Book className="h-4 w-4 mr-2" />
+                          <span className="font-medium">
+                            {tribe.name === "NOMADES" ? "Croyance: L'expérience et le mouvement" : 
+                             tribe.name === "ANCIENS" ? "Croyance: Harmonie et préservation" : 
+                             "Croyance: Progrès et innovation"}
+                          </span>
+                        </div>
+                        
+                        <div className="flex items-center mb-3">
+                          <Settings className="h-4 w-4 mr-2" />
+                          <span className="font-medium">
+                            {tribe.name === "NOMADES" ? "Compétence: Adaptation et survie" : 
+                             tribe.name === "ANCIENS" ? "Compétence: Sagesse et guérison" : 
+                             "Compétence: Ingénierie et technologie"}
+                          </span>
+                        </div>
+                        
+                        <div className="flex items-center">
+                          <Users className="h-4 w-4 mr-2" />
+                          <span className="font-medium">
+                            {tribe.name === "NOMADES" ? "Structure: Groupes familiaux égalitaires" : 
+                             tribe.name === "ANCIENS" ? "Structure: Conseil des sages" : 
+                             "Structure: Hiérarchie technocratique"}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div className={`mt-5 pt-5 border-t ${tribe.name === "ANCIENS" ? "border-gray-800/30" : "border-white/20"}`}>
+                        <h4 className={`font-display text-lg mb-2 ${getTribeTextColor(tribe.name)}`}>Rituels et traditions</h4>
+                        <ul className={`list-disc pl-5 space-y-1 text-sm ${tribe.name === "ANCIENS" ? "text-gray-800/90" : "text-white/90"}`}>
+                          {tribe.name === "NOMADES" ? (
+                            <>
+                              <li>La cérémonie du "Premier Pas"</li>
+                              <li>L'échange des routes</li>
+                              <li>Le tatouage des territoires</li>
+                            </>
+                          ) : tribe.name === "ANCIENS" ? (
+                            <>
+                              <li>La veillée des histoires</li>
+                              <li>La transmission du savoir</li>
+                              <li>Le cercle d'équinoxe</li>
+                            </>
+                          ) : (
+                            <>
+                              <li>L'éveil des technologies</li>
+                              <li>Le grand partage</li>
+                              <li>La quête des artefacts</li>
+                              <li>Le challenge de l'Innovateur</li>
+                            </>
+                          )}
                         </ul>
                       </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </motion.div>
               
+              {/* Comparative Table */}
               <motion.div 
-                className="overflow-x-auto rounded-lg shadow-lg"
+                className="overflow-x-auto rounded-lg shadow-2xl max-w-5xl mx-auto"
                 variants={itemVariants}
               >
-                <table className="min-w-full bg-white divide-y divide-gray-200">
-                  <thead className="bg-gray-800">
+                <table className="min-w-full bg-gray-900 divide-y divide-gray-700">
+                  <thead>
                     <tr>
-                      <th scope="col" className="px-6 py-4 text-left text-sm font-display text-white uppercase tracking-wider">Attributs</th>
+                      <th scope="col" className="px-6 py-4 text-left text-sm font-display text-white uppercase tracking-wider bg-gray-800">Attributs</th>
                       <th scope="col" className="px-6 py-4 text-center text-sm font-display text-white uppercase tracking-wider" style={{ backgroundColor: "#1C6E5F" }}>Nomades</th>
-                      <th scope="col" className="px-6 py-4 text-center text-sm font-display text-white uppercase tracking-wider" style={{ backgroundColor: "#E3A947" }}>Anciens</th>
+                      <th scope="col" className="px-6 py-4 text-center text-sm font-display text-gray-800 uppercase tracking-wider" style={{ backgroundColor: "#E3A947" }}>Anciens</th>
                       <th scope="col" className="px-6 py-4 text-center text-sm font-display text-white uppercase tracking-wider" style={{ backgroundColor: "#C73E3A" }}>Technos</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-gray-700">
                     <tr>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-gray-100">Territoire</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Aucun fixe</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Zones vertes</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Anciennes métropoles</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white bg-gray-800">Territoire</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Aucun fixe</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Zones vertes</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Anciennes métropoles</td>
                     </tr>
                     <tr>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-gray-100">Relation au passé</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Observation</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Préservation</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Réutilisation</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white bg-gray-800">Relation au passé</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Observation</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Préservation</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Réutilisation</td>
                     </tr>
                     <tr>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-gray-100">Compétences</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Adaptation, survie</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Sagesse, guérison</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Ingénierie, énergie</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white bg-gray-800">Compétences</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Adaptation, survie</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Sagesse, guérison</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Ingénierie, énergie</td>
                     </tr>
                     <tr>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-gray-100">Vision d'avenir</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Exploration continue</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Équilibre et tradition</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Progrès technologique</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white bg-gray-800">Vision d'avenir</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Exploration continue</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Équilibre et tradition</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Progrès technologique</td>
                     </tr>
                     <tr>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-gray-100">Leadership</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Collectif, par expérience</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Conseil des sages</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Hiérarchie méritocratique</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white bg-gray-800">Leadership</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Collectif, par expérience</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Conseil des sages</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Hiérarchie méritocratique</td>
                     </tr>
                     <tr>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-gray-100">Ressources valorisées</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Cartes, routes</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Livres, plantes</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Pièces, énergie</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white bg-gray-800">Ressources valorisées</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Cartes, routes</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Livres, plantes</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Pièces, énergie</td>
                     </tr>
                   </tbody>
                 </table>
