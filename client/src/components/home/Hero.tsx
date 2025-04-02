@@ -1,13 +1,22 @@
 import { Link } from "wouter";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 const Hero = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.src = "/attached_assets/9abila.MP4";
+    }
+  }, []);
+
   return (
     <header className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <video 
-          src="/attached_assets/9abila.mp4" 
+          ref={videoRef}
           autoPlay 
           loop 
           muted 
