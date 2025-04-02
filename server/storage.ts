@@ -25,6 +25,13 @@ import {
   type InsertPoll
 } from "@shared/schema";
 import { CHARACTERS_DATA, TRIBES_DATA, GAME_CARDS, MAP_REGIONS } from "../client/src/lib/constants";
+import { drizzle } from "drizzle-orm/neon-http";
+import { neon } from "@neondatabase/serverless";
+import { eq, inArray } from "drizzle-orm";
+
+// Database connection
+const sql = neon(process.env.DATABASE_URL!);
+export const db = drizzle(sql);
 
 export interface IStorage {
   // User operations
@@ -331,4 +338,266 @@ export class MemStorage implements IStorage {
   }
 }
 
+// PostgreSQL storage implementation 
+export class PostgresStorage implements IStorage {
+  // User operations
+  async getUser(id: number): Promise<User | undefined> {
+    const result = await sql`SELECT * FROM users WHERE id = ${id} LIMIT 1`;
+    return result.length > 0 ? result[0] : undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const result = await sql`SELECT * FROM users WHERE username = ${username} LIMIT 1`;
+    return result.length > 0 ? result[0] : undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const { username, password, email } = insertUser;
+    const result = await sql`
+      INSERT INTO users (username, password, email)
+      VALUES (${username}, ${password}, ${email})
+      RETURNING *
+    `;
+    return result[0];
+  }
+  
+  // Character operations
+  async getCharacter(id: number): Promise<Character | undefined> {
+    const result = await sql`SELECT * FROM characters WHERE id = ${id} LIMIT 1`;
+    return result.length > 0 ? result[0] : undefined;
+  }
+  
+  async getAllCharacters(): Promise<Character[]> {
+    return await sql`SELECT * FROM characters`;
+  }
+  
+  async createCharacter(insertCharacter: InsertCharacter): Promise<Character> {
+    const { name, tribe, description, traits, imageUrl, tribeIcon, tribeColor } = insertCharacter;
+    const result = await sql`
+      INSERT INTO characters (name, tribe, description, traits, image_url, tribe_icon, tribe_color)
+      VALUES (${name}, ${tribe}, ${description}, ${traits || null}, ${imageUrl || null}, ${tribeIcon || null}, ${tribeColor || null})
+      RETURNING *
+    `;
+    return result[0];
+  }
+  
+  // Tribe operations
+  async getTribe(id: number): Promise<Tribe | undefined> {
+    const result = await sql`SELECT * FROM tribes WHERE id = ${id} LIMIT 1`;
+    return result.length > 0 ? result[0] : undefined;
+  }
+  
+  async getAllTribes(): Promise<Tribe[]> {
+    return await sql`SELECT * FROM tribes`;
+  }
+  
+  async createTribe(insertTribe: InsertTribe): Promise<Tribe> {
+    const { name, description, color, icon, strengths } = insertTribe;
+    const result = await sql`
+      INSERT INTO tribes (name, description, color, icon, strengths)
+      VALUES (${name}, ${description}, ${color}, ${icon || null}, ${strengths || null})
+      RETURNING *
+    `;
+    return result[0];
+  }
+  
+  // Territory operations
+  async getTerritory(id: number): Promise<Territory | undefined> {
+    const result = await sql`SELECT * FROM territories WHERE id = ${id} LIMIT 1`;
+    return result.length > 0 ? result[0] : undefined;
+  }
+  
+  async getAllTerritories(): Promise<Territory[]> {
+    return await sql`SELECT * FROM territories`;
+  }
+  
+  async createTerritory(insertTerritory: InsertTerritory): Promise<Territory> {
+    const { name, description, tribeId, svgPath, color } = insertTerritory;
+    const result = await sql`
+      INSERT INTO territories (name, description, tribe_id, svg_path, color)
+      VALUES (${name}, ${description}, ${tribeId || null}, ${svgPath}, ${color})
+      RETURNING *
+    `;
+    return result[0];
+  }
+  
+  // Game card operations
+  async getGameCard(id: number): Promise<GameCard | undefined> {
+    const result = await sql`SELECT * FROM game_cards WHERE id = ${id} LIMIT 1`;
+    return result.length > 0 ? result[0] : undefined;
+  }
+  
+  async getAllGameCards(): Promise<GameCard[]> {
+    return await sql`SELECT * FROM game_cards`;
+  }
+  
+  async createGameCard(insertGameCard: InsertGameCard): Promise<GameCard> {
+    const { name, type, tribe, strength, description, imageIcon } = insertGameCard;
+    const result = await sql`
+      INSERT INTO game_cards (name, type, tribe, strength, description, image_icon)
+      VALUES (${name}, ${type}, ${tribe || null}, ${strength || null}, ${description}, ${imageIcon || null})
+      RETURNING *
+    `;
+    return result[0];
+  }
+  
+  // Voting system operations
+  async getPoll(id: number): Promise<Poll | undefined> {
+    const result = await sql`SELECT * FROM polls WHERE id = ${id} LIMIT 1`;
+    return result.length > 0 ? result[0] : undefined;
+  }
+  
+  async getAllPolls(): Promise<Poll[]> {
+    return await sql`SELECT * FROM polls`;
+  }
+  
+  async createPoll(insertPoll: InsertPoll): Promise<Poll> {
+    const { title, description, active, expiresAt } = insertPoll;
+    const result = await sql`
+      INSERT INTO polls (title, description, active, expires_at)
+      VALUES (${title}, ${description}, ${active === undefined ? true : active}, ${expiresAt || null})
+      RETURNING *
+    `;
+    return result[0];
+  }
+  
+  async getPollOptions(pollId: number): Promise<VoteOption[]> {
+    return await sql`SELECT * FROM vote_options WHERE poll_id = ${pollId}`;
+  }
+  
+  async createVoteOption(insertVoteOption: InsertVoteOption): Promise<VoteOption> {
+    const { pollId, option } = insertVoteOption;
+    const result = await sql`
+      INSERT INTO vote_options (poll_id, option)
+      VALUES (${pollId}, ${option})
+      RETURNING *
+    `;
+    return result[0];
+  }
+  
+  async createVote(insertVote: InsertVote): Promise<Vote> {
+    const { userId, optionId } = insertVote;
+    const result = await sql`
+      INSERT INTO votes (user_id, option_id)
+      VALUES (${userId}, ${optionId})
+      RETURNING *
+    `;
+    return result[0];
+  }
+  
+  async getVotesForPoll(pollId: number): Promise<Vote[]> {
+    // Get all options for this poll
+    const options = await this.getPollOptions(pollId);
+    if (options.length === 0) {
+      return [];
+    }
+    
+    // Extract option IDs
+    const optionIds = options.map(option => option.id);
+    
+    // Get all votes for these options
+    const optionIdsList = optionIds.join(',');
+    return await sql`SELECT * FROM votes WHERE option_id IN (${optionIds})`;
+  }
+  
+  // Initialize demo data
+  async initializeData(): Promise<void> {
+    // Check if data already exists
+    const existingTribes = await sql`SELECT * FROM tribes LIMIT 1`;
+    if (existingTribes.length > 0) {
+      return;
+    }
+    
+    // Create demo user
+    await this.createUser({
+      username: "demo",
+      password: "password123",
+      email: "demo@example.com"
+    });
+    
+    // Create tribes
+    for (const tribe of TRIBES_DATA) {
+      await this.createTribe({
+        name: tribe.name,
+        description: tribe.description,
+        color: tribe.color,
+        icon: tribe.icon,
+        strengths: tribe.strengths
+      });
+    }
+    
+    // Create characters
+    for (const character of CHARACTERS_DATA) {
+      await this.createCharacter({
+        name: character.name,
+        tribe: character.tribe,
+        description: character.description,
+        traits: character.traits,
+        imageUrl: character.image,
+        tribeIcon: character.tribe.toLowerCase(),
+        tribeColor: character.tribeColor
+      });
+    }
+    
+    // Create territories
+    for (const region of MAP_REGIONS) {
+      // Get tribe ID
+      const tribe = await this.getTribeByName(region.tribe);
+      const tribeId = tribe ? tribe.id : null;
+      
+      await this.createTerritory({
+        name: region.name,
+        description: region.description,
+        tribeId,
+        svgPath: region.path,
+        color: region.color
+      });
+    }
+    
+    // Create game cards
+    for (const card of GAME_CARDS) {
+      await this.createGameCard({
+        name: card.name,
+        type: card.type,
+        tribe: card.tribe,
+        strength: card.strength,
+        description: card.description,
+        imageIcon: card.icon
+      });
+    }
+    
+    // Create a poll with options
+    const poll = await this.createPoll({
+      title: "Quelle histoire voulez-vous pour la prochaine saison?",
+      description: "Votez pour l'intrigue que vous souhaitez voir dans la prochaine saison de ACAB",
+      active: true,
+      expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() // 30 days from now
+    });
+    
+    // Create poll options
+    await this.createVoteOption({
+      pollId: poll.id,
+      option: "Les Anciens Secrets"
+    });
+    
+    await this.createVoteOption({
+      pollId: poll.id,
+      option: "La Migration"
+    });
+    
+    await this.createVoteOption({
+      pollId: poll.id,
+      option: "La Guerre des Tribus"
+    });
+  }
+  
+  // Helper method to get tribe ID by name
+  private async getTribeByName(tribeName: string): Promise<Tribe | undefined> {
+    const tribeNameUpper = tribeName.toUpperCase();
+    const tribes = await sql`SELECT * FROM tribes`;
+    return tribes.find(t => t.name.toUpperCase() === tribeNameUpper);
+  }
+}
+
+// Use in-memory storage for now until we resolve type issues
 export const storage = new MemStorage();
