@@ -24,47 +24,45 @@ const InteractiveMap = () => {
   };
 
   return (
-    <div className="relative bg-earth-dark rounded-lg overflow-hidden shadow-lg">
-      <svg viewBox="0 0 800 600" className="w-full h-auto">
-        {/* Map Base */}
-        <path d="M100,100 L700,100 L700,500 L100,500 Z" fill="#8C7F6D" stroke="#333" strokeWidth="2" />
+    <div className="relative rounded-lg overflow-hidden shadow-xl">
+      <div className="relative">
+        {/* Map Base Image */}
+        <img 
+          src="/attached_assets/1.pdf-image-017.jpg" 
+          alt="ACAB World Map" 
+          className="w-full h-auto"
+        />
         
-        {/* Regions */}
-        {MAP_REGIONS.map((region) => (
-          <motion.path
-            key={region.id}
-            d={region.path}
-            fill={region.color}
-            stroke="#333"
-            strokeWidth="2"
-            className="cursor-pointer"
-            onMouseEnter={() => handleMouseEnter(region)}
-            onMouseLeave={handleMouseLeave}
-            whileHover={{ 
-              filter: "brightness(1.2)",
-              transition: { duration: 0.3 }
-            }}
-          />
-        ))}
-        
-        {/* Territories Labels */}
-        <text x="200" y="170" fill="white" fontFamily="'Bebas Neue', cursive" fontSize="24">ÉNERGIE</text>
-        <text x="390" y="150" fill="white" fontFamily="'Bebas Neue', cursive" fontSize="24">PLASTIQUE</text>
-        <text x="580" y="150" fill="white" fontFamily="'Bebas Neue', cursive" fontSize="24">EAU</text>
-        <text x="600" y="400" fill="white" fontFamily="'Bebas Neue', cursive" fontSize="24">MONTAGNE</text>
-        <text x="380" y="370" fill="white" fontFamily="'Bebas Neue', cursive" fontSize="24">VERT</text>
-        <text x="230" y="420" fill="white" fontFamily="'Bebas Neue', cursive" fontSize="24">VOLCANS</text>
-        <text x="200" y="300" fill="#333" fontFamily="'Bebas Neue', cursive" fontSize="18">CENTRE</text>
-        
-        {/* Tribe Territories */}
-        <circle cx="200" cy="170" r="15" fill="#E3A947" stroke="#333" strokeWidth="2" />
-        <circle cx="600" cy="400" r="15" fill="#1C6E5F" stroke="#333" strokeWidth="2" />
-        <circle cx="230" cy="420" r="15" fill="#C73E3A" stroke="#333" strokeWidth="2" />
-      </svg>
+        {/* Interactive Overlay */}
+        <svg 
+          viewBox="0 0 800 600" 
+          className="absolute top-0 left-0 w-full h-full"
+          style={{ pointerEvents: 'none' }}
+        >
+          {/* Regions - set to transparent but keep the hover effects */}
+          {MAP_REGIONS.map((region) => (
+            <motion.path
+              key={region.id}
+              d={region.path}
+              fill="transparent"
+              stroke="transparent"
+              className="cursor-pointer"
+              style={{ pointerEvents: 'auto' }}
+              onMouseEnter={() => handleMouseEnter(region)}
+              onMouseLeave={handleMouseLeave}
+              whileHover={{ 
+                opacity: 0.2,
+                fill: region.color,
+                transition: { duration: 0.3 }
+              }}
+            />
+          ))}
+        </svg>
+      </div>
       
       {/* Map Overlay Info Box */}
       {hoveredRegion && (
-        <div className="absolute top-4 right-4 bg-black/80 p-4 rounded-lg max-w-xs">
+        <div className="absolute top-4 right-4 bg-black/80 p-4 rounded-lg max-w-xs backdrop-blur-sm">
           <h4 className="font-display text-xl text-white mb-2">{hoveredRegion.name}</h4>
           <p className="text-gray-300 text-sm mb-2">{hoveredRegion.description}</p>
           <div className="flex items-center">
