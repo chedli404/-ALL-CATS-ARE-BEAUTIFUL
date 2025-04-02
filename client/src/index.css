@@ -622,7 +622,19 @@ html, body {
   padding-bottom: 3rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  background-image: linear-gradient(to bottom, var(--from-color), var(--to-color));
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0));
+}
+
+.tribe-nomades-bg {
+  background-color: #1c7f5f;
+}
+
+.tribe-anciens-bg {
+  background-color: #e5ab47;
+}
+
+.tribe-technos-bg {
+  background-color: #c73e3a;
 }
 
 .tribe-symbol-container {
@@ -758,6 +770,164 @@ html, body {
 
 .button-technos:hover {
   background-color: rgba(199, 62, 58, 0.8);
+}
+
+/* Characters Page Styles */
+.characters-page {
+  background-color: #111827;
+  min-height: 100vh;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+.page-container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.page-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: white;
+}
+
+.page-description {
+  color: #9CA3AF;
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.filter-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 3rem;
+  gap: 0.75rem;
+}
+
+.filter-button {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 9999px;
+  font-family: 'Bebas Neue', cursive;
+  transition-property: background-color, color;
+  transition-duration: 0.3s;
+}
+
+.filter-button-active {
+  background-color: white;
+  color: #111827;
+}
+
+.filter-button-all {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.filter-button-all:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.filter-button-nomades-active {
+  background-color: #1C6E5F;
+  color: white;
+}
+
+.filter-button-nomades {
+  background-color: rgba(28, 110, 95, 0.2);
+  color: #1C6E5F;
+  border: 1px solid #1C6E5F;
+}
+
+.filter-button-nomades:hover {
+  background-color: #1C6E5F;
+  color: white;
+}
+
+.filter-button-anciens-active {
+  background-color: #E3A947;
+  color: white;
+}
+
+.filter-button-anciens {
+  background-color: rgba(227, 169, 71, 0.2);
+  color: #E3A947;
+  border: 1px solid #E3A947;
+}
+
+.filter-button-anciens:hover {
+  background-color: #E3A947;
+  color: white;
+}
+
+.filter-button-technos-active {
+  background-color: #C73E3A;
+  color: white;
+}
+
+.filter-button-technos {
+  background-color: rgba(199, 62, 58, 0.2);
+  color: #C73E3A;
+  border: 1px solid #C73E3A;
+}
+
+.filter-button-technos:hover {
+  background-color: #C73E3A;
+  color: white;
+}
+
+.loading-container {
+  text-align: center;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.loading-spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid white;
+  border-top-color: transparent;
+  border-radius: 9999px;
+  animation: spin 1s linear infinite;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  color: white;
+  margin-top: 1rem;
+}
+
+.characters-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .characters-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .characters-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
 /* Character Card Styles */

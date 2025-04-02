@@ -35,11 +35,11 @@ const TribeBanner = ({ name, description, color, strengths, icon, delay = 0 }: T
 
   const getBannerBackground = () => {
     if (name === "NOMADES") {
-      return "bg-[#1c7f5f] from-[#1c7f5f]/80 to-[#1c7f5f]";
+      return "tribe-nomades-bg bg-[#1c7f5f] from-[#1c7f5f]/80 to-[#1c7f5f]";
     } else if (name === "ANCIENS") {
-      return "bg-[#e5ab47] from-[#e5ab47]/80 to-[#e5ab47]";
+      return "tribe-anciens-bg bg-[#e5ab47] from-[#e5ab47]/80 to-[#e5ab47]";
     } else if (name === "TECHNOS") {
-      return "bg-[#c73e3a] from-[#c73e3a]/80 to-[#c73e3a]";
+      return "tribe-technos-bg bg-[#c73e3a] from-[#c73e3a]/80 to-[#c73e3a]";
     }
     return "";
   };
