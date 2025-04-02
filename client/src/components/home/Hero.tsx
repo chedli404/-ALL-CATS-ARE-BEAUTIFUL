@@ -6,9 +6,12 @@ const Hero = () => {
   return (
     <header className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <img 
-          src="https://images.unsplash.com/photo-1603088549155-e7b6332ef522?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" 
-          alt="Post-apocalyptic city" 
+        <video 
+          src="/attached_assets/9abila.mp4" 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
           className="object-cover w-full h-full opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-earth-dark/90"></div>
