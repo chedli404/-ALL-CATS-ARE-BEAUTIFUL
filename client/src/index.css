@@ -175,50 +175,129 @@ html, body {
   text-align: right;
 }
 
-.relative {
+/* Hero section styles */
+.hero-section {
   position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.absolute {
+.hero-background {
   position: absolute;
-}
-
-.inset-0 {
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 0;
 }
 
-.overflow-hidden {
-  overflow: hidden;
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
 }
 
-.h-screen {
-  height: 100vh;
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), var(--color-earth-dark, #8C7F6D) 90%);
 }
 
-.container {
+.hero-content {
   width: 100%;
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
+  padding: 0 1rem;
+  z-index: 10;
 }
 
-.gap-4 {
+.hero-content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   gap: 1rem;
 }
 
-.w-full {
+@media (min-width: 768px) {
+  .hero-content-container {
+    flex-direction: row;
+  }
+}
+
+.hero-text-block {
+  text-align: left;
+  margin-bottom: 6rem;
   width: 100%;
 }
 
-.h-full {
-  height: 100%;
+@media (min-width: 768px) {
+  .hero-text-block {
+    margin-bottom: 0;
+    width: 50%;
+  }
 }
 
-.object-cover {
-  object-fit: cover;
+.hero-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: var(--font-size-5xl);
+  color: white;
+  margin-bottom: 4rem;
+  letter-spacing: 0.025em;
+  margin-left: -3rem;
+}
+
+.hero-description {
+  max-width: 36rem;
+  font-size: var(--font-size-lg);
+  color: #E5E7EB;
+  margin-bottom: 4rem;
+}
+
+.hero-buttons-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .hero-buttons-block {
+    flex-direction: row;
+    width: 50%;
+  }
+  
+  .hero-buttons-block > * + * {
+    margin-left: 3rem;
+  }
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.scroll-indicator-link {
+  color: white;
+}
+
+.scroll-indicator-icon {
+  height: 2rem;
+  width: 2rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Spacing Classes */
@@ -385,43 +464,48 @@ html, body {
 }
 
 /* Buttons */
-.btn {
+/* Button Styles */
+.button-primary, .button-outline {
   display: inline-block;
   font-weight: 500;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
   user-select: none;
-  border: 1px solid transparent;
   padding: var(--spacing-3) var(--spacing-8);
   font-size: var(--font-size-xl);
   line-height: 1.5;
   border-radius: var(--radius);
   transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   cursor: pointer;
+  font-family: 'Bebas Neue', cursive;
+  width: 100%;
 }
 
-.btn-primary {
+@media (min-width: 768px) {
+  .button-primary, .button-outline {
+    width: auto;
+  }
+}
+
+.button-primary {
   background-color: var(--color-technos);
   color: white;
+  border: 1px solid transparent;
 }
 
-.btn-primary:hover {
+.button-primary:hover {
   background-color: rgba(199, 62, 58, 0.8); /* --color-technos with opacity */
 }
 
-.btn-outline {
+.button-outline {
   background-color: transparent;
   color: white;
   border: 2px solid white;
 }
 
-.btn-outline:hover {
+.button-outline:hover {
   background-color: rgba(255, 255, 255, 0.1);
-}
-
-.btn-full {
-  width: 100%;
 }
 
 /* Rounded corners */
@@ -505,18 +589,277 @@ html, body {
   background-color: #39C9C9;
 }
 
-/* Components */
-.tribe-banner {
-  clip-path: polygon(0% 0%, 100% 0%, 95% 100%, 5% 100%);
+/* Tribe Banner Styles */
+.tribe-banner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 20rem;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
 }
 
+.tribe-title-header {
+  width: 100%;
+  text-align: center;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
+  background-color: #1F2937;
+}
+
+.tribe-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.tribe-content-body {
+  position: relative;
+  width: 100%;
+  padding-top: 1.5rem;
+  padding-bottom: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-image: linear-gradient(to bottom, var(--from-color), var(--to-color));
+}
+
+.tribe-symbol-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.tribe-symbol-circle {
+  border-radius: 9999px;
+  padding: 0.25rem;
+  border: 2px solid rgba(31, 41, 55, 0.4);
+  background-color: rgba(17, 24, 39, 0.1);
+}
+
+.tribe-decorative-element {
+  width: 8rem;
+  height: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
+}
+
+.tribe-decorative-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.tribe-description-container {
+  margin-bottom: 1.5rem;
+}
+
+.tribe-description {
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.text-light {
+  color: #F3F4F6;
+}
+
+.text-dark {
+  color: #1F2937;
+}
+
+.tribe-strengths-list {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
+.tribe-strengths-list > * + * {
+  margin-top: 0.25rem;
+}
+
+.tribe-strength-item {
+  display: flex;
+  align-items: center;
+}
+
+.tribe-strength-icon {
+  width: 1.25rem;
+  text-align: center;
+}
+
+.tribe-strength-icon-small {
+  height: 0.75rem;
+  width: 0.75rem;
+  display: inline-block;
+}
+
+.tribe-strength-text {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.tribe-decoration-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0.75rem;
+  display: flex;
+  justify-content: center;
+}
+
+.tribe-decoration-tassel {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  width: 0.25rem;
+  height: 1.5rem;
+}
+
+.tribe-button-container {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.tribe-discover-button {
+  display: inline-block;
+  font-family: 'Bebas Neue', cursive;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  transition-property: background-color, color;
+  transition-duration: 0.3s;
+}
+
+.button-nomades {
+  background-color: #1C6E5F;
+  color: white;
+}
+
+.button-nomades:hover {
+  background-color: rgba(28, 110, 95, 0.8);
+}
+
+.button-anciens {
+  background-color: #E3A947;
+  color: #1F2937;
+}
+
+.button-anciens:hover {
+  background-color: rgba(227, 169, 71, 0.8);
+}
+
+.button-technos {
+  background-color: #C73E3A;
+  color: white;
+}
+
+.button-technos:hover {
+  background-color: rgba(199, 62, 58, 0.8);
+}
+
+/* Character Card Styles */
 .character-card {
+  background-color: #1F2937; /* dark gray background */
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .character-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.character-image-container {
+  position: relative;
+}
+
+.character-image {
+  width: 100%;
+  height: 16rem;
+  object-fit: cover;
+}
+
+.character-tribe-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 1rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+.character-tribe-name {
+  color: white;
+  font-size: 0.75rem;
+  font-family: 'Space Mono', monospace;
+}
+
+.character-info-container {
+  padding: 1.5rem;
+}
+
+.character-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.character-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+.character-name {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.character-description {
+  color: #9CA3AF;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.character-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.character-traits-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.character-trait-badge {
+  display: inline-block;
+  background-color: #374151;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-family: 'Space Mono', monospace;
+  color: #D1D5DB;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.character-detail-button {
+  color: white;
+  font-family: 'Bebas Neue', cursive;
 }
 
 /* Transition utilities */

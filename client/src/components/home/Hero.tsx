@@ -13,40 +13,40 @@ const Hero = () => {
   }, []);
 
   return (
-    <header className="relative h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 z-0">
+    <header className="hero-section">
+      <div className="hero-background">
         <video 
           ref={videoRef}
           autoPlay 
           loop 
           muted 
           playsInline
-          className="object-cover w-full h-full opacity-40"
+          className="hero-video"
         />
-        <div className="absolute inset-0 bg-gradient-dark"></div>
+        <div className="hero-overlay"></div>
       </div>
       
       <motion.div 
-        className="container mx-auto px-4 z-10"
+        className="hero-content"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="flex flex-col md-flex-row justify-between items-center gap-4">
-          <div className="md-w-half text-left mb-24 md-mb-0">
-            <h2 className="font-display text-5xl text-white mb-16 tracking-wide -ml-12">
+        <div className="hero-content-container">
+          <div className="hero-text-block">
+            <h2 className="hero-title">
               ALL CATS ARE BEAUTIFUL</h2>
-            <p className="max-w-xl text-lg text-gray-200 mb-16">
+            <p className="hero-description">
               Le monde n'est plus qu'un écho du passé. Les grandes cités s'effondrent, rongées par le temps et la nature. Mais tout n'a pas disparu. Les chats survivent.
             </p>
           </div>
           
-          <div className="md-w-half flex flex-col md-flex-row justify-end items-center space-y-12 md-space-y-0 md-space-x-12">
+          <div className="hero-buttons-block">
             <Link href="#world">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="btn btn-primary w-full md-w-auto rounded-md px-8 py-3 text-xl font-display"
+                className="button-primary"
               >
                 DÉCOUVRIR L'UNIVERS
               </motion.button>
@@ -55,7 +55,7 @@ const Hero = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="btn btn-outline w-full md-w-auto rounded-md px-8 py-3 text-xl font-display"
+                className="button-outline"
               >
                 LES PERSONNAGES
               </motion.button>
@@ -65,12 +65,12 @@ const Hero = () => {
       </motion.div>
       
       <motion.div 
-        className="absolute bottom-8 left-0 right-0 text-center"
+        className="scroll-indicator"
         animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 1.5 }}
       >
-        <a href="#world" className="text-white">
-          <ChevronDown className="h-8 w-8 mx-auto" />
+        <a href="#world" className="scroll-indicator-link">
+          <ChevronDown className="scroll-indicator-icon" />
         </a>
       </motion.div>
     </header>
