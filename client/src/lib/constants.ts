@@ -73,6 +73,16 @@ export const MAP_REGIONS = [
   }
 ];
 
+// Define asset paths
+const ASSET_BASE_PATH = '/attached_assets';
+const image001 = `${ASSET_BASE_PATH}/1.pdf-image-001.jpg`;
+const image002 = `${ASSET_BASE_PATH}/1.pdf-image-002.jpg`;
+const image004 = `${ASSET_BASE_PATH}/1.pdf-image-004.jpg`;
+const image014 = `${ASSET_BASE_PATH}/1.pdf-image-014.jpg`;
+const image015 = `${ASSET_BASE_PATH}/1.pdf-image-015.jpg`;
+const image016 = `${ASSET_BASE_PATH}/1.pdf-image-016.jpg`;
+const image017 = `${ASSET_BASE_PATH}/1.pdf-image-017.jpg`;
+
 // Timeline data
 export const TIMELINE_DATA = [
   {
@@ -80,21 +90,21 @@ export const TIMELINE_DATA = [
     title: "CHUTE DE L'HUMANITÉ",
     description: "Les humains disparaissent graduellement dans des circonstances mystérieuses, laissant derrière eux technologies et infrastructures. La nature commence à reprendre ses droits.",
     color: "#C73E3A",
-    image: "/attached_assets/1.pdf-image-001.jpg"
+    image: image001
   },
   {
     period: "2070 - 2085",
     title: "ÉVEIL FÉLIN",
     description: "Les chats développent une intelligence accrue et des capacités adaptatives. Ils commencent à explorer les ruines humaines, s'organisant en petits groupes pour survivre.",
     color: "#E3A947",
-    image: "/attached_assets/1.pdf-image-001.jpg"
+    image: image001
   },
   {
     period: "2085 - 2100",
     title: "FORMATION DES TRIBUS",
     description: "Les chats se divisent en tribus distinctes suivant différentes idéologies et approches face à l'héritage humain. Émergence des quatre principales factions qui façonnent le nouveau monde.",
     color: "#1C6E5F",
-    image: "/attached_assets/1.pdf-image-002.jpg"
+    image: image002
   }
 ];
 
@@ -110,7 +120,7 @@ export const TRIBES_DATA = [
       "Médiateurs entre tribus",
       "Adaptabilité exceptionnelle"
     ],
-    icon: "/attached_assets/1.pdf-image-004.jpg"
+    icon: image004
   },
   {
     id: 2,
@@ -122,7 +132,7 @@ export const TRIBES_DATA = [
       "Harmonisation avec la nature",
       "Sagesse et diplomatie"
     ],
-    icon: "/attached_assets/1.pdf-image-004.jpg"
+    icon: image004
   },
   {
     id: 3,
@@ -134,7 +144,7 @@ export const TRIBES_DATA = [
       "Réutilisation des technologies",
       "Maîtrise de l'énergie ancienne"
     ],
-    icon: "/attached_assets/1.pdf-image-004.jpg"
+    icon: image004
   }
 ];
 
@@ -147,7 +157,7 @@ export const CHARACTERS_DATA = [
     tribeColor: "#1C6E5F",
     description: "Hrny incarne l'élégance et l'oisiveté des hautes sphères. Bourgeoise jusqu'au bout des griffes, elle évolue dans un monde de luxe et de privilèges, où tout lui est acquis sans qu'elle n'ait à lever la patte.",
     traits: ["Élégante", "Manipulatrice", "Raffinée"],
-    image: "/attached_assets/1.pdf-image-014.jpg"
+    image: image014
   },
   {
     id: 2,
@@ -156,7 +166,7 @@ export const CHARACTERS_DATA = [
     tribeColor: "#1C6E5F",
     description: "Jbal est une force de la nature, une silhouette imposante qui se dresse comme un rempart entre le chaos et ceux qui ne peuvent se défendre. Immense, puissant, mais silencieux, il incarne une présence rassurante pour les opprimés.",
     traits: ["Protecteur", "Puissant", "Gardien"],
-    image: "/attached_assets/1.pdf-image-015.jpg"
+    image: image015
   },
   {
     id: 3,
@@ -165,7 +175,7 @@ export const CHARACTERS_DATA = [
     tribeColor: "#E3A947",
     description: "Ahra est une énigme vivante, un paradoxe que peu osent approcher. On raconte que, depuis qu'elle a maîtrisé un pouvoir obscur venu des ténèbres, elle ne laisse derrière elle que destruction et silence.",
     traits: ["Mystérieuse", "Puissante", "Énigmatique"],
-    image: "/attached_assets/1.pdf-image-016.jpg"
+    image: image016
   }
 ];
 
