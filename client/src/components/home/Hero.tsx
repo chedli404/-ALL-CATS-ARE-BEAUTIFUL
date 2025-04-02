@@ -27,12 +27,12 @@ const Hero = () => {
       </div>
       
       <motion.div 
-        className="container z-10"
+        className="container mx-auto px-4 z-10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="flex flex-col md-flex-row justify-between items-center">
+        <div className="flex flex-col md-flex-row justify-between items-center gap-4">
           <div className="md-w-half text-left mb-24 md-mb-0">
             <h2 className="font-display text-5xl text-white mb-16 tracking-wide -ml-12">
               ALL CATS ARE BEAUTIFUL</h2>
@@ -46,7 +46,7 @@ const Hero = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="btn btn-primary w-full md-w-auto"
+                className="btn btn-primary w-full md-w-auto rounded-md px-8 py-3 text-xl font-display"
               >
                 DÉCOUVRIR L'UNIVERS
               </motion.button>
@@ -55,7 +55,7 @@ const Hero = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="btn btn-outline w-full md-w-auto"
+                className="btn btn-outline w-full md-w-auto rounded-md px-8 py-3 text-xl font-display"
               >
                 LES PERSONNAGES
               </motion.button>

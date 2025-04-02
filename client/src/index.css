@@ -198,6 +198,17 @@ html, body {
   height: 100vh;
 }
 
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
 .w-full {
   width: 100%;
 }
