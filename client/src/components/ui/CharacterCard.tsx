@@ -46,47 +46,47 @@ const CharacterCard = ({ character, delay = 0 }: CharacterCardProps) => {
 
   return (
     <motion.div 
-      className="character-card"
+      className="bg-gray-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
       ref={ref}
       variants={cardVariants}
       initial="hidden"
       animate={controls}
     >
-      <div className="character-image-container">
+      <div className="relative">
         <img 
           src={character.image} 
           alt={`${character.name} character`} 
-          className="character-image"
+          className="w-full h-64 object-cover"
         />
         <div 
-          className="character-tribe-badge" 
+          className="absolute top-0 right-0 m-4 px-3 py-1 rounded-full" 
           style={{ backgroundColor: character.tribeColor }}
         >
-          <span className="character-tribe-name">{character.tribe}</span>
+          <span className="text-white text-xs font-tech">{character.tribe}</span>
         </div>
       </div>
       
-      <div className="character-info-container">
-        <div className="character-header">
+      <div className="p-6">
+        <div className="flex items-center mb-4">
           <div 
-            className="character-icon" 
+            className="w-12 h-12 rounded-full flex items-center justify-center mr-4" 
             style={{ backgroundColor: character.tribeColor }}
           >
             {renderTribeIcon()}
           </div>
-          <h3 className="character-name">{character.name}</h3>
+          <h3 className="font-display text-2xl text-white">{character.name}</h3>
         </div>
         
-        <p className="character-description">
+        <p className="text-gray-400 mb-6 line-clamp-3">
           {character.description}
         </p>
         
-        <div className="character-footer">
-          <div className="character-traits-container">
+        <div className="flex justify-between items-center">
+          <div>
             {character.traits.map((trait, index) => (
               <span 
                 key={index} 
-                className="character-trait-badge"
+                className="inline-block bg-gray-700 rounded-full px-3 py-1 text-sm font-tech text-gray-300 mr-2 mb-2"
               >
                 {trait}
               </span>
@@ -94,7 +94,7 @@ const CharacterCard = ({ character, delay = 0 }: CharacterCardProps) => {
           </div>
           <Link href={`/characters/${character.id}`}>
             <button 
-              className="character-detail-button"
+              className="text-white font-display"
               style={{ color: character.tribeColor }}
             >
               VOIR PLUS

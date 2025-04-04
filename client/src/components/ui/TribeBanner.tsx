@@ -35,11 +35,11 @@ const TribeBanner = ({ name, description, color, strengths, icon, delay = 0 }: T
 
   const getBannerBackground = () => {
     if (name === "NOMADES") {
-      return "tribe-nomades-bg bg-[#1c7f5f] from-[#1c7f5f]/80 to-[#1c7f5f]";
+      return "bg-[#1c7f5f] from-[#1c7f5f]/80 to-[#1c7f5f]";
     } else if (name === "ANCIENS") {
-      return "tribe-anciens-bg bg-[#e5ab47] from-[#e5ab47]/80 to-[#e5ab47]";
+      return "bg-[#e5ab47] from-[#e5ab47]/80 to-[#e5ab47]";
     } else if (name === "TECHNOS") {
-      return "tribe-technos-bg bg-[#c73e3a] from-[#c73e3a]/80 to-[#c73e3a]";
+      return "bg-[#c73e3a] from-[#c73e3a]/80 to-[#c73e3a]";
     }
     return "";
   };
@@ -84,32 +84,32 @@ const TribeBanner = ({ name, description, color, strengths, icon, delay = 0 }: T
 
   return (
     <motion.div 
-      className="tribe-banner-container"
+      className="tribe-banner flex flex-col items-center max-w-xs mx-auto h-full"
       ref={ref}
       variants={fadeIn}
       initial="hidden"
       animate={controls}
     >
-      <div className="tribe-title-header">
-        <h3 className="tribe-title">{name}</h3>
+      <div className="tribe-name-banner w-full text-center py-2 mb-1 bg-gray-800">
+        <h3 className="font-display text-2xl text-white">{name}</h3>
       </div>
       
       <div 
-        className={`tribe-content-body ${getBannerBackground()}`}
+        className={`banner-body relative w-full pt-6 pb-12 px-4 ${getBannerBackground()} bg-gradient-to-b`}
         style={{ 
           clipPath: "polygon(0% 0%, 100% 0%, 95% 96%, 5% 96%, 0% 100%)",
           boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
           minHeight: "340px"
         }}
       >
-        <div className="tribe-symbol-container">
-          <div className="tribe-symbol-circle">
+        <div className="flex justify-center mb-6">
+          <div className="rounded-full p-1 border-2 border-gray-800/40 bg-gray-900/10">
             {getSymbol()}
           </div>
         </div>
         
-        <div className="tribe-decorative-element">
-          <svg viewBox="0 0 100 40" className="tribe-decorative-svg">
+        <div className="banner-sunrays w-32 h-8 mx-auto mb-4">
+          <svg viewBox="0 0 100 40" className="w-full h-full">
             <path d="M10 30 L50 5 L90 30" 
                   stroke={name === "TECHNOS" ? "#ff6259" : name === "ANCIENS" ? "#f8d77e" : "#5ecfc1"} 
                   strokeWidth="2" 
@@ -119,34 +119,34 @@ const TribeBanner = ({ name, description, color, strengths, icon, delay = 0 }: T
           </svg>
         </div>
         
-        <div className="tribe-description-container">
-          <p className={`tribe-description ${name === "ANCIENS" ? "text-dark" : "text-light"}`}>
+        <div className="banner-description mb-6">
+          <p className={`text-sm text-center ${name === "ANCIENS" ? "text-gray-800" : "text-gray-100"}`}>
             {description.length > 120 ? description.substring(0, 120) + "..." : description}
           </p>
         </div>
         
-        <ul className={`tribe-strengths-list ${name === "ANCIENS" ? "text-dark" : "text-light"}`}>
+        <ul className={`space-y-1 mt-4 text-sm ${name === "ANCIENS" ? "text-gray-800" : "text-gray-100"}`}>
           {strengths.map((strength, index) => (
-            <li key={index} className="tribe-strength-item">
-              <span className="tribe-strength-icon">
+            <li key={index} className="flex items-center">
+              <span className="w-5 text-center">
                 {index === 0 ? (
-                  <Compass className="tribe-strength-icon-small" />
+                  <Compass className="h-3 w-3 inline" />
                 ) : index === 1 ? (
-                  <Layers className="tribe-strength-icon-small" />
+                  <Layers className="h-3 w-3 inline" />
                 ) : (
-                  <Zap className="tribe-strength-icon-small" />
+                  <Zap className="h-3 w-3 inline" />
                 )}
               </span>
-              <span className="tribe-strength-text">{strength}</span>
+              <span className="ml-2 text-xs">{strength}</span>
             </li>
           ))}
         </ul>
         
-        <div className="tribe-decoration-bottom">
+        <div className="banner-tassels absolute bottom-0 left-0 right-0 h-3 flex justify-center">
           {[...Array(7)].map((_, i) => (
             <div 
               key={i} 
-              className="tribe-decoration-tassel"
+              className="tassel mx-1 w-1 h-6"
               style={{ 
                 backgroundColor: name === "NOMADES" ? "#5ecfc1" : 
                                name === "ANCIENS" ? "#f8d77e" : "#ff6259",
@@ -157,12 +157,12 @@ const TribeBanner = ({ name, description, color, strengths, icon, delay = 0 }: T
         </div>
       </div>
       
-      <div className="tribe-button-container">
+      <div className="mt-4 text-center">
         <button 
-          className={`tribe-discover-button
-            ${name === "NOMADES" ? "button-nomades" : 
-              name === "ANCIENS" ? "button-anciens" : 
-              "button-technos"}`}
+          className={`inline-block font-display px-4 py-1 text-sm rounded transition-colors duration-300
+            ${name === "NOMADES" ? "bg-[#1c7f5f] hover:bg-[#1c7f5f]/80 text-white" : 
+              name === "ANCIENS" ? "bg-[#e5ab47] hover:bg-[#e5ab47]/80 text-gray-800" : 
+              "bg-[#c73e3a] hover:bg-[#c73e3a]/80 text-white"}`}
         >
           DÉCOUVRIR
         </button>
