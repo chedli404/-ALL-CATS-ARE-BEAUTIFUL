@@ -40,6 +40,8 @@ const Tribes = () => {
         return <Book className="h-6 w-6 text-[#f8d77e]" />;
       case "TECHNOS":
         return <Zap className="h-6 w-6 text-[#ff6259]" />;
+      case "ÉCOLOGISTES":
+        return <CircleDot className="h-6 w-6 text-[#90EE90]" />;
       default:
         return <CircleDot className="h-6 w-6" />;
     }
@@ -53,6 +55,8 @@ const Tribes = () => {
         return "bg-gradient-to-br from-[#e5ab47]/80 to-[#e5ab47]";
       case "TECHNOS":
         return "bg-gradient-to-br from-[#c73e3a]/80 to-[#c73e3a]";
+      case "ÉCOLOGISTES":
+        return "bg-gradient-to-br from-[#4A9D3D]/80 to-[#4A9D3D]";
       default:
         return "bg-gray-800";
     }
@@ -175,6 +179,7 @@ const Tribes = () => {
                           <span className="font-medium">
                             {tribe.name === "NOMADES" ? "Territoire: Non défini, en mouvement constant" : 
                              tribe.name === "ANCIENS" ? "Territoire: Forêts et anciennes bibliothèques" : 
+                             tribe.name === "ÉCOLOGISTES" ? "Territoire: Forêts renouvelées" :
                              "Territoire: Ruines technologiques"}
                           </span>
                         </div>
@@ -184,6 +189,7 @@ const Tribes = () => {
                           <span className="font-medium">
                             {tribe.name === "NOMADES" ? "Croyance: L'expérience et le mouvement" : 
                              tribe.name === "ANCIENS" ? "Croyance: Harmonie et préservation" : 
+                             tribe.name === "ÉCOLOGISTES" ? "Croyance: Régénération et équilibre" :
                              "Croyance: Progrès et innovation"}
                           </span>
                         </div>
@@ -193,6 +199,7 @@ const Tribes = () => {
                           <span className="font-medium">
                             {tribe.name === "NOMADES" ? "Compétence: Adaptation et survie" : 
                              tribe.name === "ANCIENS" ? "Compétence: Sagesse et guérison" : 
+                             tribe.name === "ÉCOLOGISTES" ? "Compétence: Botanique et agriculture" :
                              "Compétence: Ingénierie et technologie"}
                           </span>
                         </div>
@@ -202,6 +209,7 @@ const Tribes = () => {
                           <span className="font-medium">
                             {tribe.name === "NOMADES" ? "Structure: Groupes familiaux égalitaires" : 
                              tribe.name === "ANCIENS" ? "Structure: Conseil des sages" : 
+                             tribe.name === "ÉCOLOGISTES" ? "Structure: Consensus communautaire" :
                              "Structure: Hiérarchie technocratique"}
                           </span>
                         </div>
@@ -221,6 +229,13 @@ const Tribes = () => {
                               <li>La veillée des histoires</li>
                               <li>La transmission du savoir</li>
                               <li>Le cercle d'équinoxe</li>
+                            </>
+                          ) : tribe.name === "ÉCOLOGISTES" ? (
+                            <>
+                              <li>Le cycle des semences</li>
+                              <li>La communion avec les arbres</li>
+                              <li>Le rituel de l'eau pure</li>
+                              <li>La danse de la pluie</li>
                             </>
                           ) : (
                             <>
@@ -249,6 +264,7 @@ const Tribes = () => {
                       <th scope="col" className="px-6 py-4 text-center text-sm font-display text-white uppercase tracking-wider" style={{ backgroundColor: "#1C6E5F" }}>Nomades</th>
                       <th scope="col" className="px-6 py-4 text-center text-sm font-display text-gray-800 uppercase tracking-wider" style={{ backgroundColor: "#E3A947" }}>Anciens</th>
                       <th scope="col" className="px-6 py-4 text-center text-sm font-display text-white uppercase tracking-wider" style={{ backgroundColor: "#C73E3A" }}>Technos</th>
+                      <th scope="col" className="px-6 py-4 text-center text-sm font-display text-white uppercase tracking-wider" style={{ backgroundColor: "#4A9D3D" }}>Écologistes</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-700">
@@ -257,36 +273,42 @@ const Tribes = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Aucun fixe</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Zones vertes</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Anciennes métropoles</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Forêts renouvelées</td>
                     </tr>
                     <tr>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white bg-gray-800">Relation au passé</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Observation</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Préservation</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Réutilisation</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Reformation</td>
                     </tr>
                     <tr>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white bg-gray-800">Compétences</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Adaptation, survie</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Sagesse, guérison</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Ingénierie, énergie</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Botanique, agriculture</td>
                     </tr>
                     <tr>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white bg-gray-800">Vision d'avenir</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Exploration continue</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Équilibre et tradition</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Progrès technologique</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Harmonie naturelle</td>
                     </tr>
                     <tr>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white bg-gray-800">Leadership</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Collectif, par expérience</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Conseil des sages</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Hiérarchie méritocratique</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Consensus communautaire</td>
                     </tr>
                     <tr>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white bg-gray-800">Ressources valorisées</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Cartes, routes</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Livres, plantes</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Pièces, énergie</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">Graines, eau pure</td>
                     </tr>
                   </tbody>
                 </table>

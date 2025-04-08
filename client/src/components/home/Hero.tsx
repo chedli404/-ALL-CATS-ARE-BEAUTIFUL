@@ -16,7 +16,7 @@ const Hero = () => {
           muted
           loop
           playsInline
-          className="absolute left-[430px] bottom-[250px] w-[800px] h-50 object-cover "  
+          className="absolute left-[340px] bottom-[250px] w-[800px] h-50 object-cover "  
           style={{ filter: "brightness(1.1)" 
             , transform: "scaleX(1)"
             , borderRadius: "100%"
@@ -35,8 +35,8 @@ const Hero = () => {
       >
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="md:w-1/2 text-left mb-12 md:mb-0">
-            <h2 className="font-display text-5xl text-white mb-8 tracking-wide -ml-12">ALL CATS ARE BEAUTIFUL</h2>
-            <p className="max-w-xl text-lg text-gray-200 mb-8">
+            <h2 className="font-display text-4xl text-white mb-8 tracking-wide -ml-0">ALL CATS ARE BEAUTIFUL</h2>
+            <p className="max-w-xl text-lg text-gray-200 mb-5">
               Le monde n'est plus qu'un écho du passé. Les grandes cités s'effondrent, rongées par le temps et la nature. Mais tout n'a pas disparu. Les chats survivent.
             </p>
           </div>

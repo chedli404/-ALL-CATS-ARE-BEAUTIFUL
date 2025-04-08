@@ -3,6 +3,7 @@ export const TRIBE_COLORS = {
   NOMADES: "#1C6E5F",
   ANCIENS: "#E3A947",
   TECHNOS: "#C73E3A",
+  ÉCOLOGISTES: "#4A9D3D", // New tribe - green color
 };
 
 // Background colors
@@ -143,6 +144,18 @@ export const TRIBES_DATA = [
       "Innovation et expérimentation",
       "Réutilisation des technologies",
       "Maîtrise de l'énergie ancienne"
+    ],
+    icon: image004
+  },
+  {
+    id: 4,
+    name: "ÉCOLOGISTES",
+    description: "Les Écologistes sont les gardiens de l'équilibre naturel. Ils cherchent à restaurer l'harmonie entre toutes les formes de vie et à préserver ce qui reste de l'écosystème après la grande extinction des humains.",
+    color: "#4A9D3D",
+    strengths: [
+      "Régénération des écosystèmes",
+      "Agriculture durable",
+      "Connaissance des plantes médicinales"
     ],
     icon: image004
   }

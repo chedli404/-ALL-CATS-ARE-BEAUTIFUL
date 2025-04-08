@@ -40,6 +40,8 @@ const TribeBanner = ({ name, description, color, strengths, icon, delay = 0 }: T
       return "bg-[#e5ab47] from-[#e5ab47]/80 to-[#e5ab47]";
     } else if (name === "TECHNOS") {
       return "bg-[#c73e3a] from-[#c73e3a]/80 to-[#c73e3a]";
+    } else if (name === "ÉCOLOGISTES") {
+      return "bg-[#4A9D3D] from-[#4A9D3D]/80 to-[#4A9D3D]";
     }
     return "";
   };
@@ -51,6 +53,8 @@ const TribeBanner = ({ name, description, color, strengths, icon, delay = 0 }: T
       return "#f8d77e"; // Light yellow for Anciens symbol
     } else if (name === "TECHNOS") {
       return "#ff6259"; // Light red for Technos symbol
+    } else if (name === "ÉCOLOGISTES") {
+      return "#90EE90"; // Light green for Écologistes symbol
     }
     return "white";
   };
@@ -76,6 +80,15 @@ const TribeBanner = ({ name, description, color, strengths, icon, delay = 0 }: T
         <svg viewBox="0 0 100 100" className="w-16 h-16">
           <circle cx="50" cy="50" r="40" fill={getSymbolColor()} />
           <path d="M40 25 L60 75 M30 45 L70 45" stroke="black" strokeWidth="5" fill="none" />
+        </svg>
+      );
+    } else if (name === "ÉCOLOGISTES") {
+      return (
+        <svg viewBox="0 0 100 100" className="w-16 h-16">
+          <circle cx="50" cy="50" r="40" fill={getSymbolColor()} />
+          <path d="M30 50 C40 30, 60 30, 70 50 C60 70, 40 70, 30 50 Z" stroke="black" strokeWidth="3" fill="none" />
+          <circle cx="50" cy="50" r="8" stroke="black" strokeWidth="3" fill={getSymbolColor()} />
+          <path d="M50 30 L50 20 M50 70 L50 80 M30 50 L20 50 M70 50 L80 50" stroke="black" strokeWidth="2" fill="none" />
         </svg>
       );
     }
@@ -111,11 +124,15 @@ const TribeBanner = ({ name, description, color, strengths, icon, delay = 0 }: T
         <div className="banner-sunrays w-32 h-8 mx-auto mb-4">
           <svg viewBox="0 0 100 40" className="w-full h-full">
             <path d="M10 30 L50 5 L90 30" 
-                  stroke={name === "TECHNOS" ? "#ff6259" : name === "ANCIENS" ? "#f8d77e" : "#5ecfc1"} 
+                  stroke={name === "TECHNOS" ? "#ff6259" : 
+                          name === "ANCIENS" ? "#f8d77e" : 
+                          name === "ÉCOLOGISTES" ? "#90EE90" : "#5ecfc1"} 
                   strokeWidth="2" 
                   fill="none" />
             <circle cx="50" cy="30" r="5" 
-                    fill={name === "TECHNOS" ? "#ff6259" : name === "ANCIENS" ? "#f8d77e" : "#5ecfc1"} />
+                    fill={name === "TECHNOS" ? "#ff6259" : 
+                         name === "ANCIENS" ? "#f8d77e" : 
+                         name === "ÉCOLOGISTES" ? "#90EE90" : "#5ecfc1"} />
           </svg>
         </div>
         
@@ -149,7 +166,8 @@ const TribeBanner = ({ name, description, color, strengths, icon, delay = 0 }: T
               className="tassel mx-1 w-1 h-6"
               style={{ 
                 backgroundColor: name === "NOMADES" ? "#5ecfc1" : 
-                               name === "ANCIENS" ? "#f8d77e" : "#ff6259",
+                               name === "ANCIENS" ? "#f8d77e" : 
+                               name === "ÉCOLOGISTES" ? "#90EE90" : "#ff6259",
                 transform: "translateY(3px)"
               }}
             ></div>
@@ -162,6 +180,7 @@ const TribeBanner = ({ name, description, color, strengths, icon, delay = 0 }: T
           className={`inline-block font-display px-4 py-1 text-sm rounded transition-colors duration-300
             ${name === "NOMADES" ? "bg-[#1c7f5f] hover:bg-[#1c7f5f]/80 text-white" : 
               name === "ANCIENS" ? "bg-[#e5ab47] hover:bg-[#e5ab47]/80 text-gray-800" : 
+              name === "ÉCOLOGISTES" ? "bg-[#4A9D3D] hover:bg-[#4A9D3D]/80 text-white" :
               "bg-[#c73e3a] hover:bg-[#c73e3a]/80 text-white"}`}
         >
           DÉCOUVRIR
