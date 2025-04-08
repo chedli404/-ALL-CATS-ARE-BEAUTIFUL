@@ -2,7 +2,7 @@
 
 ## GitHub Token
 
-You've provided a GitHub token (`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`). This token should be added to your GitHub repository secrets to enable automated workflows.
+You've provided a GitHub token (`[REDACTED]`). This token should be added to your GitHub repository secrets to enable automated workflows.
 
 ## Setting Up GitHub Actions
 
@@ -49,7 +49,7 @@ jobs:
 3. Click "New repository secret"
 4. Add a new secret with:
    - Name: `GITHUB_TOKEN`
-   - Value: `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`
+   - Value: `[REDACTED]`
 
 ## Optional: AWS Deployment Configuration
 

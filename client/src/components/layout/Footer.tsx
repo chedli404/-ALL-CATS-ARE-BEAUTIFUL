@@ -8,10 +8,8 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-8 md:mb-0">
             <div className="flex items-center justify-center md:justify-start">
-              <div className="w-12 h-12 bg-earth rounded-full flex items-center justify-center mr-4">
-                <span className="font-display text-xl text-gray-900">AC</span>
-              </div>
-              <h3 className="font-display text-2xl text-white">ACAB</h3>
+              
+              <h3 className="font-display text-2xl text-white tracking-widest  " >Kabila</h3>
             </div>
             <p className="text-gray-500 mt-2 text-center md:text-left">All Cats Are Beautiful - L'Héritage</p>
           </div>
@@ -69,8 +67,7 @@ const Footer = () => {
         
         <div className="mt-12 pt-8 border-t border-gray-800">
           <p className="text-gray-600 text-center text-sm">
-            © 2023 ACAB - All Cats Are Beautiful. Tous droits réservés. <br />
-            Projet par Zied Belaifa, Zied Ouerda & Sarra Bdiri.
+            © 2023 ACAB - All Cats Are Beautiful. Tous droits réservés.
           </p>
         </div>
       </div>

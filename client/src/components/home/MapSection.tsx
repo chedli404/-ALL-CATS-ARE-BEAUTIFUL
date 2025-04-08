@@ -24,7 +24,7 @@ const MapSection = () => {
   };
 
   return (
-    <section id="map" className="py-24 bg-earth" ref={ref}>
+    <section id="map" className="py-24 "style={{ backgroundColor: 'rgb(39, 58, 70)' }} ref={ref}>
       <div className="container mx-auto px-4">
         <motion.h2 
           className="font-display text-5xl mb-6 text-center"
@@ -35,7 +35,7 @@ const MapSection = () => {
           CARTOGRAPHIE
         </motion.h2>
         <motion.p 
-          className="text-gray-700 max-w-3xl mx-auto text-center mb-16"
+          className="text-white max-w-3xl mx-auto text-center mb-16"
           variants={fadeIn}
           initial="hidden"
           animate={controls}
@@ -62,7 +62,7 @@ const MapSection = () => {
           >
             <h3 className="font-display text-3xl mb-6">TERRITOIRES ET RESSOURCES</h3>
             
-            <p className="text-gray-700 mb-6">
+            <p className="text-white mb-6">
               Chaque région porte la marque d'une ressource qui a survécu au cataclysme, devenant à la fois une bénédiction et une malédiction pour ceux qui y vivent. D'immenses terres irradiées s'étendent à perte de vue, parcourues de structures déformées par le temps et la radioactivité.
             </p>
             
@@ -71,7 +71,7 @@ const MapSection = () => {
                 <span className="inline-block w-4 h-4 rounded-full bg-[#9C4DC4] mt-1 mr-3"></span>
                 <div>
                   <span className="font-display text-lg">Zone d'Énergie</span>
-                  <p className="text-gray-600 text-sm">Vestiges de centrales électriques et installations énergétiques où l'énergie ancienne continue de circuler.</p>
+                  <p className="text-white text-sm">Vestiges de centrales électriques et installations énergétiques où l'énergie ancienne continue de circuler.</p>
                 </div>
               </li>
               
@@ -79,7 +79,7 @@ const MapSection = () => {
                 <span className="inline-block w-4 h-4 rounded-full bg-[#1C6E5F] mt-1 mr-3"></span>
                 <div>
                   <span className="font-display text-lg">Sanctuaires Verts</span>
-                  <p className="text-gray-600 text-sm">Rares poches de végétation où la nature a repris ses droits, offrant refuge et ressources.</p>
+                  <p className="text-white text-sm">Rares poches de végétation où la nature a repris ses droits, offrant refuge et ressources.</p>
                 </div>
               </li>
               
@@ -87,7 +87,7 @@ const MapSection = () => {
                 <span className="inline-block w-4 h-4 rounded-full bg-[#39C9C9] mt-1 mr-3"></span>
                 <div>
                   <span className="font-display text-lg">Océans Transformés</span>
-                  <p className="text-gray-600 text-sm">Étendues d'eau mutante aux propriétés mystérieuses, aussi dangereuses que prometteuses.</p>
+                  <p className="text-white text-sm">Étendues d'eau mutante aux propriétés mystérieuses, aussi dangereuses que prometteuses.</p>
                 </div>
               </li>
               
@@ -95,13 +95,13 @@ const MapSection = () => {
                 <span className="inline-block w-4 h-4 rounded-full bg-[#C73E3A] mt-1 mr-3"></span>
                 <div>
                   <span className="font-display text-lg">Terres Brûlantes</span>
-                  <p className="text-gray-600 text-sm">Régions où le sol lui-même brûle, alimenté par des tempêtes de suie et d'hydrocarbures.</p>
+                  <p className="text-white text-sm">Régions où le sol lui-même brûle, alimenté par des tempêtes de suie et d'hydrocarbures.</p>
                 </div>
               </li>
             </ul>
             
             <div className="bg-earth-dark/20 p-4 rounded-lg">
-              <p className="text-gray-700 italic text-sm">
+              <p className="text-gray-400 italic text-sm">
                 "Cet univers morcelé est un champ de bataille silencieux, où chaque territoire renferme ses propres règles, ses propres monstres et ses propres espoirs."
               </p>
             </div>

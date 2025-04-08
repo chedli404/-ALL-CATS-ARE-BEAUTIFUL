@@ -25,7 +25,7 @@ const TribesSection = () => {
   };
 
   return (
-    <section id="tribes" className="py-24 bg-gradient-to-b from-earth to-earth-dark" ref={ref}>
+    <section id="tribes" className="py-24" style={{ backgroundColor: 'rgb(39, 58, 70)' }}  ref={ref}>
       <div className="container mx-auto px-4">
         <motion.h2 
           className="font-display text-5xl mb-16 text-center"

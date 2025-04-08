@@ -26,7 +26,7 @@ const WorldSection = () => {
   };
 
   return (
-    <section id="world" className="py-24 bg-earth" ref={ref}>
+    <section id="world" className="py-24" style={{ backgroundColor: 'rgb(20, 36, 45)' }} ref={ref}>
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <motion.h2 
@@ -66,7 +66,7 @@ const WorldSection = () => {
             >
               <div className="relative rounded-lg overflow-hidden shadow-xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1569580719238-50e10f880cc9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                  src=" /attached_assets/katous.png"
                   alt="Post-apocalyptic landscape" 
                   className="w-full h-auto"
                 />

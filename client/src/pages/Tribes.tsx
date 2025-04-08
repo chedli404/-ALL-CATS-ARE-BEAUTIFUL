@@ -74,7 +74,7 @@ const Tribes = () => {
           {/* Background Image with Banner Art */}
           <div className="absolute inset-0 opacity-10 pointer-events-none">
             <img 
-              src="/attached_assets/1.pdf-image-004.jpg" 
+              src="/attached_assets/" 
               alt="ACAB Tribe Banners" 
               className="w-full h-full object-cover object-center"
             />
@@ -109,10 +109,28 @@ const Tribes = () => {
               {/* Main Tribe Banners Section */}
               <div className="relative z-10">
                 <img 
-                  src="/attached_assets/1.pdf-image-004.jpg" 
+                  src="/attached_assets/trib1.jpeg" 
                   alt="ACAB Tribe Banners" 
                   className="w-full max-w-4xl mx-auto rounded-lg shadow-2xl mb-12 md:mb-16"
                 />
+                <div className="relative z-10">
+                  <img 
+                    src="/attached_assets/trib2.jpeg" 
+                    alt="ACAB Tribe Banners" 
+                    className="w-full max-w-4xl mx-auto rounded-lg shadow-2xl mb-12 md:mb-16"
+                  />
+                  <div className="relative z-10">
+                    <img 
+                      src="/attached_assets/trib3.jpeg" 
+                      alt="ACAB Tribe Banners" 
+                      className="w-full max-w-4xl mx-auto rounded-lg shadow-2xl mb-12 md:mb-16"
+                    />
+                    <div className="relative z-10">
+                      <img 
+                        src="/attached_assets/trib4.jpeg" 
+                        alt="ACAB Tribe Banners" 
+                        className="w-full max-w-4xl mx-auto rounded-lg shadow-2xl mb-12 md:mb-16"
+                      />
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 md:mb-24 max-w-5xl mx-auto">
                   {tribes.map((tribe, index) => (
@@ -128,6 +146,11 @@ const Tribes = () => {
                   ))}
                 </div>
               </div>
+                            </div>
+                          </div>
+                        </div>
+                      
+          
               
               {/* Tribe Details Section */}
               <motion.div variants={itemVariants} className="mt-8 mb-16">

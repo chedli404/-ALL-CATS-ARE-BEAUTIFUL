@@ -25,7 +25,7 @@ const Game = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black py-24">
+    <div className="min-h-screen  py-24" style={{ backgroundColor: "rgb(20, 36, 45)" }}>
       <div className="container mx-auto px-4">
         <motion.div
           className="max-w-5xl mx-auto"

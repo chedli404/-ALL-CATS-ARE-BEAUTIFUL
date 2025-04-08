@@ -11,6 +11,7 @@ import Tribes from "@/pages/Tribes";
 import Legends from "@/pages/Legends";
 import Artifacts from "@/pages/Artifacts";
 import NotFound from "@/pages/not-found";
+import world from "@/pages/world";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <main className="flex-grow">
         <Switch>
           <Route path="/" component={Home} />
+          <Route path="/world" component={world} />
           <Route path="/characters" component={Characters} />
           <Route path="/characters/:id" component={CharacterDetail} />
           <Route path="/map" component={Map} />

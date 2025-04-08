@@ -28,7 +28,7 @@ const InteractiveMap = () => {
       <div className="relative">
         {/* Map Base Image */}
         <img 
-          src="/attached_assets/1.pdf-image-017.jpg" 
+          src="/attached_assets/MAP.png" 
           alt="ACAB World Map" 
           className="w-full h-auto"
         />

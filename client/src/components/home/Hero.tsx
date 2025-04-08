@@ -1,32 +1,33 @@
 import { Link } from "wouter";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+
 
 const Hero = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.src = "/attached_assets/9abila.MP4";
-    }
-  }, []);
+
 
   return (
-    <header className="relative h-screen flex items-center justify-center overflow-hidden">
+    <header className="relative h-screen flex items-center justify-center overflow-hidden" style={{ backgroundColor: "rgb(20, 36, 45)" }}>
       <div className="absolute inset-0 z-0">
-        <video 
-          ref={videoRef}
-          autoPlay 
-          loop 
-          muted 
+        <video
+          src="/attached_assets/anim.mp4"
+          
+          autoPlay
+          muted
+          loop
           playsInline
-          className="object-cover w-full h-full opacity-40"
+          className="absolute left-[430px] bottom-[250px] w-[800px] h-50 object-cover "  
+          style={{ filter: "brightness(1.1)" 
+            , transform: "scaleX(1)"
+            , borderRadius: "100%"
+            , opacity: 0.8
+           }}
+          
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-earth-dark/90"></div>
+        
       </div>
-      
-      <motion.div 
+
+      <motion.div
         className="container mx-auto px-4 z-10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -39,7 +40,7 @@ const Hero = () => {
               Le monde n'est plus qu'un écho du passé. Les grandes cités s'effondrent, rongées par le temps et la nature. Mais tout n'a pas disparu. Les chats survivent.
             </p>
           </div>
-          
+
           <div className="md:w-1/2 flex flex-col md:flex-row justify-end items-center space-y-6 md:space-y-0 md:space-x-6">
             <Link href="#world">
               <motion.button
@@ -62,8 +63,8 @@ const Hero = () => {
           </div>
         </div>
       </motion.div>
-      
-      <motion.div 
+
+      <motion.div
         className="absolute bottom-8 left-0 right-0 text-center"
         animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 1.5 }}

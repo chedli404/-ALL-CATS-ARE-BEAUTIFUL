@@ -74,7 +74,7 @@ const Legends = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 py-24">
+    <div className="min-h-screen  py-24" style={{ backgroundColor: "rgb(20, 36, 45)" }}>
       <div className="container mx-auto px-4">
         <motion.div
           variants={containerVariants}

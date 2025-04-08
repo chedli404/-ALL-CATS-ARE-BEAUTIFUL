@@ -18,10 +18,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <div className="w-10 h-10 bg-earth rounded-full flex items-center justify-center mr-3">
-                <span className="font-display text-lg text-gray-900">AC</span>
-              </div>
-              <span className="font-display text-xl text-white">ACAB</span>
+              <span className="font-display text-xl text-white tracking-widest">Kabila</span>
             </Link>
           </div>
           
