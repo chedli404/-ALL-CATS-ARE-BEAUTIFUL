@@ -27,11 +27,11 @@ const GameSection = () => {
   };
 
   return (
-    <section id="game" className="py-24 bg-gradient-to-b from-gray-900 to-black" ref={ref}>
+    <section id="game" className="py-24 " style={{ backgroundColor: 'rgb(35, 35, 35)' }} ref={ref}>
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <motion.h2 
-            className="font-display text-5xl mb-6 text-center text-white"
+            className="font-display text-5xl mb-6 text-center text-[#64afd6]"
             variants={fadeIn}
             initial="hidden"
             animate={controls}

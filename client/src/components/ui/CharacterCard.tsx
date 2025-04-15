@@ -66,7 +66,7 @@ const CharacterCard = ({ character, delay = 0 }: CharacterCardProps) => {
         </div>
       </div>
       
-      <div className="p-6">
+      <div className="p-6 bg-[#568564] rounded-b-xl">
         <div className="flex items-center mb-4">
           <div 
             className="w-12 h-12 rounded-full flex items-center justify-center mr-4" 

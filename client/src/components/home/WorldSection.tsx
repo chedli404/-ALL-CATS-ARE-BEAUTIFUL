@@ -26,11 +26,11 @@ const WorldSection = () => {
   };
 
   return (
-    <section id="world" className="py-24" style={{ backgroundColor: 'rgb(20, 36, 45)' }} ref={ref}>
+    <section id="world" className="py-24" style={{ backgroundColor: 'rgb(35, 35, 35)' }} ref={ref}>
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <motion.h2 
-            className="font-display text-5xl mb-8 text-center"
+            className="font-display text-5xl mb-8 text-center text-[#64afd6]"
             variants={fadeIn}
             initial="hidden"
             animate={controls}
@@ -87,7 +87,7 @@ const WorldSection = () => {
             animate={controls}
             transition={{ delay: 0.6 }}
           >
-            <h3 className="font-display text-3xl mb-6 text-center">CHRONOLOGIE DE L'HÉRITAGE</h3>
+            <h3 className="font-display text-3xl mb-6 text-center text-[#64afd6]">CHRONOLOGIE DE L'HÉRITAGE</h3>
             
             <div className="relative">
               {/* Timeline line */}

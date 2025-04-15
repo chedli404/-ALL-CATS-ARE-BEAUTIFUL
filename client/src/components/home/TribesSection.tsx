@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "framer-motion";
-import TribeBanner from "@/components/ui/TribeBanner";
+import  TribeBanner from "@/components/ui/TribeBanner";
 import { TRIBES_DATA } from "@/lib/constants";
 
 const TribesSection = () => {
@@ -25,10 +25,10 @@ const TribesSection = () => {
   };
 
   return (
-    <section id="tribes" className="py-24" style={{ backgroundColor: 'rgb(39, 58, 70)' }}  ref={ref}>
+    <section id="tribes" className="py-24" style={{ backgroundColor: 'rgb(30, 30, 30)' }}  ref={ref}>
       <div className="container mx-auto px-4">
         <motion.h2 
-          className="font-display text-5xl mb-16 text-center"
+          className="font-display text-5xl mb-16 text-center text-[#64afd6]"
           variants={fadeIn}
           initial="hidden"
           animate={controls}
@@ -65,6 +65,9 @@ const TribesSection = () => {
                 <th scope="col" className="px-6 py-4 text-center text-sm font-display text-white uppercase tracking-wider" style={{ backgroundColor: "#1C6E5F" }}>Nomades</th>
                 <th scope="col" className="px-6 py-4 text-center text-sm font-display text-white uppercase tracking-wider" style={{ backgroundColor: "#E3A947" }}>Anciens</th>
                 <th scope="col" className="px-6 py-4 text-center text-sm font-display text-white uppercase tracking-wider" style={{ backgroundColor: "#C73E3A" }}>Technos</th>
+                <th scope="col" className="px-6 py-4 text-center text-sm font-display text-white uppercase tracking-wider" style={{ backgroundColor: "#4A9D3D" }}>Ecologistes</th>
+                <th scope="col" className="px-6 py-4 text-center text-sm font-display text-white uppercase tracking-wider" style={{ backgroundColor: "#9C4DC4" }}>Mystiques</th>
+                <th scope="col" className="px-6 py-4 text-center text-sm font-display text-white uppercase tracking-wider" style={{ backgroundColor: "#39C9C9" }}>Électriques</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -73,24 +76,47 @@ const TribesSection = () => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Aucun fixe</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Zones vertes</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Anciennes métropoles</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Régions en énergie</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Régions en énergie</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Régions en énergie</td>
+              </tr>
+              <tr>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-gray-100">Relation aux autres</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Aucune</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Aucune</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Aucune</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Aucune</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Aucune</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Aucune</td>
+
+
               </tr>
               <tr>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-gray-100">Relation au passé</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Observation</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Préservation</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Réutilisation</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Renaissance</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Renaissance</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Renaissance</td>
               </tr>
               <tr>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-gray-100">Compétences</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Adaptation, survie</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Sagesse, guérison</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Ingénierie, énergie</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Santé, environnement</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Mysticisme, spiritualité</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Énergie, technologie</td>
               </tr>
               <tr>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-gray-100">Vision d'avenir</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Exploration continue</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Équilibre et tradition</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Progrès technologique</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Écologie et protection</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Éveil spirituel</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Innovation technologique</td>
               </tr>
             </tbody>
           </table>

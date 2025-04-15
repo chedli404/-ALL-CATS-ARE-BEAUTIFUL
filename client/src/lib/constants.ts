@@ -3,11 +3,15 @@ export const TRIBE_COLORS = {
   NOMADES: "#1C6E5F",
   ANCIENS: "#E3A947",
   TECHNOS: "#C73E3A",
+  ECOLOGISTES: "#90EE90",
+  MYSTIQUES: "#9C4DC4",
+  ÉLECTRIQUES: "#BDB298",
 };
 
 // Background colors
 export const BACKGROUND_COLORS = {
   EARTH: "#BDB298",
+  LIGHT:  "#4B4B4B",
   EARTH_DARK: "#8C7F6D",
   ENERGY: "#9C4DC4",
   WATER: "#39C9C9",
@@ -145,7 +149,44 @@ export const TRIBES_DATA = [
       "Maîtrise de l'énergie ancienne"
     ],
     icon: image004
+  },
+  {
+    id: 4,
+    name: "ÉCOLOGISTES",
+    description: "Engagés dans la rééducation et la réintégration de la vie en commun, les Écologistes cherchent à restaurer les territoires et à promouvoir l'équilibre naturel.",
+    color: "#90EE90",
+    strengths: [
+      "Botanique et agriculture",
+      "Réintégration de la nature",
+      "Écologie et conservation"
+    ],
+    icon: image017
+  },
+  {
+    id: 5,
+    name: "MYSTIQUES",
+    description: "Les Mystiques sont les gardiens des traditions anciennes et des rituels. Ils cherchent à comprendre les forces invisibles qui régissent le monde.",
+    color: "#9C4DC4",
+    strengths: [
+      "Rituels et traditions",
+      "Spiritualité et mysticisme",
+      "Interprétation des signes"
+    ],
+    icon: image004
+  },
+  {
+    id: 6,
+    name: "ÉLECTRIQUES",
+    description: "Les Électriques sont fascinés par l'énergie et la technologie. Ils cherchent à comprendre et maîtriser les forces électriques qui parcourent le monde.",
+    color: "#BDB298",
+    strengths: [
+      "Maîtrise de l'énergie électrique",
+      "Technologie avancée",
+      "Ingénierie et innovation"
+    ],
+    icon: image004
   }
+  
 ];
 
 // Character data

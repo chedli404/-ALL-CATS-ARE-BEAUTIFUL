@@ -30,10 +30,10 @@ const CharactersSection = () => {
     : CHARACTERS_DATA.filter(character => character.tribe === filter);
 
   return (
-    <section id="characters" className="py-24 bg-gray-900" ref={ref}>
+    <section id="characters" className="py-24 "style={{ backgroundColor: 'rgb(35, 35, 35)' }} ref={ref}>
       <div className="container mx-auto px-4">
         <motion.h2 
-          className="font-display text-5xl mb-6 text-center text-white"
+          className="font-display text-5xl mb-6 text-center text-white text-[#64afd6]"
           variants={fadeIn}
           initial="hidden"
           animate={controls}
