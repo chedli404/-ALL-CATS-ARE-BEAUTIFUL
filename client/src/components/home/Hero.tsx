@@ -1,75 +1,64 @@
-import { Link } from "wouter";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
-
+import './Style.css';
 
 const Hero = () => {
-
-
   return (
-    <header className="relative h-screen flex items-center justify-center overflow-hidden" style={{ backgroundColor: "rgb(20, 36, 45)" }}>
-      <div className="absolute inset-0 z-0">
-        <video
-          src="/attached_assets/anim.mp4"
-          
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute left-[340px] bottom-[250px] w-[800px] h-50 object-cover "  
-          style={{ filter: "brightness(1.1)" 
-            , transform: "scaleX(1)"
-            , borderRadius: "100%"
-            , opacity: 0.8
-           }}
-          
-        />
-        
+    <header className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 py-16 sm:py-0" style={{ backgroundColor: "rgb(30, 30, 30)" }}>
+      {/* Art vertical line - hide on mobile */}
+      <div className="absolute hidden md:block left-[2%] lg:left-[90px] top-20 h-[200px] w-[2px] bg-gray-700">
+        <h1 className="art">ART <br/> W <br/> 5ONAR</h1>
       </div>
 
+      <div className="absolute hidden md:block left-[8%] lg:left-[90px] top-[500px] h-[200px] w-[2px] bg-gray-700"></div>
+      
       <motion.div
-        className="container mx-auto px-4 z-10"
-        initial={{ opacity: 0, y: 20 }}
+        className="hero-container flex flex-col md:flex-row items-center max-w-7xl w-full md:space-x-12 lg:space-x-16 gap-6 md:gap-0"
+        initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 1 }}
       >
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="md:w-1/2 text-left mb-12 md:mb-0">
-            <h2 className="font-display text-4xl text-white mb-8 tracking-wide -ml-0">ALL CATS ARE BEAUTIFUL</h2>
-            <p className="max-w-xl text-lg text-gray-200 mb-5">
-              Le monde n'est plus qu'un écho du passé. Les grandes cités s'effondrent, rongées par le temps et la nature. Mais tout n'a pas disparu. Les chats survivent.
-            </p>
-          </div>
+        {/* Image - Shows on top for mobile, on right for larger screens */}
+        <motion.div
+          className="hero-video order-first md:order-last w-full md:w-1/2 mb-8 md:mb-0 flex justify-center"
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+        >
+          <img
+            src="/attached_assets/9abila 3d.png"
+            alt="Hero"
+            className="w-full max-w-sm md:max-w-full h-auto rounded-lg shadow-xl"
+            style={{ maxHeight: "50vh", objectFit: "contain" }}
+          />
+        </motion.div>
 
-          <div className="md:w-1/2 flex flex-col md:flex-row justify-end items-center space-y-6 md:space-y-0 md:space-x-6">
-            <Link href="#world">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full md:w-auto bg-technos hover:bg-technos/80 text-white font-display text-xl px-8 py-3 rounded-md transition-colors duration-300"
-              >
-                DÉCOUVRIR L'UNIVERS
-              </motion.button>
-            </Link>
-            <Link href="/characters">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full md:w-auto bg-transparent border-2 border-white text-white hover:bg-white/10 font-display text-xl px-8 py-3 rounded-md transition-colors duration-300"
-              >
-                LES PERSONNAGES
-              </motion.button>
-            </Link>
-          </div>
-        </div>
+        {/* Content - Shows below image on mobile, on left for larger screens */}
+        <motion.div
+          className="hero-content order-last md:order-first w-full md:w-1/2 pr-0 md:pr-12 text-center md:text-left md:pl-8 lg:pl-12"
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+        >
+          <p className="text-base md:text-lg text-gray-200 mb-8 leading-relaxed ">
+          
+Kabila est un média indépendant, né de l'élan d'un collectif de citoyens engagés à révéler les grands bouleversements de notre époque : dérèglement climatique, fractures sociales, conflits invisibles. Nous donnons voix à ce qui dérange, éclaire, éveille — avec la conviction que chaque récit peut devenir une force de transformation.
+
+Dans un monde fragmenté par les clivages et les certitudes, Kabila se veut un espace de convergence et de création, où l'imaginaire rejoint le réel, où les sensibilités s'expriment librement, et où l'engagement prend forme au-delà des mots.
+
+Nous tendons la main à celles et ceux qui imaginent, racontent et façonnent le monde autrement. Ensemble, ouvrons des espaces sensibles et puissants où les récits prennent corps, bousculent, relient. Rejoignez-nous pour faire de la création un acte d'engagement, et de chaque œuvre une passerelle vers un avenir plus juste et plus vivant.ration collective et de transformation sociétale.
+          </p>
+        </motion.div>
       </motion.div>
-
+      
       <motion.div
-        className="absolute bottom-8 left-0 right-0 text-center"
+        className="absolute bottom-8 left-0 right-0 text-center z-10"
         animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 1.5 }}
       >
-        <a href="#world" className="text-white">
+        <a href="#world" className="text-white ">
           <ChevronDown className="h-8 w-8 mx-auto" />
         </a>
       </motion.div>

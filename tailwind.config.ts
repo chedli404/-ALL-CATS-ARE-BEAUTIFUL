@@ -63,7 +63,9 @@ export default {
         },
       },
       fontFamily: {
-        display: ["dm-sans", "sans-serif"],
+        sans: ["dm-sans", "sans-serif"],
+        display: ["Bebas Neue", "cursive"],
+        mono: ["dm-mono", "monospace"],
         
       },
       keyframes: {

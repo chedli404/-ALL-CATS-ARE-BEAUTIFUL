@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import Hero from "@/components/home/Hero";
-import WorldSection from "@/components/home/WorldSection";
-import TribesSection from "@/components/home/TribesSection";
-import CharactersSection from "@/components/home/CharactersSection";
 import MapSection from "@/components/home/MapSection";
 import GameSection from "@/components/home/GameSection";
+import Zied from "@/components/home/Zied";
+import Organisation from "@/components/home/Organisation";
+import Kabila from "@/components/home/Kabila";
+import Introduction from "@/components/home/Introduction";
+import Chronologie from "@/components/home/Chronologie";
 
 const Home = () => {
   // Scroll to section if URL has hash
@@ -22,11 +23,13 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
-      <Hero />
-      <WorldSection />
-      <TribesSection />
-      <CharactersSection />
+    <div className="bg-background-dark min-h-screen">
+      {/* Original layout restored */}
+      <Introduction />
+      <Chronologie />
+      <Kabila />
+      <Zied />
+      <Organisation />
       <MapSection />
       <GameSection />
     </div>

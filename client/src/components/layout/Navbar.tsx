@@ -1,58 +1,219 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
+import { motion, AnimatePresence } from "framer-motion";
 import { NAV_LINKS } from "@/lib/constants";
-import { Menu } from "lucide-react";
-import MobileMenu from "./MobileMenu";
+import { Menu, X } from "lucide-react";
+import logo9abila from "@assets/logo9abila.svg";
+import './logo.css';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [location] = useLocation();
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+
+  // Handle scroll position for visual effects
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const logoRef = useRef<HTMLDivElement>(null);
+
+  // Get tribal color based on hovered navigation link
+  const getNavAccentColor = (href: string) => {
+    switch(href) {
+      case "/tribes":
+        return "#E3A947"; // Anciens - golden
+      case "/characters":
+        return "#1C6E5F"; // Nomades - green
+      case "/map":
+        return "#C73E3A"; // Technos - red
+      case "/legends":
+        return "#9C4DC4"; // Energy - purple
+      case "/world":
+        return "#39C9C9"; // Water - teal
+      default:
+        return "#64afd6"; // Default blue
+    }
+  };
+
+  // Variants for menu items animation
+  const menuItemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (custom: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: custom * 0.1,
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1]
+      }
+    })
+  };
+
   return (
-    <nav className="sticky top-0 bg-black/80 backdrop-blur-md z-50 border-b border-earth/20">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center">
-              <span className="font-display text-xl text-white tracking-widest">Kabila</span>
+    <nav 
+      className={`fixed top-0 w-full z-50 transition-all duration-300 font-display ${
+        scrollPosition > 20 ? "h-[70px] shadow-md" : "h-[90px]"
+      }`} 
+      style={{ 
+        backgroundColor: "rgba(15, 15, 15, 0.95)",
+        backdropFilter: "blur(10px)",
+        borderBottom: "1px solid rgba(100, 100, 100, 0.1)"
+      }}
+    > 
+      <div className="container mx-auto px-4 h-full">
+        <div className="flex items-center justify-between h-full">
+          {/* Logo */}
+          <motion.div 
+            className="flex-shrink-0 w-40 md:w-64 h-full relative overflow-visible" 
+            style={{ zIndex: 100 }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
+          >
+            <Link href="/" className="block h-full">
+              <img
+                src={logo9abila}
+                alt="Kabila Logo"
+                className="absolute w-[400px] h-[150px] -left-[-110px] -top-[30px] md:w-[600px] md:h-[200px] md:-left-[120px] md:-top-[50px] lg:w-[800px] lg:h-[220px] lg:-left-[50px] lg:-top-[60px]"
+              />
             </Link>
-          </div>
+          </motion.div>
           
-          <div className="hidden md:block">
-            <div className="flex items-center space-x-4">
+          {/* Desktop Navigation */}
+          <div className="hidden lg:block relative">
+            <div className="flex items-center space-x-6 xl:space-x-10">
               {NAV_LINKS.map((link) => (
-                <Link 
-                  key={link.href} 
-                  href={link.href}
-                  className={`${
-                    location === link.href 
-                      ? "text-white" 
-                      : "text-gray-300 hover:text-white"
-                  } px-3 py-2 rounded-md text-sm font-medium transition-colors`}
+                <motion.div
+                  key={link.href}
+                  onHoverStart={() => setHoveredLink(link.href)}
+                  onHoverEnd={() => setHoveredLink(null)}
+                  className="relative"
+                  whileHover={{ y: -2 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 15 }}
                 >
-                  {link.label}
-                </Link>
+                  <Link 
+                    href={link.href}
+                    className={`${location === link.href 
+                      ? "text-white font-bold" 
+                      : "text-gray-300 hover:text-white"}
+                      px-3 py-2 font-medium transition-all duration-200 text-sm md:text-base xl:text-lg inline-block`}
+                  >
+                    {link.label}
+                  </Link>
+                  
+                  {/* Animated underline */}
+                  <motion.div 
+                    className="absolute -bottom-1 left-0 h-[2px] rounded-full"
+                    style={{ backgroundColor: getNavAccentColor(link.href) }}
+                    initial={{ width: location === link.href ? "100%" : 0 }}
+                    animate={{ 
+                      width: (location === link.href || hoveredLink === link.href) ? "100%" : 0,
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  />
+                </motion.div>
               ))}
             </div>
           </div>
           
-          <div className="md:hidden">
+          {/* Mobile Navigation Button */}
+          <motion.div 
+            className="lg:hidden"
+            whileTap={{ scale: 0.9 }}
+          >
             <button 
               type="button" 
-              className="text-gray-400 hover:text-white"
+              className="text-gray-400 hover:text-white p-2 rounded-full bg-[rgba(50,50,50,0.3)]"
               onClick={toggleMenu}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
-              <Menu className="h-6 w-6" />
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </button>
-          </div>
+          </motion.div>
         </div>
       </div>
       
-      <MobileMenu isOpen={isMenuOpen} onClose={toggleMenu} />
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            className={`lg:hidden fixed ${scrollPosition > 20 ? 'top-[70px]' : 'top-[90px]'} left-0 w-full bg-[rgb(15,15,15)] border-t border-gray-800 shadow-xl z-40`}
+            style={{ 
+              maxHeight: 'calc(100vh - 90px)',
+              backdropFilter: "blur(10px)",
+            }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+          >
+            <div className="px-4 py-3 space-y-2 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 90px)' }}>
+              {NAV_LINKS.map((link, index) => (
+                <motion.div
+                  key={link.href}
+                  custom={index}
+                  variants={menuItemVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                >
+                  <Link
+                    href={link.href}
+                    className={`block relative overflow-hidden rounded-md text-base md:text-lg font-medium transition-all duration-200 flex items-center`}
+                    onClick={toggleMenu}
+                  >
+                    <motion.div
+                      className="w-full px-4 py-4 z-10 relative"
+                      whileHover={{ x: 5 }}
+                      style={{
+                        color: location === link.href ? "white" : "rgb(209, 213, 219)"
+                      }}
+                    >
+                      {link.label}
+                    </motion.div>
+                    
+                    {/* Background indicator */}
+                    <motion.div 
+                      className="absolute inset-0 z-0"
+                      initial={{ x: "-100%" }}
+                      animate={{ 
+                        x: location === link.href ? 0 : "-100%" 
+                      }}
+                      style={{ 
+                        backgroundColor: getNavAccentColor(link.href),
+                        opacity: 0.15
+                      }}
+                    />
+                    
+                    {/* Left border indicator */}
+                    {location === link.href && (
+                      <motion.div 
+                        className="absolute left-0 top-0 bottom-0 w-1 z-0"
+                        initial={{ height: 0 }}
+                        animate={{ height: "100%" }}
+                        style={{ backgroundColor: getNavAccentColor(link.href) }}
+                      />
+                    )}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };

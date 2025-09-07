@@ -1,8 +1,0 @@
-# Replit Deployment Configuration
-# This overrides settings in .replit for deployment only
-
-run = "PORT=5000 node dist/production.js"
-
-[[ports]]
-localPort = 5000
-externalPort = 80

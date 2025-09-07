@@ -24,10 +24,10 @@ const MapSection = () => {
   };
 
   return (
-    <section id="map" className="py-24 "style={{ backgroundColor: 'rgb(39, 58, 70)' }} ref={ref}>
+    <section id="map" className="py-24 "style={{ backgroundColor: 'rgb(30, 30, 30)' }} ref={ref}>
       <div className="container mx-auto px-4">
         <motion.h2 
-          className="font-display text-5xl mb-6 text-center"
+          className="font-display text-5xl mb-6 text-center text-[#64afd6]"
           variants={fadeIn}
           initial="hidden"
           animate={controls}

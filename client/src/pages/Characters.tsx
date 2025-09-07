@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import CharacterCard from "@/components/ui/CharacterCard";
 import { CHARACTERS_DATA } from "@/lib/constants";
 import { Character } from "@/types";
+import RotatingCards from "@/components/characters/RotatingCards";
+
+// Log for debugging
+console.log('Characters data:', CHARACTERS_DATA);
 
 const Characters = () => {
   const [filter, setFilter] = useState("all");
@@ -15,27 +18,22 @@ const Characters = () => {
     initialData: CHARACTERS_DATA
   });
 
-  const filteredCharacters = characters 
-    ? filter === "all" 
-      ? characters 
-      : characters.filter(character => character.tribe === filter)
-    : [];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
   return (
-    <div className="bg-gray-900 min-h-screen py-24">
+    <div style={{ 
+      backgroundColor: "#1a1a1a", 
+      minHeight: "100vh",
+      position: "relative",
+      paddingTop: "2rem",
+      paddingBottom: "6rem"
+    }}>
       <div className="container mx-auto px-4">
         <motion.h1 
-          className="font-display text-5xl mb-6 text-center text-white"
+          className="text-5xl mb-4 text-center"
+          style={{ 
+            color: "#64afd6", 
+            fontFamily: '"Nunito Sans", sans-serif',
+            fontWeight: 600 
+          }}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -47,6 +45,7 @@ const Characters = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
+          style={{ fontFamily: '"Nunito Sans", sans-serif' }}
         >
           Découvrez les chats qui survivent dans ce monde post-apocalyptique, chacun avec son histoire et ses motivations uniques.
         </motion.p>
@@ -59,66 +58,75 @@ const Characters = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
         >
           <button 
-            className={`px-4 py-2 rounded-full font-display transition-colors ${
+            className={`px-4 py-2 rounded-full transition-colors ${
               filter === "all" 
                 ? "bg-white text-gray-900" 
                 : "bg-white/20 text-white hover:bg-white/30"
             }`}
             onClick={() => setFilter("all")}
+            style={{ fontFamily: '"Nunito Sans", sans-serif' }}
           >
             Tous
           </button>
           <button 
-            className={`px-4 py-2 rounded-full font-display transition-colors ${
+            className={`px-4 py-2 rounded-full transition-colors ${
               filter === "NOMADES" 
                 ? "bg-[#1C6E5F] text-white" 
                 : "bg-[#1C6E5F]/20 text-[#1C6E5F] border border-[#1C6E5F] hover:bg-[#1C6E5F] hover:text-white"
             }`}
             onClick={() => setFilter("NOMADES")}
+            style={{ fontFamily: '"Nunito Sans", sans-serif' }}
           >
             Nomades
           </button>
           <button 
-            className={`px-4 py-2 rounded-full font-display transition-colors ${
+            className={`px-4 py-2 rounded-full transition-colors ${
               filter === "ANCIENS" 
                 ? "bg-[#E3A947] text-white" 
                 : "bg-[#E3A947]/20 text-[#E3A947] border border-[#E3A947] hover:bg-[#E3A947] hover:text-white"
             }`}
             onClick={() => setFilter("ANCIENS")}
+            style={{ fontFamily: '"Nunito Sans", sans-serif' }}
           >
             Anciens
           </button>
           <button 
-            className={`px-4 py-2 rounded-full font-display transition-colors ${
+            className={`px-4 py-2 rounded-full transition-colors ${
               filter === "TECHNOS" 
                 ? "bg-[#C73E3A] text-white" 
                 : "bg-[#C73E3A]/20 text-[#C73E3A] border border-[#C73E3A] hover:bg-[#C73E3A] hover:text-white"
             }`}
             onClick={() => setFilter("TECHNOS")}
+            style={{ fontFamily: '"Nunito Sans", sans-serif' }}
           >
             Technos
+          </button>
+          <button 
+            className={`px-4 py-2 rounded-full transition-colors ${
+              filter === "ÉCOLOGISTES" 
+                ? "bg-[#4A9D3D] text-white" 
+                : "bg-[#4A9D3D]/20 text-[#4A9D3D] border border-[#4A9D3D] hover:bg-[#4A9D3D] hover:text-white"
+            }`}
+            onClick={() => setFilter("ÉCOLOGISTES")}
+            style={{ fontFamily: '"Nunito Sans", sans-serif' }}
+          >
+            Écologistes
           </button>
         </motion.div>
         
         {isLoading ? (
           <div className="text-center py-12">
             <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
-            <p className="text-white mt-4">Chargement des personnages...</p>
+            <p className="text-white mt-4" style={{ fontFamily: '"Nunito Sans", sans-serif' }}>Chargement des personnages...</p>
           </div>
         ) : (
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="min-h-[80vh] relative"
           >
-            {filteredCharacters.map((character, index) => (
-              <CharacterCard 
-                key={character.id}
-                character={character}
-                delay={0.1 * index}
-              />
-            ))}
+            <RotatingCards characters={characters || []} filter={filter} />
           </motion.div>
         )}
       </div>

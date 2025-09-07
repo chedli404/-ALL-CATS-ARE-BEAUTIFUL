@@ -7,7 +7,7 @@ import { Character } from "@/types";
 
 const CharacterDetail = () => {
   const { id } = useParams();
-  const characterId = parseInt(id);
+  const characterId = parseInt(id ?? "0");
 
   // In a real implementation, this would fetch from the API
   const { data: character, isLoading } = useQuery<Character>({

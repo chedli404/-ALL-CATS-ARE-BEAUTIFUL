@@ -1,6 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary: #ff6b35; /* Vivid orange - primary accent color */
+  --secondary: #2ec4b6; /* Teal - secondary accent */
+  --tertiary: #9656a1; /* Purple - tertiary accent */
+  --background-dark: #121212; /* Nearly black background */
+  --background-medium: #1a1a1a; /* Slightly lighter background */
+  --text-light: #f5f5f5; /* Light text */
+  --text-dim: #b0b0b0; /* Dimmed text */
+  --nomade: #2ec4b6; /* Nomade tribe color - teal */
+  --ancien: #ffbf65; /* Ancien tribe color - golden */
+  --techno: #ff6b35; /* Techno tribe color - orange */
+  --ecologiste: #95de64; /* Ecologiste tribe color - green */
+  --mystique: #9656a1; /* Mystique tribe color - purple */
+  --electrique: #4fc3f7; /* Electrique tribe color - blue */
+  
+  /* Aliases for Tailwind classes */
+  --nomades: var(--nomade);
+  --anciens: var(--ancien);
+  --technos: var(--techno);
+  --ecologistes: var(--ecologiste);
+  --mystiques: var(--mystique);
+  --electriques: var(--electrique);
+  --energy: var(--mystique);
+  --glow-shadow: 0 0 15px rgba(255, 107, 53, 0.5); /* Orange glow shadow */
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Add padding to body to account for fixed navbar */
+body {
+  padding-top: 80px; /* Same as navbar height */
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--background-dark);
+  color: var(--text-light);
+  font-family: 'Inter', sans-serif;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* Base gradient background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 70% 90%, rgba(255, 107, 53, 0.08), transparent 30%),
+    radial-gradient(circle at 30% 20%, rgba(46, 196, 182, 0.08), transparent 30%),
+    radial-gradient(circle at 50% 50%, rgba(150, 86, 161, 0.05), transparent 40%),
+    linear-gradient(to bottom, rgba(18, 18, 18, 1), rgba(26, 26, 26, 0.8));
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Grid background effect */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+/* Media query for adjusting padding on scroll */
+@media screen and (max-width: 768px) {
+  body {
+    padding-top: 70px;
+  }
+}
+
+/* Animated particle background */
+@keyframes float {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(5deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0.7; transform: scale(1); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(26, 26, 26, 0.95);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--primary), var(--secondary));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Typography classes */
+.heading-display {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.heading-section {
+  font-family: 'Kanit', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.body-text {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.7;
+}
+
+/* Custom utility classes */
+.text-gradient {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% auto;
+  animation: gradientShift 8s ease infinite;
+}
+
+.bg-glass {
+  background: rgba(26, 26, 26, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.glow-shadow {
+  box-shadow: var(--glow-shadow);
+}
+
+/* 3D Card Styles */
+.perspective {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotateY-180 {
+  transform: rotateY(180deg);
+}
+
+.section-container {
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 1rem;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  margin: 2rem 0;
+  opacity: 0.5;
+}
+
+.tribe-glow {
+  position: relative;
+}
+
+.tribe-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.7;
+}
 
 @layer base {
   :root {
@@ -173,7 +389,7 @@
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
   }
   .font-display {
-    font-family: 'dm-sans', sans-serif;
+    font-family: "Nova Flat", system-ui;
     font-weight: 200;
  }
 
