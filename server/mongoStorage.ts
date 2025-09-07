@@ -6,6 +6,7 @@ import {
   UserType, CharacterType, TribeType, TerritoryType, GameCardType,
   PollType, VoteOptionType, VoteType
 } from '../shared/mongoSchema';
+import bcrypt from 'bcryptjs';
 
 // MongoDB connection
 const connectMongoDB = async (connectionString: string) => {
@@ -73,16 +74,32 @@ export class MongoStorage implements IStorage {
   
   // User operations
   async getUser(id: string): Promise<UserType | null> {
-    return await User.findById(id);
+    const user = await User.findById(id);
+    if (!user) return null;
+    return {
+      ...user.toObject(),
+      displayName: user.displayName || undefined
+    } as unknown as UserType;
   }
   
   async getUserByUsername(username: string): Promise<UserType | null> {
-    return await User.findOne({ username });
+    const user = await User.findOne({ username });
+    if (!user) return null;
+    return {
+      ...user.toObject(),
+      displayName: user.displayName || undefined
+    } as unknown as UserType;
   }
   
   async createUser(user: InsertUser): Promise<UserType> {
-    const newUser = new User(user);
-    return await newUser.save();
+    // Hash the password before saving
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    const newUser = new User({ ...user, password: hashedPassword });
+    const savedUser = await newUser.save();
+    return {
+      ...savedUser.toObject(),
+      displayName: savedUser.displayName || undefined
+    } as unknown as UserType;
   }
   
   // Character operations
@@ -138,7 +155,11 @@ export class MongoStorage implements IStorage {
   
   async createGameCard(gameCard: InsertGameCard): Promise<GameCardType> {
     const newGameCard = new GameCard(gameCard);
-    return await newGameCard.save();
+    const savedGameCard = await newGameCard.save();
+    return {
+      ...savedGameCard.toObject(),
+      tribe: savedGameCard.tribe || undefined
+    } as unknown as GameCardType;
   }
   
   // Voting system operations
@@ -152,7 +173,11 @@ export class MongoStorage implements IStorage {
   
   async createPoll(poll: InsertPoll): Promise<PollType> {
     const newPoll = new Poll(poll);
-    return await newPoll.save();
+    const savedPoll = await newPoll.save();
+    return {
+      ...savedPoll.toObject(),
+      expiresAt: savedPoll.expiresAt || undefined
+    } as unknown as PollType;
   }
   
   async getPollOptions(pollId: string): Promise<VoteOptionType[]> {
@@ -161,12 +186,21 @@ export class MongoStorage implements IStorage {
   
   async createVoteOption(option: InsertVoteOption): Promise<VoteOptionType> {
     const newVoteOption = new VoteOption(option);
-    return await newVoteOption.save();
+    const savedVoteOption = await newVoteOption.save();
+    return {
+      ...savedVoteOption.toObject(),
+      pollId: savedVoteOption.pollId.toString()
+    } as unknown as VoteOptionType;
   }
   
   async createVote(vote: InsertVote): Promise<VoteType> {
     const newVote = new Vote(vote);
-    return await newVote.save();
+    const savedVote = await newVote.save();
+    return {
+      ...savedVote.toObject(),
+      userId: savedVote.userId.toString(),
+      optionId: savedVote.optionId.toString()
+    } as unknown as VoteType;
   }
   
   async getVotesForPoll(pollId: string): Promise<VoteType[]> {
@@ -351,7 +385,9 @@ export class MongoStorage implements IStorage {
 }
 
 // Create storage instance with connection string
-const MONGO_URI = 'mongodb+srv://chedlifrini:Ht9LRz0E2qXN8skP@cluster0.amsc9.mongodb.net/9abila';
+import dotenv from 'dotenv';
+dotenv.config();
+const MONGO_URI = process.env.MONGO_URI || '';
 export const storage = new MongoStorage(MONGO_URI);
 
 // For backward compatibility: MemStorage still available but unused

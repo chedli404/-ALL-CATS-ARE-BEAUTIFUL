@@ -14,6 +14,53 @@ import {
 } from "../shared/mongoSchema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // User registration
+  app.post("/api/register", async (req, res) => {
+    try {
+      const userData = insertUserSchema.parse(req.body);
+      // Check if username or email already exists
+      const existingUser = await storage.getUserByUsername(userData.username);
+      if (existingUser) {
+        return res.status(409).json({ message: "Username already taken" });
+      }
+      // You may also want to check for email uniqueness
+      const emailUser = await storage.getUserByUsername(userData.email);
+      if (emailUser) {
+        return res.status(409).json({ message: "Email already registered" });
+      }
+      const newUser = await storage.createUser(userData);
+      res.status(201).json({ id: newUser._id, username: newUser.username, email: newUser.email });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid user data", errors: error.errors });
+      }
+      res.status(500).json({ message: "Failed to register user" });
+    }
+  });
+
+  // User login
+  app.post("/api/login", async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      if (!username || !password) {
+        return res.status(400).json({ message: "Username and password required" });
+      }
+      const user = await storage.getUserByUsername(username);
+      if (!user) {
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+      // Compare password
+      const bcrypt = require('bcryptjs');
+      const valid = await bcrypt.compare(password, user.password);
+      if (!valid) {
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+      // For demo: just return user info (do not use in production)
+      res.json({ id: user._id, username: user.username, email: user.email });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to login" });
+    }
+  });
   // Characters routes
   app.get("/api/characters", async (req, res) => {
     try {
