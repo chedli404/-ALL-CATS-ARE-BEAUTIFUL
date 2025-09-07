@@ -351,8 +351,9 @@ export class MongoStorage implements IStorage {
 }
 
 // Create storage instance with connection string
-const MONGO_URI = 'mongodb+srv://chedlifrini:Ht9LRz0E2qXN8skP@cluster0.amsc9.mongodb.net/9abila';
-export const storage = new MongoStorage(MONGO_URI);
+import dotenv from 'dotenv';
+dotenv.config();
+const MONGO_URI = process.env.MONGO_URI || '';export const storage = new MongoStorage(MONGO_URI);
 
 // For backward compatibility: MemStorage still available but unused
 export class MemStorage implements IStorage {
