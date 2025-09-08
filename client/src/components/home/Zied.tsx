@@ -38,7 +38,7 @@ function Zied() {
                 <div className="absolute -inset-2 rounded-full border-4 border-[#64afd6]/20" style={{animation: 'spin 3s linear infinite'}}></div>
                 <div className="absolute -inset-4 rounded-full border border-[#64afd6]/20" style={{animation: 'spin 4s linear infinite'}}></div>
                 <img 
-                  src="/attached_assets/zied.png" 
+                  src="/attached_assets/zied.png?v=2" 
                   alt="Zied"
                   className="w-128 h-128 lg:w-144 lg:h-144 object-center rounded-full   z-50 relative -m-24 -ml-4 -mt-4"
                 />

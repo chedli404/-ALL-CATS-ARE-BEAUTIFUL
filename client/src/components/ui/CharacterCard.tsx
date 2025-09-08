@@ -92,7 +92,7 @@ const CharacterCard = ({ character, delay = 0 }: CharacterCardProps) => {
               </span>
             ))}
           </div>
-          <Link href={`/characters/${character.id}`}>
+          <Link href={`/characters/${character._id || character.id}`}>
             <button 
               className="text-white font-display"
               style={{ color: character.tribeColor }}

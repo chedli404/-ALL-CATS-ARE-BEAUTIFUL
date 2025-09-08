@@ -7,13 +7,14 @@ import { Character } from "@/types";
 
 const CharacterDetail = () => {
   const { id } = useParams();
-  const characterId = parseInt(id ?? "0");
 
-  // In a real implementation, this would fetch from the API
   const { data: character, isLoading } = useQuery<Character>({
-    queryKey: [`/api/characters/${characterId}`],
-    // Using mock data for now
-    initialData: CHARACTERS_DATA.find(c => c.id === characterId)
+    queryKey: [`/api/characters/${id}`],
+    queryFn: async () => {
+      const res = await fetch(`/api/characters/${id}`);
+      if (!res.ok) throw new Error('Character not found');
+      return res.json();
+    }
   });
 
   const renderTribeIcon = (tribe: string) => {

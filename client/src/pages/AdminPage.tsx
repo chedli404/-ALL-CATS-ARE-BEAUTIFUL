@@ -473,10 +473,19 @@ export default function AdminPage() {
                     <p className="text-gray-300 text-sm">{character.tribe}</p>
                     <p className="text-gray-400 text-xs mt-2">{character.description.substring(0, 100)}...</p>
                     <div className="flex space-x-2 mt-3">
-                      <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">
+                      <button 
+                        onClick={() => {
+                          setEditingCharacter(character);
+                          setShowCharacterModal(true);
+                        }}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm"
+                      >
                         Edit
                       </button>
-                      <button className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">
+                      <button 
+                        onClick={() => deleteCharacter(character._id)}
+                        className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
+                      >
                         Delete
                       </button>
                     </div>

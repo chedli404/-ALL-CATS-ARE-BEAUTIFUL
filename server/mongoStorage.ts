@@ -192,8 +192,20 @@ export class MongoStorage implements IStorage {
   }
   
   async createCharacter(character: InsertCharacter): Promise<CharacterType> {
+    console.log('About to save character to MongoDB:', character);
     const newCharacter = new Character(character);
-    return await newCharacter.save();
+    const saved = await newCharacter.save();
+    console.log('Character saved to MongoDB with ID:', saved._id);
+    
+    // Verify it was actually saved
+    const verification = await Character.findById(saved._id);
+    console.log('Verification - character found in DB:', verification ? 'YES' : 'NO');
+    
+    // Also check total count
+    const totalCount = await Character.countDocuments();
+    console.log('Total characters in database:', totalCount);
+    
+    return saved;
   }
   
   // Tribe operations

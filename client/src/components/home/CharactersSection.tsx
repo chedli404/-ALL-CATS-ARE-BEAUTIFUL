@@ -89,31 +89,31 @@ const CharactersSection = () => {
           </button>
           <button 
             className={`px-4 py-2 rounded-full font-display transition-colors ${
-              filter === "NOMADES" 
+              filter === "Nomades" 
                 ? "bg-[#1C6E5F] text-white" 
                 : "bg-[#1C6E5F]/20 text-[#1C6E5F] border border-[#1C6E5F] hover:bg-[#1C6E5F] hover:text-white"
             }`}
-            onClick={() => setFilter("NOMADES")}
+            onClick={() => setFilter("Nomades")}
           >
             Nomades
           </button>
           <button 
             className={`px-4 py-2 rounded-full font-display transition-colors ${
-              filter === "ANCIENS" 
+              filter === "Anciens" 
                 ? "bg-[#E3A947] text-white" 
                 : "bg-[#E3A947]/20 text-[#E3A947] border border-[#E3A947] hover:bg-[#E3A947] hover:text-white"
             }`}
-            onClick={() => setFilter("ANCIENS")}
+            onClick={() => setFilter("Anciens")}
           >
             Anciens
           </button>
           <button 
             className={`px-4 py-2 rounded-full font-display transition-colors ${
-              filter === "TECHNOS" 
+              filter === "Technos" 
                 ? "bg-[#C73E3A] text-white" 
                 : "bg-[#C73E3A]/20 text-[#C73E3A] border border-[#C73E3A] hover:bg-[#C73E3A] hover:text-white"
             }`}
-            onClick={() => setFilter("TECHNOS")}
+            onClick={() => setFilter("Technos")}
           >
             Technos
           </button>

@@ -277,10 +277,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(201).json(character);
     } catch (error) {
       console.error('Character creation error:', error);
-      res.status(500).json({ 
-        error: 'Failed to create character', 
-        details: typeof error === 'object' && error !== null && 'message' in error ? (error as any).message : String(error) 
-      });
+      console.error('Full error object:', error);
+      res.status(500).json({ error: 'Failed to create character' });
     }
   });
 

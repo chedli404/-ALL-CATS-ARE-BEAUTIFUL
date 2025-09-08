@@ -11,11 +11,20 @@ console.log('Characters data:', CHARACTERS_DATA);
 const Characters = () => {
   const [filter, setFilter] = useState("all");
 
-  // In a real implementation, this would be replaced with the API call
-  const { data: characters, isLoading } = useQuery<Character[]>({
-    queryKey: ['/api/characters'],
-    // Using mock data for now
-    initialData: CHARACTERS_DATA
+  const { data: characters, isLoading, refetch } = useQuery<Character[]>({
+    queryKey: ['characters', Date.now()],
+    queryFn: async () => {
+      console.log('Fetching characters from API...');
+      const res = await fetch('/api/characters?' + Date.now());
+      if (!res.ok) throw new Error('Failed to fetch characters');
+      const data = await res.json();
+      console.log('Characters received from API:', data);
+      return data;
+    },
+    staleTime: 0,
+    cacheTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true
   });
 
   return (
@@ -70,33 +79,33 @@ const Characters = () => {
           </button>
           <button 
             className={`px-4 py-2 rounded-full transition-colors ${
-              filter === "NOMADES" 
+              filter === "Nomades" 
                 ? "bg-[#1C6E5F] text-white" 
                 : "bg-[#1C6E5F]/20 text-[#1C6E5F] border border-[#1C6E5F] hover:bg-[#1C6E5F] hover:text-white"
             }`}
-            onClick={() => setFilter("NOMADES")}
+            onClick={() => setFilter("Nomades")}
             style={{ fontFamily: '"Nunito Sans", sans-serif' }}
           >
             Nomades
           </button>
           <button 
             className={`px-4 py-2 rounded-full transition-colors ${
-              filter === "ANCIENS" 
+              filter === "Anciens" 
                 ? "bg-[#E3A947] text-white" 
                 : "bg-[#E3A947]/20 text-[#E3A947] border border-[#E3A947] hover:bg-[#E3A947] hover:text-white"
             }`}
-            onClick={() => setFilter("ANCIENS")}
+            onClick={() => setFilter("Anciens")}
             style={{ fontFamily: '"Nunito Sans", sans-serif' }}
           >
             Anciens
           </button>
           <button 
             className={`px-4 py-2 rounded-full transition-colors ${
-              filter === "TECHNOS" 
+              filter === "Technos" 
                 ? "bg-[#C73E3A] text-white" 
                 : "bg-[#C73E3A]/20 text-[#C73E3A] border border-[#C73E3A] hover:bg-[#C73E3A] hover:text-white"
             }`}
-            onClick={() => setFilter("TECHNOS")}
+            onClick={() => setFilter("Technos")}
             style={{ fontFamily: '"Nunito Sans", sans-serif' }}
           >
             Technos
@@ -126,6 +135,7 @@ const Characters = () => {
             transition={{ duration: 0.8 }}
             className="min-h-[80vh] relative"
           >
+            {console.log('Characters data:', characters)}
             <RotatingCards characters={characters || []} filter={filter} />
           </motion.div>
         )}

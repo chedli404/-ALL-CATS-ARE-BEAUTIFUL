@@ -11,17 +11,17 @@ interface RotatingCardsProps {
 
 const getTribeClass = (tribe: string) => {
   switch(tribe) {
-    case 'NOMADES':
+    case 'Nomades':
       return 'nomades';
-    case 'ANCIENS':
+    case 'Anciens':
       return 'traditionnalistes';
-    case 'TECHNOS':
+    case 'Technos':
       return 'technologistes';
-    case 'ÉCOLOGISTES':
+    case 'Écologistes':
       return 'ecologistes';
-    case 'MYSTIQUES':
+    case 'Mystiques':
       return 'mystiques';
-    case 'ÉLECTRIQUES':
+    case 'Électriques':
       return 'electriques';
     default:
       return 'nomades';

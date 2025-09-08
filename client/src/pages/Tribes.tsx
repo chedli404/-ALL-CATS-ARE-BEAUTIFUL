@@ -12,10 +12,13 @@ const Tribes = () => {
   const isSection3InView = useInView(section3Ref, { once: false, amount: 0.2 });
 
   const [tribes, setTribes] = useState([]);
+  const [characters, setCharacters] = useState([]);
+  const [selectedTribe, setSelectedTribe] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchTribes();
+    fetchCharacters();
   }, []);
 
   const fetchTribes = async () => {
@@ -47,6 +50,18 @@ const Tribes = () => {
       console.error('Failed to fetch tribes:', error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const fetchCharacters = async () => {
+    try {
+      const res = await fetch('/api/characters');
+      if (res.ok) {
+        const data = await res.json();
+        setCharacters(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch characters:', error);
     }
   };
 
@@ -92,18 +107,49 @@ const Tribes = () => {
                 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 md:mb-24 max-w-5xl mx-auto">
                 {tribes.map((tribe, index) => (
-                  <TribeBanner 
-                    key={tribe._id} 
-                    name={tribe.name}
-                    description={tribe.description}
-                    color={tribe.color}
-                    strengths={tribe.strengths}
-                    icon={tribe.icon}
-                    image={tribe.image}
-                    index={index}
-                  />
+                  <div key={tribe._id} onClick={() => { console.log('Clicked tribe:', tribe.name); setSelectedTribe(selectedTribe === tribe.name ? '' : tribe.name); }} className="cursor-pointer">
+                    <TribeBanner 
+                      name={tribe.name}
+                      description={tribe.description}
+                      color={tribe.color}
+                      strengths={tribe.strengths}
+                      icon={tribe.icon}
+                      image={tribe.image}
+                      index={index}
+                    />
+                  </div>
                 ))}
               </div>
+              
+              {/* Characters Section */}
+              {selectedTribe && (
+                <div className="mt-12">
+                  <h3 className="text-2xl font-bold text-white mb-6 text-center">
+                    Personnages de la tribu {selectedTribe}
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {characters.filter(char => char.tribe === selectedTribe).map((character) => (
+                      <div key={character._id} className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                        {character.image && (
+                          <img src={character.image} alt={character.name} className="w-full h-48 object-cover rounded mb-4" />
+                        )}
+                        <h4 className="text-xl font-semibold text-white mb-2">{character.name}</h4>
+                        <p className="text-gray-300 mb-3">{character.description}</p>
+                        <div className="flex flex-wrap gap-2">
+                          {character.traits?.map((trait, index) => (
+                            <span key={index} className="px-2 py-1 bg-gray-700 text-gray-300 rounded text-sm">
+                              {trait}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  {characters.filter(char => char.tribe === selectedTribe).length === 0 && (
+                    <p className="text-center text-gray-400 mt-6">Aucun personnage trouvé pour cette tribu.</p>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>

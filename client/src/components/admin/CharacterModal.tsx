@@ -126,14 +126,25 @@ export default function CharacterModal({ isOpen, onClose, onSave, character }: C
           </div>
           
           <div>
-            <label className="block text-gray-300 text-sm mb-1">Image URL</label>
+            <label className="block text-gray-300 text-sm mb-1">Image</label>
             <input
-              type="url"
-              value={formData.image}
-              onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-              className="w-full bg-gray-700 text-white px-3 py-2 rounded"
-              placeholder="https://example.com/image.jpg"
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onload = (e) => {
+                    setFormData({ ...formData, image: e.target?.result as string });
+                  };
+                  reader.readAsDataURL(file);
+                }
+              }}
+              className="w-full bg-gray-700 text-white px-3 py-2 rounded file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-gray-600 file:text-white"
             />
+            {formData.image && (
+              <img src={formData.image} alt="Preview" className="mt-2 w-20 h-20 object-cover rounded" />
+            )}
           </div>
           
           <div className="flex space-x-3 pt-4">
