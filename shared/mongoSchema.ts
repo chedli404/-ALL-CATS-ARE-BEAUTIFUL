@@ -27,7 +27,8 @@ const tribeSchema = new mongoose.Schema({
   description: { type: String, required: true },
   color: { type: String, required: true },
   strengths: [String],
-  icon: { type: String, required: true }
+  icon: { type: String, required: true },
+  image: { type: String }
 });
 
 // Territory Schema
@@ -96,7 +97,8 @@ export const insertTribeSchema = z.object({
   description: z.string(),
   color: z.string(),
   strengths: z.array(z.string()),
-  icon: z.string()
+  icon: z.string(),
+  image: z.string().optional()
 });
 
 export const insertTerritorySchema = z.object({
@@ -154,7 +156,16 @@ export const Territory = mongoose.model('Territory', territorySchema);
 export const GameCard = mongoose.model('GameCard', gameCardSchema);
 export const Poll = mongoose.model('Poll', pollSchema);
 export const VoteOption = mongoose.model('VoteOption', voteOptionSchema);
+// Tribe Image Schema
+const tribeImageSchema = new mongoose.Schema({
+  tribeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Tribe', required: true },
+  tribeName: { type: String, required: true },
+  imageData: { type: String, required: true },
+  uploadedAt: { type: Date, default: Date.now }
+});
+
 export const Vote = mongoose.model('Vote', voteSchema);
+export const TribeImage = mongoose.model('TribeImage', tribeImageSchema);
 
 // Export Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -178,5 +189,14 @@ export type PollType = mongoose.Document & InsertPoll;
 export type InsertVoteOption = z.infer<typeof insertVoteOptionSchema>;
 export type VoteOptionType = mongoose.Document & InsertVoteOption;
 
+export const insertTribeImageSchema = z.object({
+  tribeId: z.string(),
+  tribeName: z.string(),
+  imageData: z.string()
+});
+
 export type InsertVote = z.infer<typeof insertVoteSchema>;
 export type VoteType = mongoose.Document & InsertVote;
+
+export type InsertTribeImage = z.infer<typeof insertTribeImageSchema>;
+export type TribeImageType = mongoose.Document & InsertTribeImage;

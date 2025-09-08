@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { 
-  User, Character, Tribe, Territory, GameCard, Poll, VoteOption, Vote,
+  User, Character, Tribe, Territory, GameCard, Poll, VoteOption, Vote, TribeImage,
   InsertUser, InsertCharacter, InsertTribe, InsertTerritory, 
   InsertGameCard, InsertPoll, InsertVoteOption, InsertVote,
   UserType, CharacterType, TribeType, TerritoryType, GameCardType,
@@ -28,6 +28,12 @@ export interface IStorage {
   updateUserLevel(id: string, level: number): Promise<void>;
   deleteUser(id: string): Promise<void>;
   deleteCharacter(id: string): Promise<void>;
+  updateCharacter(id: string, data: any): Promise<CharacterType>;
+  updateTribe(id: string, data: any): Promise<TribeType>;
+  deleteTribe(id: string): Promise<void>;
+  createTribeImage(tribeId: string, tribeName: string, imageData: string): Promise<any>;
+  getTribeImages(): Promise<any[]>;
+  deleteTribeImage(tribeId: string): Promise<void>;
   migrateUsersLevel(): Promise<void>;
   createUser(user: InsertUser): Promise<UserType>;
   
@@ -110,6 +116,39 @@ export class MongoStorage implements IStorage {
   
   async deleteCharacter(id: string): Promise<void> {
     await Character.findByIdAndDelete(id);
+  }
+  
+  async updateCharacter(id: string, data: any): Promise<CharacterType> {
+    const character = await Character.findByIdAndUpdate(id, data, { new: true });
+    if (!character) throw new Error('Character not found');
+    return character;
+  }
+  
+  async updateTribe(id: string, data: any): Promise<TribeType> {
+    console.log('Updating tribe in DB with data:', data);
+    const tribe = await Tribe.findByIdAndUpdate(id, data, { new: true });
+    if (!tribe) throw new Error('Tribe not found');
+    console.log('Updated tribe from DB:', tribe);
+    return tribe;
+  }
+  
+  async deleteTribe(id: string): Promise<void> {
+    await Tribe.findByIdAndDelete(id);
+    await TribeImage.deleteMany({ tribeId: id });
+  }
+  
+  async createTribeImage(tribeId: string, tribeName: string, imageData: string): Promise<any> {
+    await TribeImage.findOneAndDelete({ tribeId });
+    const tribeImage = new TribeImage({ tribeId, tribeName, imageData });
+    return await tribeImage.save();
+  }
+  
+  async getTribeImages(): Promise<any[]> {
+    return await TribeImage.find();
+  }
+  
+  async deleteTribeImage(tribeId: string): Promise<void> {
+    await TribeImage.findOneAndDelete({ tribeId });
   }
   
   async migrateUsersLevel(): Promise<void> {
@@ -439,6 +478,12 @@ export class MemStorage implements IStorage {
   async updateUserLevel(id: string, level: number): Promise<void> { return; }
   async deleteUser(id: string): Promise<void> { return; }
   async deleteCharacter(id: string): Promise<void> { return; }
+  async updateCharacter(id: string, data: any): Promise<any> { return {}; }
+  async updateTribe(id: string, data: any): Promise<any> { return {}; }
+  async deleteTribe(id: string): Promise<void> { return; }
+  async createTribeImage(tribeId: string, tribeName: string, imageData: string): Promise<any> { return {}; }
+  async getTribeImages(): Promise<any[]> { return []; }
+  async deleteTribeImage(tribeId: string): Promise<void> { return; }
   async migrateUsersLevel(): Promise<void> { return; }
   async createUser(user: InsertUser): Promise<any> { return {}; }
   async getCharacter(id: string): Promise<any> { return null; }

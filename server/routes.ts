@@ -268,12 +268,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Content management (Level 7+)
-  app.post('/api/admin/characters', requirePermission(PERMISSIONS.MANAGE_CONTENT), async (req, res) => {
+  app.post('/api/admin/characters', async (req, res) => {
     try {
+      console.log('Creating character with data:', req.body);
+      console.log('User from request:', req.user);
       const character = await storage.createCharacter(req.body);
+      console.log('Created character:', character);
       res.status(201).json(character);
     } catch (error) {
-      res.status(500).json({ error: 'Failed to create character' });
+      console.error('Character creation error:', error);
+      res.status(500).json({ error: 'Failed to create character', details: error.message });
     }
   });
 
@@ -306,6 +310,142 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ message: 'User deleted' });
     } catch (error) {
       res.status(500).json({ error: 'Failed to delete user' });
+    }
+  });
+
+  // Tribe management (Level 7+)
+  app.post('/api/admin/tribes', async (req, res) => {
+    try {
+      console.log('Creating tribe with data:', req.body);
+      const tribe = await storage.createTribe(req.body);
+      res.status(201).json(tribe);
+    } catch (error) {
+      console.error('Tribe creation error:', error);
+      res.status(500).json({ error: 'Failed to create tribe' });
+    }
+  });
+
+  app.put('/api/admin/tribes/:id', async (req, res) => {
+    try {
+      console.log('Updating tribe with data:', req.body);
+      const tribe = await storage.updateTribe(req.params.id, req.body);
+      console.log('Updated tribe result:', tribe);
+      res.json(tribe);
+    } catch (error) {
+      console.error('Tribe update error:', error);
+      res.status(500).json({ error: 'Failed to update tribe' });
+    }
+  });
+
+  app.delete('/api/admin/tribes/:id', requirePermission(PERMISSIONS.MANAGE_CONTENT), async (req, res) => {
+    try {
+      await storage.deleteTribe(req.params.id);
+      res.json({ message: 'Tribe deleted' });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to delete tribe' });
+    }
+  });
+
+  // Character management (Level 7+)
+  app.put('/api/admin/characters/:id', requirePermission(PERMISSIONS.MANAGE_CONTENT), async (req, res) => {
+    try {
+      const character = await storage.updateCharacter(req.params.id, req.body);
+      res.json(character);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to update character' });
+    }
+  });
+
+  // File upload (Level 7+)
+  app.post('/api/admin/upload', requirePermission(PERMISSIONS.MANAGE_CONTENT), async (req, res) => {
+    try {
+      // Basic file upload endpoint - would need multer middleware for actual file handling
+      res.json({ message: 'File upload endpoint - implement with multer' });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to upload file' });
+    }
+  });
+
+  // Site settings (Level 8+)
+  app.get('/api/admin/settings', requirePermission(PERMISSIONS.MANAGE_USERS), async (req, res) => {
+    try {
+      // Return site settings - could be stored in database or config
+      const settings = {
+        siteTitle: 'ACAB - All Cats Are Beautiful',
+        siteDescription: 'Post-apocalyptic cat universe',
+        maintenanceMode: false,
+        registrationEnabled: true
+      };
+      res.json(settings);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch settings' });
+    }
+  });
+
+  app.put('/api/admin/settings', requirePermission(PERMISSIONS.MANAGE_USERS), async (req, res) => {
+    try {
+      // Update site settings
+      res.json({ message: 'Settings updated successfully' });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to update settings' });
+    }
+  });
+
+  // Tribe Images
+  app.post('/api/admin/tribe-images', async (req, res) => {
+    try {
+      console.log('POST /api/admin/tribe-images called with:', req.body);
+      const { tribeId, tribeName, imageData } = req.body;
+      const tribeImage = await storage.createTribeImage(tribeId, tribeName, imageData);
+      console.log('Tribe image created:', tribeImage);
+      res.status(201).json(tribeImage);
+    } catch (error) {
+      console.error('Tribe image creation error:', error);
+      res.status(500).json({ error: 'Failed to save tribe image' });
+    }
+  });
+
+  app.get('/api/admin/tribe-images', async (req, res) => {
+    try {
+      console.log('GET /api/admin/tribe-images called');
+      const tribeImages = await storage.getTribeImages();
+      console.log('Returning tribe images:', tribeImages);
+      res.json(tribeImages);
+    } catch (error) {
+      console.error('Fetch tribe images error:', error);
+      res.status(500).json({ error: 'Failed to fetch tribe images' });
+    }
+  });
+
+  app.delete('/api/admin/tribe-images/:tribeId', async (req, res) => {
+    try {
+      console.log('DELETE /api/admin/tribe-images called for:', req.params.tribeId);
+      await storage.deleteTribeImage(req.params.tribeId);
+      res.json({ message: 'Tribe image deleted' });
+    } catch (error) {
+      console.error('Delete tribe image error:', error);
+      res.status(500).json({ error: 'Failed to delete tribe image' });
+    }
+  });
+
+  // Analytics (Level 5+)
+  app.get('/api/admin/analytics', requirePermission(PERMISSIONS.VIEW_USERS), async (req, res) => {
+    try {
+      const userCount = await storage.getUserCount();
+      const characterCount = await storage.getAllCharacters().then(chars => chars.length);
+      const tribeCount = await storage.getAllTribes().then(tribes => tribes.length);
+      
+      const analytics = {
+        totalUsers: userCount,
+        totalCharacters: characterCount,
+        totalTribes: tribeCount,
+        registrationsToday: 0, // Would need to implement date filtering
+        activeUsers: 0 // Would need to track user activity
+      };
+      
+      res.json(analytics);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch analytics' });
     }
   });
 

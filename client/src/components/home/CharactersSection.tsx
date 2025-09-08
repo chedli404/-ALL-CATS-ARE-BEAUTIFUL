@@ -2,19 +2,38 @@ import { useState, useEffect, useRef } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "framer-motion";
 import CharacterCard from "@/components/ui/CharacterCard.tsx";
-import { CHARACTERS_DATA } from "@/lib/constants.ts";
 
 const CharactersSection = () => {
   const [filter, setFilter] = useState("all");
+  const [characters, setCharacters] = useState([]);
+  const [loading, setLoading] = useState(true);
   const controls = useAnimation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   
   useEffect(() => {
+    fetchCharacters();
+  }, []);
+
+  useEffect(() => {
     if (isInView) {
       controls.start("visible");
     }
   }, [controls, isInView]);
+
+  const fetchCharacters = async () => {
+    try {
+      const res = await fetch('/api/characters');
+      if (res.ok) {
+        const data = await res.json();
+        setCharacters(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch characters:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -26,8 +45,8 @@ const CharactersSection = () => {
   };
 
   const filteredCharacters = filter === "all" 
-    ? CHARACTERS_DATA 
-    : CHARACTERS_DATA.filter(character => character.tribe === filter);
+    ? characters 
+    : characters.filter(character => character.tribe === filter);
 
   return (
     <section id="characters" className="py-24 "style={{ backgroundColor: 'rgb(35, 35, 35)' }} ref={ref}>
@@ -101,15 +120,19 @@ const CharactersSection = () => {
         </motion.div>
         
         {/* Characters grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredCharacters.map((character, index) => (
-            <CharacterCard 
-              key={character.id}
-              character={character}
-              delay={0.4 + (index * 0.1)}
-            />
-          ))}
-        </div>
+        {loading ? (
+          <div className="text-center text-white">Loading characters...</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredCharacters.map((character, index) => (
+              <CharacterCard 
+                key={character._id}
+                character={character}
+                delay={0.4 + (index * 0.1)}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

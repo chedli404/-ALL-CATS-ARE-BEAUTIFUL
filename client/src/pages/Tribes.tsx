@@ -1,8 +1,5 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
-import { useQuery } from "@tanstack/react-query";
-import { TRIBES_DATA } from "@/lib/constants.ts";
-import { Tribe } from "@/types";
 import TribeBanner from "@/components/ui/TribeBanner.tsx";
 
 const Tribes = () => {
@@ -14,10 +11,44 @@ const Tribes = () => {
   const isSection2InView = useInView(section2Ref, { once: false, amount: 0.2 });
   const isSection3InView = useInView(section3Ref, { once: false, amount: 0.2 });
 
-  const { data: tribes, isLoading } = useQuery<Tribe[]>({
-    queryKey: ["/api/tribes"],
-    initialData: TRIBES_DATA
-  });
+  const [tribes, setTribes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchTribes();
+  }, []);
+
+  const fetchTribes = async () => {
+    try {
+      const [tribesRes, imagesRes] = await Promise.all([
+        fetch('/api/tribes'),
+        fetch('/api/admin/tribe-images')
+      ]);
+      
+      if (tribesRes.ok) {
+        const tribesData = await tribesRes.json();
+        console.log('Fetched tribes:', tribesData);
+        
+        let tribeImages = [];
+        if (imagesRes.ok) {
+          tribeImages = await imagesRes.json();
+          console.log('Fetched tribe images:', tribeImages);
+        }
+        
+        // Merge tribes with their images
+        const tribesWithImages = tribesData.map(tribe => {
+          const tribeImage = tribeImages.find(img => img.tribeId === tribe._id);
+          return { ...tribe, image: tribeImage?.imageData };
+        });
+        
+        setTribes(tribesWithImages);
+      }
+    } catch (error) {
+      console.error('Failed to fetch tribes:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background-dark">
@@ -41,37 +72,34 @@ const Tribes = () => {
             <div>
               {/* Main Tribe Banners Section - Gallery */}
               <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                <img 
-                  src="/attached_assets/trib1.jpeg" 
-                  alt="ACAB Tribe Banners" 
-                  className="w-full rounded-lg shadow-2xl"
-                />
-                <img 
-                  src="/attached_assets/trib2.jpeg" 
-                  alt="ACAB Tribe Banners" 
-                  className="w-full rounded-lg shadow-2xl"
-                />
-                <img 
-                  src="/attached_assets/trib3.jpeg" 
-                  alt="ACAB Tribe Banners" 
-                  className="w-full rounded-lg shadow-2xl"
-                />
-                <img 
-                  src="/attached_assets/trib4.jpeg" 
-                  alt="ACAB Tribe Banners" 
-                  className="w-full rounded-lg shadow-2xl"
-                />
+                {/* Show ONLY tribe images */}
+                {tribes.filter(tribe => tribe.image).map((tribe, index) => (
+                  <img 
+                    key={tribe._id}
+                    src={tribe.image} 
+                    alt={`${tribe.name} Tribe Banner`} 
+                    className="w-full rounded-lg shadow-2xl"
+                  />
+                ))}
+                
+                {/* Show message if no tribe images */}
+                {tribes.filter(tribe => tribe.image).length === 0 && (
+                  <div className="col-span-full text-center py-12">
+                    <p className="text-gray-400">No tribe images uploaded yet. Use the admin panel to add images.</p>
+                  </div>
+                )}
               </div>
                 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 md:mb-24 max-w-5xl mx-auto">
                 {tribes.map((tribe, index) => (
                   <TribeBanner 
-                    key={tribe.id} 
+                    key={tribe._id} 
                     name={tribe.name}
                     description={tribe.description}
                     color={tribe.color}
                     strengths={tribe.strengths}
                     icon={tribe.icon}
+                    image={tribe.image}
                     index={index}
                   />
                 ))}

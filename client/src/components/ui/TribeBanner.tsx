@@ -9,6 +9,7 @@ interface TribeBannerProps {
   color: string;
   strengths: string[];
   icon: string;
+  image?: string;
   index: number;
   onHover?: () => void;
   onLeave?: () => void;
@@ -20,6 +21,7 @@ const TribeBanner = ({
   color, 
   strengths, 
   icon, 
+  image,
   index, 
   onHover, 
   onLeave 
@@ -79,6 +81,7 @@ const TribeBanner = ({
       />
 
       <div className="p-6 relative z-10">
+        
         {/* Tribe name and icon */}
         <div className="flex items-center gap-3 mb-4">
           <div 

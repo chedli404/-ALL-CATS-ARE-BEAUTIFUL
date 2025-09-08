@@ -1,12 +1,13 @@
 import express, { type Request, Response, NextFunction } from "express";
+import cors from "cors";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import path from "path";
 import { storage } from "./mongoStorage";
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json({ limit: '50mb' })); // Increase payload limit for images
+app.use(express.urlencoded({ limit: '50mb', extended: false }));
 
 // Serve attached_assets directory
 app.use('/attached_assets', express.static(path.join(process.cwd(), 'attached_assets')));
