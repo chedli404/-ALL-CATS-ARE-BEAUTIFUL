@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { NAV_LINKS } from "@/lib/constants.ts";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogOut } from "lucide-react";
 import logo9abila from "@assets/logo9abila.svg";
 import './logo.css';
 
@@ -11,6 +11,7 @@ const Navbar = () => {
   const [location] = useLocation();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [user, setUser] = useState<any>(null);
 
   // Handle scroll position for visual effects
   useEffect(() => {
@@ -20,6 +21,32 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Check authentication status
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const userData = localStorage.getItem('user');
+    if (token && userData) {
+      const parsedUser = JSON.parse(userData);
+      console.log('User data:', parsedUser);
+      setUser(parsedUser);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setUser(null);
+    window.location.href = '/';
+  };
+
+  // Filter nav links based on auth status
+  const getNavLinks = () => {
+    if (user) {
+      return NAV_LINKS.filter(link => !['Login', "S'inscrire"].includes(link.label));
+    }
+    return NAV_LINKS;
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -91,7 +118,7 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden lg:block relative">
             <div className="flex items-center space-x-6 xl:space-x-10">
-              {NAV_LINKS.map((link) => (
+              {getNavLinks().map((link) => (
                 <motion.div
                   key={link.href}
                   onHoverStart={() => setHoveredLink(link.href)}
@@ -122,6 +149,60 @@ const Navbar = () => {
                   />
                 </motion.div>
               ))}
+              
+              {/* Admin link */}
+              {user && user.level === 9 && (
+                <motion.div
+                  onHoverStart={() => setHoveredLink('/admin')}
+                  onHoverEnd={() => setHoveredLink(null)}
+                  className="relative"
+                  whileHover={{ y: -2 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                >
+                  <Link 
+                    href="/admin"
+                    className={`${location === '/admin' 
+                      ? "text-white font-bold" 
+                      : "text-gray-300 hover:text-white"}
+                      px-3 py-2 font-medium transition-all duration-200 text-sm md:text-base xl:text-lg inline-block`}
+                  >
+                    Admin
+                  </Link>
+                  
+                  <motion.div 
+                    className="absolute -bottom-1 left-0 h-[2px] rounded-full"
+                    style={{ backgroundColor: '#ff6b35' }}
+                    initial={{ width: location === '/admin' ? "100%" : 0 }}
+                    animate={{ 
+                      width: (location === '/admin' || hoveredLink === '/admin') ? "100%" : 0,
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  />
+                </motion.div>
+              )}
+              
+              {/* User info and logout */}
+              {user && (
+                <div className="flex items-center space-x-4 ml-6">
+                  <span className="text-gray-300 text-sm md:text-base">
+                    {user.username} {user.level >= 5 && (
+                      user.level === 9 ? '(Super Admin)' :
+                      user.level === 8 ? '(Admin)' :
+                      user.level === 7 ? '(Moderator)' :
+                      '(Staff)'
+                    )}
+                  </span>
+                  <motion.button
+                    onClick={handleLogout}
+                    className="flex items-center space-x-1 text-gray-300 hover:text-white px-3 py-2 font-medium transition-all duration-200 text-sm md:text-base"
+                    whileHover={{ y: -2 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                  >
+                    <LogOut className="h-4 w-4" />
+                    <span>Logout</span>
+                  </motion.button>
+                </div>
+              )}
             </div>
           </div>
           
@@ -161,7 +242,7 @@ const Navbar = () => {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
             <div className="px-4 py-3 space-y-2 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 90px)' }}>
-              {NAV_LINKS.map((link, index) => (
+              {getNavLinks().map((link, index) => (
                 <motion.div
                   key={link.href}
                   custom={index}
@@ -210,6 +291,64 @@ const Navbar = () => {
                   </Link>
                 </motion.div>
               ))}
+              
+              {/* Mobile admin link */}
+              {user && user.level === 9 && (
+                <motion.div
+                  custom={getNavLinks().length}
+                  variants={menuItemVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                >
+                  <Link
+                    href="/admin"
+                    className={`block relative overflow-hidden rounded-md text-base md:text-lg font-medium transition-all duration-200 flex items-center`}
+                    onClick={toggleMenu}
+                  >
+                    <motion.div
+                      className="w-full px-4 py-4 z-10 relative"
+                      whileHover={{ x: 5 }}
+                      style={{
+                        color: location === '/admin' ? "white" : "rgb(209, 213, 219)"
+                      }}
+                    >
+                      Admin
+                    </motion.div>
+                  </Link>
+                </motion.div>
+              )}
+              
+              {/* Mobile user info and logout */}
+              {user && (
+                <motion.div
+                  custom={getNavLinks().length + (user.level === 9 ? 1 : 0)}
+                  variants={menuItemVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                  className="border-t border-gray-700 pt-2 mt-2"
+                >
+                  <div className="px-4 py-2 text-gray-300">
+                    {user.username} {user.level >= 5 && (
+                      user.level === 9 ? '(Super Admin)' :
+                      user.level === 8 ? '(Admin)' :
+                      user.level === 7 ? '(Moderator)' :
+                      '(Staff)'
+                    )}
+                  </div>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      toggleMenu();
+                    }}
+                    className="w-full text-left px-4 py-4 text-gray-300 hover:text-white flex items-center space-x-2"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    <span>Logout</span>
+                  </button>
+                </motion.div>
+              )}
             </div>
           </motion.div>
         )}

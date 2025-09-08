@@ -23,6 +23,12 @@ export interface IStorage {
   // User operations
   getUser(id: string): Promise<UserType | null>;
   getUserByUsername(username: string): Promise<UserType | null>;
+  getAllUsers(): Promise<UserType[]>;
+  getUserCount(): Promise<number>;
+  updateUserLevel(id: string, level: number): Promise<void>;
+  deleteUser(id: string): Promise<void>;
+  deleteCharacter(id: string): Promise<void>;
+  migrateUsersLevel(): Promise<void>;
   createUser(user: InsertUser): Promise<UserType>;
   
   // Character operations
@@ -82,8 +88,42 @@ export class MongoStorage implements IStorage {
     } as unknown as UserType;
   }
   
+  async getAllUsers(): Promise<UserType[]> {
+    const users = await User.find();
+    return users.map(user => ({
+      ...user.toObject(),
+      displayName: user.displayName || undefined
+    })) as unknown as UserType[];
+  }
+  
+  async getUserCount(): Promise<number> {
+    return await User.countDocuments();
+  }
+  
+  async updateUserLevel(id: string, level: number): Promise<void> {
+    await User.findByIdAndUpdate(id, { level });
+  }
+  
+  async deleteUser(id: string): Promise<void> {
+    await User.findByIdAndDelete(id);
+  }
+  
+  async deleteCharacter(id: string): Promise<void> {
+    await Character.findByIdAndDelete(id);
+  }
+  
+  async migrateUsersLevel(): Promise<void> {
+    // Add level field to users that don't have it
+    await User.updateMany(
+      { level: { $exists: false } },
+      { $set: { level: 1 } }
+    );
+  }
+  
   async getUserByUsername(username: string): Promise<UserType | null> {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ 
+      $or: [{ username }, { email: username }]
+    });
     if (!user) return null;
     return {
       ...user.toObject(),
@@ -92,9 +132,7 @@ export class MongoStorage implements IStorage {
   }
   
   async createUser(user: InsertUser): Promise<UserType> {
-    // Hash the password before saving
-    const hashedPassword = await bcrypt.hash(user.password, 10);
-    const newUser = new User({ ...user, password: hashedPassword });
+    const newUser = new User(user);
     const savedUser = await newUser.save();
     return {
       ...savedUser.toObject(),
@@ -396,6 +434,12 @@ export class MemStorage implements IStorage {
 
   async getUser(id: string): Promise<any> { return null; }
   async getUserByUsername(username: string): Promise<any> { return null; }
+  async getAllUsers(): Promise<any[]> { return []; }
+  async getUserCount(): Promise<number> { return 0; }
+  async updateUserLevel(id: string, level: number): Promise<void> { return; }
+  async deleteUser(id: string): Promise<void> { return; }
+  async deleteCharacter(id: string): Promise<void> { return; }
+  async migrateUsersLevel(): Promise<void> { return; }
   async createUser(user: InsertUser): Promise<any> { return {}; }
   async getCharacter(id: string): Promise<any> { return null; }
   async getAllCharacters(): Promise<any[]> { return []; }

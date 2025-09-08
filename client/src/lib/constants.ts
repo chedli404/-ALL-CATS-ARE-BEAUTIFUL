@@ -6,6 +6,9 @@ export const NAV_LINKS = [
   { label: "Carte", href: "/map" },
   { label: "Légendes", href: "/legends" },
   { label: "Monde", href: "/world" },
+  { label: "Login", href: "/login" },
+  { label: "S'inscrire", href: "/register" }
+
 ];
 
 // Characters data

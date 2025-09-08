@@ -13,6 +13,9 @@ import Tribes from "@/pages/Tribes.tsx";
 import Legends from "@/pages/Legends.tsx";
 import Artifacts from "@/pages/Artifacts.tsx";
 import NotFound from "@/pages/not-found.tsx";
+import LoginPage from "@/pages/LoginPage.tsx";
+import RegisterPage from "@/pages/RegisterPage";
+import AdminPage from "@/pages/AdminPage.tsx";
 import World from "@/pages/world.tsx";
 
 // Kabila background particles component
@@ -138,6 +141,9 @@ function App() {
                 <Route path="/legends" component={Legends} />
                 <Route path="/artifacts" component={Artifacts} />
                 <Route path="/game" component={Game} />
+                <Route path="/login" component={LoginPage} />
+                <Route path="/register" component={RegisterPage} />
+                <Route path="/admin" component={AdminPage} />
                 <Route component={NotFound} />
               </Switch>
             </PageTransition>

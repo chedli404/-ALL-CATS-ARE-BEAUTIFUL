@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   displayName: { type: String },
+  level: { type: Number, default: 1 },
   createdAt: { type: Date, default: Date.now }
 });
 
@@ -77,7 +78,8 @@ export const insertUserSchema = z.object({
   username: z.string(),
   email: z.string().email(),
   password: z.string(),
-  displayName: z.string().optional()
+  displayName: z.string().optional(),
+  level: z.number().default(1)
 });
 
 export const insertCharacterSchema = z.object({
@@ -130,6 +132,18 @@ export const insertVoteOptionSchema = z.object({
 export const insertVoteSchema = z.object({
   userId: z.string(),
   optionId: z.string()
+});
+
+// Frontend validation schemas
+export const loginSchema = z.object({
+  identifier: z.string().min(1, { message: "Username or email is required" }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+});
+
+export const registerSchema = z.object({
+  username: z.string().min(3, { message: "Username must be at least 3 characters" }),
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
 });
 
 // Export Mongoose Models
