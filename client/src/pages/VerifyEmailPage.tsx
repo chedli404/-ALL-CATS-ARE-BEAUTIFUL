@@ -21,9 +21,11 @@ const VerifyEmailPage = () => {
         const response = await fetch(`/api/verify-email?token=${token}`);
         const data = await response.json();
 
+        console.log('Verification response:', response.status, data);
+        
         if (response.ok) {
           setStatus('success');
-          setMessage(data.message);
+          setMessage(data.message || 'Email verified successfully!');
           // Redirect to login after 3 seconds
           setTimeout(() => {
             setLocation('/login');
