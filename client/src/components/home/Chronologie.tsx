@@ -1,8 +1,8 @@
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
-import TimelineItem from "@/components/ui/TimelineItem";
-import { TIMELINE_DATA } from "@/lib/constants";
+import TimelineItem from "@/components/ui/TimelineItem.tsx";
+import { TIMELINE_DATA } from "@/lib/constants.ts";
 
 const Chronologie = () => {
   const controls = useAnimation();

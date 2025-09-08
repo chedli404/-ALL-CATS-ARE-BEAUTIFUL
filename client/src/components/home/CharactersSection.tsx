@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "framer-motion";
-import CharacterCard from "@/components/ui/CharacterCard";
-import { CHARACTERS_DATA } from "@/lib/constants";
+import CharacterCard from "@/components/ui/CharacterCard.tsx";
+import { CHARACTERS_DATA } from "@/lib/constants.ts";
 
 const CharactersSection = () => {
   const [filter, setFilter] = useState("all");

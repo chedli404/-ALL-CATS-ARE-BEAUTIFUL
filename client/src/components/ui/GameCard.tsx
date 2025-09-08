@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { GAME_CARDS } from "@/lib/constants";
+import { GAME_CARDS } from "@/lib/constants.ts";
 import { Circle, User, Map, Zap, Bookmark, FileBarChart2 } from "lucide-react";
 
 type GameCardType = {

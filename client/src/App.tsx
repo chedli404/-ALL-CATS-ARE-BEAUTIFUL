@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import { Switch, Route, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { Toaster } from "@/components/ui/toaster";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import Home from "@/pages/Home";
-import CharactersPage from "@/pages/CharactersPage";
-import CharacterDetail from "@/pages/CharacterDetail";
-import Map from "@/pages/Map";
-import Game from "@/pages/Game";
-import Tribes from "@/pages/Tribes";
-import Legends from "@/pages/Legends";
-import Artifacts from "@/pages/Artifacts";
-import NotFound from "@/pages/not-found";
-import World from "@/pages/world";
+import { Toaster } from "@/components/ui/toaster.tsx";
+import Navbar from "@/components/layout/Navbar.tsx";
+import Footer from "@/components/layout/Footer.tsx";
+import Home from "@/pages/Home.tsx";
+import CharactersPage from "@/pages/CharactersPage.tsx";
+import CharacterDetail from "@/pages/CharacterDetail.tsx";
+import Map from "@/pages/Map.tsx";
+import Game from "@/pages/Game.tsx";
+import Tribes from "@/pages/Tribes.tsx";
+import Legends from "@/pages/Legends.tsx";
+import Artifacts from "@/pages/Artifacts.tsx";
+import NotFound from "@/pages/not-found.tsx";
+import World from "@/pages/world.tsx";
 
 // Kabila background particles component
 const BackgroundParticles = () => {

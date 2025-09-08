@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import MapSection from "@/components/home/MapSection";
-import GameSection from "@/components/home/GameSection";
-import Zied from "@/components/home/Zied";
-import Organisation from "@/components/home/Organisation";
-import Kabila from "@/components/home/Kabila";
-import Introduction from "@/components/home/Introduction";
-import Chronologie from "@/components/home/Chronologie";
+import MapSection from "@/components/home/MapSection.tsx";
+import GameSection from "@/components/home/GameSection.tsx";
+import Zied from "@/components/home/Zied.tsx";
+import Organisation from "@/components/home/Organisation.tsx";
+import Kabila from "@/components/home/Kabila.tsx";
+import Introduction from "@/components/home/Introduction.tsx";
+import Chronologie from "@/components/home/Chronologie.tsx";
 
 const Home = () => {
   // Scroll to section if URL has hash

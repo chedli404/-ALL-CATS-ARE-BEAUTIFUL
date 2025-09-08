@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { CHARACTERS_DATA } from '@/lib/constants';
-import RotatingCards from '@/components/characters/RotatingCards';
-import AnimatedHeading from '@/components/ui/AnimatedHeading';
+import { CHARACTERS_DATA } from '@/lib/constants.ts';
+import RotatingCards from '@/components/characters/RotatingCards.tsx';
+import AnimatedHeading from '@/components/ui/AnimatedHeading.tsx';
 
 const FeatureCharacters = () => {
   // Use state for filter to maintain consistency with the Characters page

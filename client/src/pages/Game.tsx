@@ -2,9 +2,9 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "wouter";
 import { Users, Hourglass, Gamepad, Download } from "lucide-react";
-import { GAME_CARDS } from "@/lib/constants";
-import NewAnimatedHeading from "@/components/ui/NewAnimatedHeading";
-import GameSection from "@/components/home/GameSection";
+import { GAME_CARDS } from "@/lib/constants.ts";
+import NewAnimatedHeading from "@/components/ui/NewAnimatedHeading.tsx";
+import GameSection from "@/components/home/GameSection.tsx";
 
 const GameFeature = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => {
   return (

@@ -1,8 +1,8 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import InteractiveMap from "@/components/ui/InteractiveMap";
-import NewAnimatedHeading from "@/components/ui/NewAnimatedHeading";
-import { MAP_REGIONS, TRIBES_DATA } from "@/lib/constants";
+import InteractiveMap from "@/components/ui/InteractiveMap.tsx";
+import NewAnimatedHeading from "@/components/ui/NewAnimatedHeading.tsx";
+import { MAP_REGIONS, TRIBES_DATA } from "@/lib/constants.ts";
 
 const Map = () => {
   const sectionRef = useRef<HTMLDivElement>(null);

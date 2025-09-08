@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MAP_REGIONS } from '@/lib/constants';
+import { MAP_REGIONS } from '@/lib/constants.ts';
 import NewAnimatedHeading from './NewAnimatedHeading';
 
 interface RegionTooltipProps {

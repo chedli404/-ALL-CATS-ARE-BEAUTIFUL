@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "framer-motion";
-import InteractiveMap from "@/components/ui/InteractiveMap";
+import InteractiveMap from "@/components/ui/InteractiveMap.tsx";
 
 const MapSection = () => {
   const controls = useAnimation();

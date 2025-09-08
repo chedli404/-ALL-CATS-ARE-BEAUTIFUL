@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useInView } from "framer-motion";
 import { Link } from "wouter";
-import TribeBanner from "@/components/ui/TribeBanner";
-import { TRIBES_DATA } from "@/lib/constants";
+import TribeBanner from "@/components/ui/TribeBanner.tsx";
+import { TRIBES_DATA } from "@/lib/constants.ts";
 
 const TribesSection = () => {
   const controls = useAnimation();

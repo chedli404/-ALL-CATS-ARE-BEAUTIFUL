@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import TimelineItem from "@/components/ui/TimelineItem";
-import { TIMELINE_DATA } from "@/lib/constants";
-import AnimatedHeading from "@/components/ui/AnimatedHeading";
+import TimelineItem from "@/components/ui/TimelineItem.tsx";
+import { TIMELINE_DATA } from "@/lib/constants.ts";
+import AnimatedHeading from "@/components/ui/AnimatedHeading.tsx";
 
 const WorldSection = () => {
   const controls = useAnimation();

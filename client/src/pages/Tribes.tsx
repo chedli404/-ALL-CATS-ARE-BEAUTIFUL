@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { TRIBES_DATA } from "@/lib/constants";
+import { TRIBES_DATA } from "@/lib/constants.ts";
 import { Tribe } from "@/types";
-import TribeBanner from "@/components/ui/TribeBanner";
+import TribeBanner from "@/components/ui/TribeBanner.tsx";
 
 const Tribes = () => {
   const section1Ref = useRef<HTMLDivElement>(null);

@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import { Link } from "wouter";
-import GameCard from "@/components/ui/GameCard";
-import { GAME_CARDS } from "@/lib/constants";
+import GameCard from "@/components/ui/GameCard.tsx";
+import { GAME_CARDS } from "@/lib/constants.ts";
 import { Users, Hourglass, Gamepad } from "lucide-react";
 
 const GameSection = () => {

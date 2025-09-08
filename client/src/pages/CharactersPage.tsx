@@ -1,4 +1,4 @@
-import CharactersSection from "@/components/home/CharactersSection";
+import CharactersSection from "@/components/home/CharactersSection.tsx";
 
 const CharactersPage = () => {
   return (

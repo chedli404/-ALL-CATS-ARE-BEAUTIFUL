@@ -1,7 +1,7 @@
 import { useParams, Link } from "wouter";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { CHARACTERS_DATA } from "@/lib/constants";
+import { CHARACTERS_DATA } from "@/lib/constants.ts";
 import { ArrowLeft, Compass, CircleDot, Zap } from "lucide-react";
 import { Character } from "@/types";
 

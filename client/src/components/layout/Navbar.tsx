@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { NAV_LINKS } from "@/lib/constants";
+import { NAV_LINKS } from "@/lib/constants.ts";
 import { Menu, X } from "lucide-react";
 import logo9abila from "@assets/logo9abila.svg";
 import './logo.css';
