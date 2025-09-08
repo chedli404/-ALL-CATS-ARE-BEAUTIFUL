@@ -23,9 +23,9 @@ const VerifyEmailPage = () => {
 
         console.log('Verification response:', response.status, data);
         
-        if (response.ok) {
+        if (response.status === 200) {
           setStatus('success');
-          setMessage(data.message || 'Email verified successfully!');
+          setMessage(data.message || 'Email verified successfully! You can now log in.');
           // Redirect to login after 3 seconds
           setTimeout(() => {
             setLocation('/login');
