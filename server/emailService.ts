@@ -17,6 +17,11 @@ export const generateVerificationToken = (): string => {
 export const sendVerificationEmail = async (email: string, username: string, token: string) => {
   const verificationUrl = `${process.env.CLIENT_URL || 'http://localhost:5000'}/verify-email?token=${token}`;
   console.log('Verification URL:', verificationUrl);
+  console.log('Email config:', {
+    user: process.env.EMAIL_USER,
+    passLength: process.env.EMAIL_PASS?.length,
+    clientUrl: process.env.CLIENT_URL
+  });
   
   const mailOptions = {
     from: process.env.EMAIL_USER || 'noreply@kabila.com',
@@ -40,10 +45,14 @@ export const sendVerificationEmail = async (email: string, username: string, tok
   };
 
   try {
-    await transporter.sendMail(mailOptions);
+    console.log('Attempting to send email to:', email);
+    const result = await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully:', result.messageId);
     console.log('Verification email sent to:', email);
   } catch (error) {
-    console.error('Failed to send verification email:', error);
+    console.error('DETAILED EMAIL ERROR:', error);
+    console.error('Error code:', error.code);
+    console.error('Error message:', error.message);
     throw error;
   }
 };
