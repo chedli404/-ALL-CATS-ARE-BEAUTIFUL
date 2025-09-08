@@ -268,7 +268,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Content management (Level 7+)
-  app.post('/api/admin/characters', async (req, res) => {
+  app.post('/api/admin/characters', async (req: AuthenticatedRequest, res) => {
     try {
       console.log('Creating character with data:', req.body);
       console.log('User from request:', req.user);
@@ -277,7 +277,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(201).json(character);
     } catch (error) {
       console.error('Character creation error:', error);
-      res.status(500).json({ error: 'Failed to create character', details: error.message });
+      res.status(500).json({ 
+        error: 'Failed to create character', 
+        details: typeof error === 'object' && error !== null && 'message' in error ? (error as any).message : String(error) 
+      });
     }
   });
 
@@ -294,12 +297,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.put('/api/admin/users/:id/level', requirePermission(PERMISSIONS.MANAGE_USERS), async (req: AuthenticatedRequest, res) => {
     try {
       const { level } = req.body;
-      if (level > req.user.level) {
+      if (level > (req as any).user.level) {
         return res.status(403).json({ error: 'Cannot promote user above your level' });
       }
       await storage.updateUserLevel(req.params.id, level);
       res.json({ message: 'User level updated' });
-    } catch (error) {
+    } catch (error: any) {
       res.status(500).json({ error: 'Failed to update user level' });
     }
   });

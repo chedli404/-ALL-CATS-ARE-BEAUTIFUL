@@ -129,7 +129,10 @@ export class MongoStorage implements IStorage {
     const tribe = await Tribe.findByIdAndUpdate(id, data, { new: true });
     if (!tribe) throw new Error('Tribe not found');
     console.log('Updated tribe from DB:', tribe);
-    return tribe;
+    return {
+      ...tribe.toObject(),
+      image: tribe.image || undefined
+    } as unknown as TribeType;
   }
   
   async deleteTribe(id: string): Promise<void> {
@@ -199,12 +202,20 @@ export class MongoStorage implements IStorage {
   }
   
   async getAllTribes(): Promise<TribeType[]> {
-    return await Tribe.find();
+    const tribes = await Tribe.find();
+    return tribes.map(tribe => ({
+      ...tribe.toObject(),
+      image: tribe.image || undefined
+    })) as unknown as TribeType[];
   }
   
   async createTribe(tribe: InsertTribe): Promise<TribeType> {
     const newTribe = new Tribe(tribe);
-    return await newTribe.save();
+    const savedTribe = await newTribe.save();
+    return {
+      ...savedTribe.toObject(),
+      image: savedTribe.image || undefined
+    } as unknown as TribeType;
   }
   
   // Territory operations

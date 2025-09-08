@@ -35,8 +35,8 @@ function Zied() {
           >
             <div className="flex justify-center lg:justify-end">
               <div className="relative w-64 h-64 lg:w-80 lg:h-80">
-                <div className="absolute -inset-2 rounded-full border-4 border-[#64afd6]/20 animate-spin-slow"></div>
-                <div className="absolute -inset-4 rounded-full border border-[#64afd6]/20 animate-spin-slow"></div>
+                <div className="absolute -inset-2 rounded-full border-4 border-[#64afd6]/20" style={{animation: 'spin 3s linear infinite'}}></div>
+                <div className="absolute -inset-4 rounded-full border border-[#64afd6]/20" style={{animation: 'spin 4s linear infinite'}}></div>
                 <img 
                   src="/attached_assets/zied.png" 
                   alt="Zied"
