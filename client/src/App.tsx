@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Toaster } from "@/components/ui/toaster.tsx";
 import Navbar from "@/components/layout/Navbar.tsx";
 import Footer from "@/components/layout/Footer.tsx";
+import { EditModeProvider } from "@/contexts/EditModeContext";
+import EditModeToggle from "@/components/admin/EditModeToggle";
 import Home from "@/pages/Home.tsx";
 import CharactersPage from "@/pages/CharactersPage.tsx";
 import CharacterDetail from "@/pages/CharacterDetail.tsx";
@@ -17,6 +19,7 @@ import LoginPage from "@/pages/LoginPage.tsx";
 import RegisterPage from "@/pages/RegisterPage";
 import AdminPage from "@/pages/AdminPage.tsx";
 import World from "@/pages/world.tsx";
+import VerifyEmailPage from "@/pages/VerifyEmailPage";
 
 // Kabila background particles component
 const BackgroundParticles = () => {
@@ -108,9 +111,11 @@ function App() {
   }, [location]);
   
   return (
-    <div className="flex flex-col min-h-screen w-full max-w-[100vw] overflow-x-hidden relative bg-background-dark">
-      <BackgroundParticles />
-      <Navbar />
+    <EditModeProvider>
+      <div className="flex flex-col min-h-screen w-full max-w-[100vw] overflow-x-hidden relative bg-background-dark">
+        <BackgroundParticles />
+        <EditModeToggle />
+        <Navbar />
       
       <main className="flex-grow w-full relative z-10">
         <AnimatePresence mode="wait">
@@ -143,6 +148,7 @@ function App() {
                 <Route path="/game" component={Game} />
                 <Route path="/login" component={LoginPage} />
                 <Route path="/register" component={RegisterPage} />
+                <Route path="/verify-email" component={VerifyEmailPage} />
                 <Route path="/admin" component={AdminPage} />
                 <Route component={NotFound} />
               </Switch>
@@ -151,9 +157,10 @@ function App() {
         </AnimatePresence>
       </main>
       
-      <Footer />
-      <Toaster />
-    </div>
+        <Footer />
+        <Toaster />
+      </div>
+    </EditModeProvider>
   );
 }
 

@@ -151,7 +151,7 @@ const Navbar = () => {
               ))}
               
               {/* Admin link */}
-              {user && user.level === 9 && (
+              {user && user.level >= 9 && (
                 <motion.div
                   onHoverStart={() => setHoveredLink('/admin')}
                   onHoverEnd={() => setHoveredLink(null)}
@@ -186,6 +186,7 @@ const Navbar = () => {
                 <div className="flex items-center space-x-4 ml-6">
                   <span className="text-gray-300 text-sm md:text-base">
                     {user.username} {user.level >= 5 && (
+                      user.level >= 10 ? '(Developer)' :
                       user.level === 9 ? '(Super Admin)' :
                       user.level === 8 ? '(Admin)' :
                       user.level === 7 ? '(Moderator)' :
@@ -293,7 +294,7 @@ const Navbar = () => {
               ))}
               
               {/* Mobile admin link */}
-              {user && user.level === 9 && (
+              {user && user.level >= 9 && (
                 <motion.div
                   custom={getNavLinks().length}
                   variants={menuItemVariants}
@@ -331,6 +332,7 @@ const Navbar = () => {
                 >
                   <div className="px-4 py-2 text-gray-300">
                     {user.username} {user.level >= 5 && (
+                      user.level >= 10 ? '(Developer)' :
                       user.level === 9 ? '(Super Admin)' :
                       user.level === 8 ? '(Admin)' :
                       user.level === 7 ? '(Moderator)' :

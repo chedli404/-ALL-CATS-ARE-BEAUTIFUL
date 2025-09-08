@@ -17,16 +17,19 @@ export default function RegisterPage() {
     });
     const data = await res.json();
     
-    if (res.ok && data.token) {
-      // Store token in localStorage
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
-      setMessage("Registration successful! Redirecting...");
-      
-      // Redirect to home page after short delay
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 1000);
+    if (res.ok) {
+      if (data.token) {
+        // Old flow - immediate login
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        setMessage("Registration successful! Redirecting...");
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1000);
+      } else {
+        // New flow - email verification required
+        setMessage(data.message || "Registration successful! Please check your email to verify your account.");
+      }
     } else {
       setMessage(data.error || "Registration failed");
     }

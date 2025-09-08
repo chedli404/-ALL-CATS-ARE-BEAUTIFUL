@@ -8,6 +8,9 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   displayName: { type: String },
   level: { type: Number, default: 1 },
+  isVerified: { type: Boolean, default: false },
+  verificationToken: { type: String },
+  verificationExpires: { type: Date },
   createdAt: { type: Date, default: Date.now }
 });
 

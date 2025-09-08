@@ -19,8 +19,14 @@ const PERMISSIONS = {
   VIEW_USERS: 5,
   MANAGE_CONTENT: 7,
   MANAGE_USERS: 8,
-  FULL_ACCESS: 9
+  FULL_ACCESS: 9,
+  EDIT_MODE: 10
 };
+
+const EDIT_MODE_SECRET = 'dev_secret_2024';
+const EDIT_MODE_ENABLED = true;
+
+console.log('Edit mode config:', { EDIT_MODE_SECRET, EDIT_MODE_ENABLED });
 
 // Admin middleware
 const requireAdmin = async (req: AuthenticatedRequest, res: any, next: any) => {
@@ -113,19 +119,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
       
-      const userData = { username, email, password: hashedPassword, level };
+      // Generate verification token
+      const { generateVerificationToken, sendVerificationEmail } = await import('./emailService');
+      const verificationToken = generateVerificationToken();
+      const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+      
+      const userData = { 
+        username, 
+        email, 
+        password: hashedPassword, 
+        level,
+        isVerified: false,
+        verificationToken,
+        verificationExpires
+      };
       const newUser = await storage.createUser(userData);
       console.log('Created user with level:', newUser.level);
       
-      const token = jwt.sign(
-        { id: newUser._id, username: newUser.username, email: newUser.email, level: newUser.level },
-        JWT_SECRET,
-        { expiresIn: '7d' }
-      );
+      // Send verification email
+      try {
+        await sendVerificationEmail(email, username, verificationToken);
+      } catch (emailError) {
+        console.error('Failed to send verification email:', emailError);
+      }
       
       res.status(201).json({ 
-        token,
-        user: { id: newUser._id, username: newUser.username, email: newUser.email, level: newUser.level }
+        message: 'Registration successful! Please check your email to verify your account.',
+        user: { id: newUser._id, username: newUser.username, email: newUser.email, isVerified: false }
       });
     } catch (error) {
       console.error("Registration error:", error);
@@ -146,8 +166,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
       
+      if (!user.isVerified) {
+        return res.status(401).json({ error: 'Please verify your email before logging in' });
+      }
+      
       console.log('User from DB:', user);
       console.log('User level:', user.level);
+      console.log('User ID:', user._id);
       
       const isMatch = await bcrypt.compare(password, user.password);
       
@@ -298,6 +323,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (level > (req as any).user.level) {
         return res.status(403).json({ error: 'Cannot promote user above your level' });
       }
+      if (level === 10 && (req as any).user.level < 10) {
+        return res.status(403).json({ error: 'Only developers can create other developers' });
+      }
       await storage.updateUserLevel(req.params.id, level);
       res.json({ message: 'User level updated' });
     } catch (error: any) {
@@ -367,8 +395,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Site settings (Level 8+)
-  app.get('/api/admin/settings', requirePermission(PERMISSIONS.MANAGE_USERS), async (req, res) => {
+  // Site settings (Level 10+)
+  app.get('/api/admin/settings', requirePermission(PERMISSIONS.EDIT_MODE), async (req, res) => {
     try {
       // Return site settings - could be stored in database or config
       const settings = {
@@ -383,7 +411,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put('/api/admin/settings', requirePermission(PERMISSIONS.MANAGE_USERS), async (req, res) => {
+  app.put('/api/admin/settings', requirePermission(PERMISSIONS.EDIT_MODE), async (req, res) => {
     try {
       // Update site settings
       res.json({ message: 'Settings updated successfully' });
@@ -429,6 +457,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Content management endpoints
+  app.get('/api/content/:key', async (req, res) => {
+    try {
+      const { Content } = await import('./contentSchema');
+      const content = await Content.findOne({ key: req.params.key });
+      if (!content) {
+        return res.status(404).json({ error: 'Content not found' });
+      }
+      res.json(content);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch content' });
+    }
+  });
+
+  app.put('/api/content/:key', requirePermission(PERMISSIONS.EDIT_MODE), async (req: AuthenticatedRequest, res) => {
+    try {
+      const { Content } = await import('./contentSchema');
+      const { value, type, page, section } = req.body;
+      const user = (req as any).user;
+      
+      const content = await Content.findOneAndUpdate(
+        { key: req.params.key },
+        { 
+          value, 
+          type, 
+          page, 
+          section, 
+          updatedAt: new Date(), 
+          updatedBy: user._id 
+        },
+        { upsert: true, new: true }
+      );
+      
+      res.json(content);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to save content' });
+    }
+  });
+
   // Analytics (Level 5+)
   app.get('/api/admin/analytics', requirePermission(PERMISSIONS.VIEW_USERS), async (req, res) => {
     try {
@@ -450,6 +517,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Edit mode activation endpoint
+  app.post('/api/admin/activate-edit-mode', requirePermission(PERMISSIONS.FULL_ACCESS), async (req: AuthenticatedRequest, res) => {
+    try {
+      const { secretKey } = req.body;
+      const user = (req as any).user;
+      
+      console.log('Edit mode activation attempt');
+      console.log('User:', user);
+      console.log('User level:', user?.level);
+      console.log('Required level:', PERMISSIONS.EDIT_MODE);
+      console.log('Edit mode enabled:', EDIT_MODE_ENABLED);
+      
+      if (!EDIT_MODE_ENABLED) {
+        return res.status(403).json({ error: 'Edit mode is disabled' });
+      }
+      
+      if (user.level < PERMISSIONS.EDIT_MODE) {
+        return res.status(403).json({ error: 'Insufficient permissions for edit mode' });
+      }
+      
+      console.log('Received secret key:', secretKey);
+      console.log('Expected secret key:', EDIT_MODE_SECRET);
+      console.log('Keys match:', secretKey === EDIT_MODE_SECRET);
+      
+      if (secretKey !== EDIT_MODE_SECRET) {
+        return res.status(403).json({ error: 'Invalid secret key' });
+      }
+      
+      // Generate edit mode session (expires in 30 minutes)
+      const editToken = jwt.sign(
+        { userId: user._id, editMode: true },
+        JWT_SECRET,
+        { expiresIn: '30m' }
+      );
+      
+      res.json({ 
+        editToken,
+        message: 'Edit mode activated',
+        expiresIn: 30 * 60 * 1000 // 30 minutes in milliseconds
+      });
+    } catch (error: any) {
+      res.status(500).json({ error: 'Failed to activate edit mode' });
+    }
+  });
+  
   // Temporary endpoint to make yourself admin (remove after use)
   app.post('/api/make-admin', async (req, res) => {
     try {
@@ -459,8 +571,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: 'User not found' });
       }
       
-      await storage.updateUserLevel((user as any)._id.toString(), 9);
-      res.json({ message: 'User promoted to admin' });
+      await storage.updateUserLevel((user as any)._id.toString(), 10);
+      res.json({ message: 'User promoted to developer' });
     } catch (error) {
       res.status(500).json({ error: 'Failed to promote user' });
     }
@@ -473,6 +585,67 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ message: 'Users migrated successfully' });
     } catch (error) {
       res.status(500).json({ error: 'Migration failed' });
+    }
+  });
+
+  // Resend verification email
+  app.post('/api/resend-verification', async (req, res) => {
+    try {
+      const { email } = req.body;
+      
+      const { User } = await import('../shared/mongoSchema');
+      const user = await User.findOne({ email, isVerified: false });
+      
+      if (!user) {
+        return res.status(400).json({ error: 'User not found or already verified' });
+      }
+      
+      // Generate new token
+      const { generateVerificationToken, sendVerificationEmail } = await import('./emailService');
+      const verificationToken = generateVerificationToken();
+      const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+      
+      user.verificationToken = verificationToken;
+      user.verificationExpires = verificationExpires;
+      await user.save();
+      
+      await sendVerificationEmail(email, user.username, verificationToken);
+      
+      res.json({ message: 'Verification email sent!' });
+    } catch (error) {
+      console.error('Resend verification error:', error);
+      res.status(500).json({ error: 'Failed to resend verification email' });
+    }
+  });
+
+  // Email verification endpoint
+  app.get('/api/verify-email', async (req, res) => {
+    try {
+      const { token } = req.query;
+      
+      if (!token) {
+        return res.status(400).json({ error: 'Verification token is required' });
+      }
+      
+      const { User } = await import('../shared/mongoSchema');
+      const user = await User.findOne({ 
+        verificationToken: token,
+        verificationExpires: { $gt: new Date() }
+      });
+      
+      if (!user) {
+        return res.status(400).json({ error: 'Invalid or expired verification token' });
+      }
+      
+      user.isVerified = true;
+      user.verificationToken = undefined;
+      user.verificationExpires = undefined;
+      await user.save();
+      
+      res.json({ message: 'Email verified successfully! You can now log in.' });
+    } catch (error) {
+      console.error('Email verification error:', error);
+      res.status(500).json({ error: 'Failed to verify email' });
     }
   });
 

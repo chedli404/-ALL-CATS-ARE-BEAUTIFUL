@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "framer-motion";
 import CharacterCard from "@/components/ui/CharacterCard.tsx";
+import SmartEditable from "@/components/admin/SmartEditable";
 
 const CharactersSection = () => {
   const [filter, setFilter] = useState("all");
@@ -57,7 +58,13 @@ const CharactersSection = () => {
           initial="hidden"
           animate={controls}
         >
-          PERSONNAGES
+          <SmartEditable
+            contentKey="characters.title"
+            type="text"
+            page="characters"
+            section="header"
+            defaultValue="PERSONNAGES"
+          />
         </motion.h2>
         <motion.p 
           className="text-gray-400 max-w-3xl mx-auto text-center mb-16"
@@ -66,7 +73,14 @@ const CharactersSection = () => {
           animate={controls}
           transition={{ delay: 0.2 }}
         >
-          Des héros et survivants dans un monde post-apocalyptique, chacun avec sa propre histoire et ses motivations uniques.
+          <SmartEditable
+            contentKey="characters.description"
+            type="text"
+            page="characters"
+            section="header"
+            defaultValue="Des héros et survivants dans un monde post-apocalyptique, chacun avec sa propre histoire et ses motivations uniques."
+            multiline={true}
+          />
         </motion.p>
         
         {/* Character filter buttons */}

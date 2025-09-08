@@ -364,7 +364,7 @@ export default function AdminPage() {
     { id: 'tribes', label: 'Tribes', count: tribes.length },
     { id: 'images', label: 'Images', count: 0 },
     { id: 'content', label: 'Content', count: 0 },
-    { id: 'settings', label: 'Settings', count: 0 }
+    ...(currentUser?.level >= 10 ? [{ id: 'settings', label: 'Settings', count: 0 }] : [])
   ];
 
   return (
@@ -412,12 +412,14 @@ export default function AdminPage() {
                     <td className="py-3 text-gray-300">{user.email}</td>
                     <td className="py-3">
                       <span className={`px-2 py-1 rounded text-xs ${
+                        user.level >= 10 ? 'bg-purple-600 text-white' :
                         user.level >= 9 ? 'bg-red-600 text-white' :
                         user.level >= 7 ? 'bg-orange-600 text-white' :
                         user.level >= 5 ? 'bg-blue-600 text-white' :
                         'bg-gray-600 text-gray-200'
                       }`}>
                         Level {user.level} {
+                          user.level >= 10 ? '(Developer)' :
                           user.level === 9 ? '(Super Admin)' :
                           user.level === 8 ? '(Admin)' :
                           user.level === 7 ? '(Moderator)' :
@@ -442,6 +444,7 @@ export default function AdminPage() {
                             <option value={7}>Level 7 (Moderator)</option>
                             <option value={8}>Level 8 (Admin)</option>
                             {currentUser.level >= 9 && <option value={9}>Level 9 (Super Admin)</option>}
+                            {currentUser.level >= 10 && <option value={10}>Level 10 (Developer)</option>}
                           </select>
                           {user._id !== currentUser.id && (
                             <button 
@@ -637,9 +640,9 @@ export default function AdminPage() {
             </>
           )}
           
-          {activeTab === 'settings' && (
+          {activeTab === 'settings' && currentUser?.level >= 10 && (
             <>
-              <h2 className="text-xl font-semibold text-white mb-4">System Settings</h2>
+              <h2 className="text-xl font-semibold text-white mb-4">System Settings (Developer Only)</h2>
               <div className="space-y-6">
                 <div className="bg-gray-800 rounded-lg p-4">
                   <h3 className="text-white font-semibold mb-2">Site Configuration</h3>

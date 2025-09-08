@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { Facebook, Twitter, Instagram, MessageSquare } from "lucide-react";
+import SmartEditable from "@/components/admin/SmartEditable";
 
 const Footer = () => {
   return (
@@ -9,9 +10,25 @@ const Footer = () => {
           <div className="mb-8 md:mb-0">
             <div className="flex items-center justify-center md:justify-start">
               
-              <h3 className="font-display text-2xl text-white tracking-widest  " >Kabila</h3>
+              <h3 className="font-display text-2xl text-white tracking-widest">
+                <SmartEditable
+                  contentKey="footer.title"
+                  type="text"
+                  page="global"
+                  section="footer"
+                  defaultValue="Kabila"
+                />
+              </h3>
             </div>
-            <p className="text-gray-500 mt-2 text-center md:text-left">All Cats Are Beautiful - L'Héritage</p>
+            <p className="text-gray-500 mt-2 text-center md:text-left">
+              <SmartEditable
+                contentKey="footer.subtitle"
+                type="text"
+                page="global"
+                section="footer"
+                defaultValue="All Cats Are Beautiful - L'Héritage"
+              />
+            </p>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -67,7 +84,13 @@ const Footer = () => {
         
         <div className="mt-12 pt-8 border-t border-gray-800">
           <p className="text-gray-600 text-center text-sm">
-            © 2023 ACAB - All Cats Are Beautiful. Tous droits réservés.
+            <SmartEditable
+              contentKey="footer.copyright"
+              type="text"
+              page="global"
+              section="footer"
+              defaultValue="© 2023 ACAB - All Cats Are Beautiful. Tous droits réservés."
+            />
           </p>
         </div>
       </div>

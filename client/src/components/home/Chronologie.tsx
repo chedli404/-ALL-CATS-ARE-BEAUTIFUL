@@ -3,6 +3,7 @@ import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import TimelineItem from "@/components/ui/TimelineItem.tsx";
 import { TIMELINE_DATA } from "@/lib/constants.ts";
+import SmartEditable from "@/components/admin/SmartEditable";
 
 const Chronologie = () => {
   const controls = useAnimation();
@@ -50,8 +51,25 @@ const Chronologie = () => {
           animate={controls}
           variants={headerVariants}
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display text-white mb-4">Chronologie</h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto font-body">L'évolution du monde depuis la disparition des humains</p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display text-white mb-4">
+            <SmartEditable
+              contentKey="home.chronologie.title"
+              type="text"
+              page="home"
+              section="chronologie"
+              defaultValue="Chronologie"
+            />
+          </h2>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto font-body">
+            <SmartEditable
+              contentKey="home.chronologie.subtitle"
+              type="text"
+              page="home"
+              section="chronologie"
+              defaultValue="L'évolution du monde depuis la disparition des humains"
+              multiline={true}
+            />
+          </p>
           <div className="w-24 h-1 bg-gradient-to-r from-technos to-anciens mx-auto mt-6"></div>
         </motion.div>
 

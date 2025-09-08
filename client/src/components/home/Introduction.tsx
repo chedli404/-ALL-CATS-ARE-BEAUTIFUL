@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import SmartEditable from '@/components/admin/SmartEditable';
 
 const Introduction: React.FC = () => {
   // Animation variants
@@ -32,19 +33,55 @@ const Introduction: React.FC = () => {
         >
           {/* Text Content */}
           <motion.div className="w-full md:w-1/2 order-2 md:order-1" variants={itemVariants}>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display text-white mb-6">L'ère des humains est révolue</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display text-white mb-6">
+              <SmartEditable
+                contentKey="home.intro.title"
+                type="text"
+                page="home"
+                section="introduction"
+                defaultValue="L'ère des humains est révolue"
+              />
+            </h2>
             <div className="text-gray-200 text-base md:text-lg space-y-4 leading-relaxed font-body">
               <p>
-                L'ère des humains n'est plus qu'un souvenir effacé par le vent et la poussière. Leur monde, jadis grandiose et indomptable, s'est effondré sous le poids de ses propres excès, ne laissant derrière lui que des ruines hantées par l'écho de leur disparition.
+                <SmartEditable
+                  contentKey="home.intro.paragraph1"
+                  type="text"
+                  page="home"
+                  section="introduction"
+                  defaultValue="L'ère des humains n'est plus qu'un souvenir effacé par le vent et la poussière. Leur monde, jadis grandiose et indomptable, s'est effondré sous le poids de ses propres excès, ne laissant derrière lui que des ruines hantées par l'écho de leur disparition."
+                  multiline={true}
+                />
               </p>
               <p>
-                Désormais, une nouvelle espèce règne sur les vestiges de cette civilisation éteinte : les chats.
+                <SmartEditable
+                  contentKey="home.intro.paragraph2"
+                  type="text"
+                  page="home"
+                  section="introduction"
+                  defaultValue="Désormais, une nouvelle espèce règne sur les vestiges de cette civilisation éteinte : les chats."
+                  multiline={true}
+                />
               </p>
               <p>
-                Nés dans l'ombre de l'apocalypse, ils ont appris à dompter le chaos. Là où l'humanité voyait sa fin, eux ont trouvé un nouveau départ. Certains ont exploité les restes de l'ancienne technologie, d'autres ont embrassé les mutations et les forces mystérieuses qui ont émergé du cataclysme.
+                <SmartEditable
+                  contentKey="home.intro.paragraph3"
+                  type="text"
+                  page="home"
+                  section="introduction"
+                  defaultValue="Nés dans l'ombre de l'apocalypse, ils ont appris à dompter le chaos. Là où l'humanité voyait sa fin, eux ont trouvé un nouveau départ. Certains ont exploité les restes de l'ancienne technologie, d'autres ont embrassé les mutations et les forces mystérieuses qui ont émergé du cataclysme."
+                  multiline={true}
+                />
               </p>
               <p>
-                Des cités se sont reformées, des tribus se sont levées, des pouvoirs se sont consolidés. Mais si le monde a changé de maîtres, il n'a pas pour autant changé de nature...
+                <SmartEditable
+                  contentKey="home.intro.paragraph4"
+                  type="text"
+                  page="home"
+                  section="introduction"
+                  defaultValue="Des cités se sont reformées, des tribus se sont levées, des pouvoirs se sont consolidés. Mais si le monde a changé de maîtres, il n'a pas pour autant changé de nature..."
+                  multiline={true}
+                />
               </p>
             </div>
           </motion.div>
@@ -55,10 +92,14 @@ const Introduction: React.FC = () => {
             variants={itemVariants}
           >
             <div className="relative rounded-lg overflow-hidden shadow-2xl border border-gray-800">
-              <img 
-                src="/attached_assets/9abila 3d.png"
+              <SmartEditable
+                contentKey="home.intro.image"
+                type="image"
+                page="home"
+                section="introduction"
+                defaultValue="/attached_assets/9abila 3d.png"
                 alt="Introduction Image"
-                className="w-full h-auto object-cover" 
+                className="w-full h-auto object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>
             </div>

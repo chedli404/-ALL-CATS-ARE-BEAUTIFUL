@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import SmartEditable from "@/components/admin/SmartEditable";
 
 interface TimelineItemProps {
   period: string;
@@ -79,10 +80,33 @@ const TimelineItem = ({
             className="font-tech text-lg inline-block px-4 py-1 rounded-full mb-3" 
             style={{ backgroundColor: `${color}30`, color }}
           >
-            {period}
+            <SmartEditable
+              contentKey={`timeline.${period.replace(/\s+/g, '_').toLowerCase()}.period`}
+              type="text"
+              page="home"
+              section="timeline"
+              defaultValue={period}
+            />
           </span>
-          <h4 className="font-display text-2xl md:text-3xl mb-3 text-white">{title}</h4>
-          <p className="text-gray-300 font-body">{description}</p>
+          <h4 className="font-display text-2xl md:text-3xl mb-3 text-white">
+            <SmartEditable
+              contentKey={`timeline.${period.replace(/\s+/g, '_').toLowerCase()}.title`}
+              type="text"
+              page="home"
+              section="timeline"
+              defaultValue={title}
+            />
+          </h4>
+          <p className="text-gray-300 font-body">
+            <SmartEditable
+              contentKey={`timeline.${period.replace(/\s+/g, '_').toLowerCase()}.description`}
+              type="text"
+              page="home"
+              section="timeline"
+              defaultValue={description}
+              multiline={true}
+            />
+          </p>
         </motion.div>
 
         <motion.div
@@ -92,13 +116,25 @@ const TimelineItem = ({
           animate="visible"
         >
           <div className="overflow-hidden rounded-lg border border-gray-700 shadow-lg bg-gray-800/30 backdrop-blur-sm">
-            <img 
-              src={image} 
-              alt={title} 
-              className="w-full h-48 object-cover" 
+            <SmartEditable
+              contentKey={`timeline.${period.replace(/\s+/g, '_').toLowerCase()}.image`}
+              type="image"
+              page="home"
+              section="timeline"
+              defaultValue={image}
+              alt={title}
+              className="w-full h-48 object-cover"
             />
             <div className="p-3">
-              <span className="text-xs font-tech text-gray-400">Vestige de l'ère {title.toLowerCase()}</span>
+              <span className="text-xs font-tech text-gray-400">
+                <SmartEditable
+                  contentKey={`timeline.${period.replace(/\s+/g, '_').toLowerCase()}.caption`}
+                  type="text"
+                  page="home"
+                  section="timeline"
+                  defaultValue={`Vestige de l'ère ${title.toLowerCase()}`}
+                />
+              </span>
             </div>
           </div>
         </motion.div>
@@ -118,10 +154,33 @@ const TimelineItem = ({
                 className="font-tech text-lg inline-block px-4 py-1 rounded-full mb-3" 
                 style={{ backgroundColor: `${color}30`, color }}
               >
-                {period}
+                <SmartEditable
+                  contentKey={`timeline.${period.replace(/\s+/g, '_').toLowerCase()}.period`}
+                  type="text"
+                  page="home"
+                  section="timeline"
+                  defaultValue={period}
+                />
               </span>
-              <h4 className="font-display text-2xl md:text-3xl mb-3 text-white">{title}</h4>
-              <p className="text-gray-300 font-body">{description}</p>
+              <h4 className="font-display text-2xl md:text-3xl mb-3 text-white">
+                <SmartEditable
+                  contentKey={`timeline.${period.replace(/\s+/g, '_').toLowerCase()}.title`}
+                  type="text"
+                  page="home"
+                  section="timeline"
+                  defaultValue={title}
+                />
+              </h4>
+              <p className="text-gray-300 font-body">
+                <SmartEditable
+                  contentKey={`timeline.${period.replace(/\s+/g, '_').toLowerCase()}.description`}
+                  type="text"
+                  page="home"
+                  section="timeline"
+                  defaultValue={description}
+                  multiline={true}
+                />
+              </p>
             </motion.div>
             
             <div className="w-[10%] flex justify-center relative">
@@ -146,13 +205,25 @@ const TimelineItem = ({
               animate="visible"
             >
               <div className="overflow-hidden rounded-lg border border-gray-700 shadow-lg bg-gray-800/30 backdrop-blur-sm transform hover:scale-105 transition-transform duration-300">
-                <img 
-                  src={image} 
-                  alt={title} 
-                  className="w-full h-64 object-cover" 
+                <SmartEditable
+                  contentKey={`timeline.${period.replace(/\s+/g, '_').toLowerCase()}.image`}
+                  type="image"
+                  page="home"
+                  section="timeline"
+                  defaultValue={image}
+                  alt={title}
+                  className="w-full h-64 object-cover"
                 />
                 <div className="p-3">
-                  <span className="text-sm font-tech text-gray-400">Vestige de l'ère {title.toLowerCase()}</span>
+                  <span className="text-sm font-tech text-gray-400">
+                    <SmartEditable
+                      contentKey={`timeline.${period.replace(/\s+/g, '_').toLowerCase()}.caption`}
+                      type="text"
+                      page="home"
+                      section="timeline"
+                      defaultValue={`Vestige de l'ère ${title.toLowerCase()}`}
+                    />
+                  </span>
                 </div>
               </div>
             </motion.div>
@@ -166,13 +237,25 @@ const TimelineItem = ({
               animate="visible"
             >
               <div className="overflow-hidden rounded-lg border border-gray-700 shadow-lg bg-gray-800/30 backdrop-blur-sm transform hover:scale-105 transition-transform duration-300">
-                <img 
-                  src={image} 
-                  alt={title} 
-                  className="w-full h-64 object-cover" 
+                <SmartEditable
+                  contentKey={`timeline.${period.replace(/\s+/g, '_').toLowerCase()}.image`}
+                  type="image"
+                  page="home"
+                  section="timeline"
+                  defaultValue={image}
+                  alt={title}
+                  className="w-full h-64 object-cover"
                 />
                 <div className="p-3">
-                  <span className="text-sm font-tech text-gray-400">Vestige de l'ère {title.toLowerCase()}</span>
+                  <span className="text-sm font-tech text-gray-400">
+                    <SmartEditable
+                      contentKey={`timeline.${period.replace(/\s+/g, '_').toLowerCase()}.caption`}
+                      type="text"
+                      page="home"
+                      section="timeline"
+                      defaultValue={`Vestige de l'ère ${title.toLowerCase()}`}
+                    />
+                  </span>
                 </div>
               </div>
             </motion.div>
@@ -202,10 +285,33 @@ const TimelineItem = ({
                 className="font-tech text-lg inline-block px-4 py-1 rounded-full mb-3" 
                 style={{ backgroundColor: `${color}30`, color }}
               >
-                {period}
+                <SmartEditable
+                  contentKey={`timeline.${period.replace(/\s+/g, '_').toLowerCase()}.period`}
+                  type="text"
+                  page="home"
+                  section="timeline"
+                  defaultValue={period}
+                />
               </span>
-              <h4 className="font-display text-2xl md:text-3xl mb-3 text-white">{title}</h4>
-              <p className="text-gray-300 font-body">{description}</p>
+              <h4 className="font-display text-2xl md:text-3xl mb-3 text-white">
+                <SmartEditable
+                  contentKey={`timeline.${period.replace(/\s+/g, '_').toLowerCase()}.title`}
+                  type="text"
+                  page="home"
+                  section="timeline"
+                  defaultValue={title}
+                />
+              </h4>
+              <p className="text-gray-300 font-body">
+                <SmartEditable
+                  contentKey={`timeline.${period.replace(/\s+/g, '_').toLowerCase()}.description`}
+                  type="text"
+                  page="home"
+                  section="timeline"
+                  defaultValue={description}
+                  multiline={true}
+                />
+              </p>
             </motion.div>
           </>
         )}

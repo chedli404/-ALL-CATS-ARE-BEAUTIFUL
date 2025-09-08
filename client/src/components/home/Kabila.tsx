@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import SmartEditable from "@/components/admin/SmartEditable";
 
 const Kabila = () => {
   const ref = useRef(null);
@@ -24,9 +25,24 @@ const Kabila = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">KABILA</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+            <SmartEditable
+              contentKey="home.kabila.title"
+              type="text"
+              page="home"
+              section="kabila"
+              defaultValue="KABILA"
+            />
+          </h1>
           <p className="text-lg text-gray-300 max-w-3xl mx-auto mb-8">
-            Un média innovant utilisant l'art digital pour sensibiliser et mobiliser
+            <SmartEditable
+              contentKey="home.kabila.subtitle"
+              type="text"
+              page="home"
+              section="kabila"
+              defaultValue="Un média innovant utilisant l'art digital pour sensibiliser et mobiliser"
+              multiline={true}
+            />
           </p>
         </motion.div>
 
@@ -38,8 +54,12 @@ const Kabila = () => {
             animate={isInView ? "visible" : "hidden"}
             transition={{ delay: 0.2 }}
           >
-            <img
-              src="/attached_assets/IMG_0292.png"
+            <SmartEditable
+              contentKey="home.kabila.image"
+              type="image"
+              page="home"
+              section="kabila"
+              defaultValue="/attached_assets/IMG_0292.png"
               alt="Kabila"
               className="w-full max-w-2xl mx-auto rounded-2xl shadow-2xl border border-gray-800"
             />
@@ -54,16 +74,46 @@ const Kabila = () => {
             transition={{ delay: 0.4 }}
           >
             <div className="bg-gray-800 bg-opacity-50 p-6 rounded-lg border border-gray-700">
-              <h3 className="text-xl font-semibold mb-3 text-[#E3A947]">Notre Mission</h3>
+              <h3 className="text-xl font-semibold mb-3 text-[#E3A947]">
+                <SmartEditable
+                  contentKey="home.kabila.mission.title"
+                  type="text"
+                  page="home"
+                  section="kabila"
+                  defaultValue="Notre Mission"
+                />
+              </h3>
               <p className="text-gray-300 leading-relaxed">
-                Kabila se distingue comme un média innovant, utilisant l'art digital pour sensibiliser et mobiliser autour des enjeux cruciaux de notre époque. Nous croyons fermement que l'information et la créativité peuvent transformer la société.
+                <SmartEditable
+                  contentKey="home.kabila.mission.text"
+                  type="text"
+                  page="home"
+                  section="kabila"
+                  defaultValue="Kabila se distingue comme un média innovant, utilisant l'art digital pour sensibiliser et mobiliser autour des enjeux cruciaux de notre époque. Nous croyons fermement que l'information et la créativité peuvent transformer la société."
+                  multiline={true}
+                />
               </p>
             </div>
             
             <div className="bg-gray-800 bg-opacity-50 p-6 rounded-lg border border-gray-700">
-              <h3 className="text-xl font-semibold mb-3 text-[#1C6E5F]">Notre Vision</h3>
+              <h3 className="text-xl font-semibold mb-3 text-[#1C6E5F]">
+                <SmartEditable
+                  contentKey="home.kabila.vision.title"
+                  type="text"
+                  page="home"
+                  section="kabila"
+                  defaultValue="Notre Vision"
+                />
+              </h3>
               <p className="text-gray-300 leading-relaxed">
-                En mettant en avant des sujets souvent négligés, nous cherchons à créer une communauté engagée et à inciter à l'action pour un monde plus juste et durable. Rejoignez cette aventure avec nous.
+                <SmartEditable
+                  contentKey="home.kabila.vision.text"
+                  type="text"
+                  page="home"
+                  section="kabila"
+                  defaultValue="En mettant en avant des sujets souvent négligés, nous cherchons à créer une communauté engagée et à inciter à l'action pour un monde plus juste et durable. Rejoignez cette aventure avec nous."
+                  multiline={true}
+                />
               </p>
             </div>
           </motion.div>
