@@ -3,6 +3,9 @@ import { useEditMode } from '@/contexts/EditModeContext';
 import EditableText from './EditableText';
 import EditableImage from './EditableImage';
 
+// Cache to prevent repeated API calls for the same content
+const contentCache = new Map<string, string>();
+
 interface SmartEditableProps {
   contentKey: string;
   type: 'text' | 'image';
@@ -30,22 +33,38 @@ const SmartEditable = ({
   const [content, setContent] = useState(defaultValue);
   const [loading, setLoading] = useState(false);
 
-  // Load content from database
+  // Load content from database only when in edit mode
   useEffect(() => {
+    if (!isEditMode) {
+      setContent(defaultValue);
+      return;
+    }
+    
+    // Check cache first
+    if (contentCache.has(contentKey)) {
+      setContent(contentCache.get(contentKey) || defaultValue);
+      return;
+    }
+    
     const loadContent = async () => {
       try {
         const res = await fetch(`/api/content/${contentKey}`);
         if (res.ok) {
           const data = await res.json();
+          contentCache.set(contentKey, data.value);
           setContent(data.value);
+        } else {
+          contentCache.set(contentKey, defaultValue);
+          setContent(defaultValue);
         }
       } catch (error) {
-        console.log('Using default content for', contentKey);
+        contentCache.set(contentKey, defaultValue);
+        setContent(defaultValue);
       }
     };
     
     loadContent();
-  }, [contentKey]);
+  }, [contentKey, isEditMode, defaultValue]);
 
   const handleSave = async (newValue: string) => {
     setLoading(true);
