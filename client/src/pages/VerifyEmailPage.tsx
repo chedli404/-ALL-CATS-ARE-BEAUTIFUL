@@ -7,6 +7,8 @@ const VerifyEmailPage = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
+    let hasRun = false;
+    
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
 
@@ -17,6 +19,9 @@ const VerifyEmailPage = () => {
     }
 
     const verifyEmail = async () => {
+      if (hasRun) return;
+      hasRun = true;
+      
       try {
         const response = await fetch(`/api/verify-email?token=${token}`);
         const data = await response.json();
