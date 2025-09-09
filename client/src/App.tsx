@@ -6,6 +6,7 @@ import Navbar from "@/components/layout/Navbar.tsx";
 import Footer from "@/components/layout/Footer.tsx";
 import { EditModeProvider } from "@/contexts/EditModeContext";
 import EditModeToggle from "@/components/admin/EditModeToggle";
+import AuthGuard from "@/components/auth/AuthGuard";
 import Home from "@/pages/Home.tsx";
 import CharactersPage from "@/pages/CharactersPage.tsx";
 import CharacterDetail from "@/pages/CharacterDetail.tsx";
@@ -103,16 +104,16 @@ const PageTransition = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
   const [location] = useLocation();
-
   
+  const isAuthPage = ['/login', '/register'].includes(location) || location.startsWith('/verify');
 
-  
   return (
     <EditModeProvider>
-      <div className="flex flex-col min-h-screen w-full max-w-[100vw] overflow-x-hidden relative bg-background-dark">
-        <BackgroundParticles />
-        <EditModeToggle />
-        <Navbar />
+      <AuthGuard>
+        <div className="flex flex-col min-h-screen w-full max-w-[100vw] overflow-x-hidden relative bg-background-dark">
+          {!isAuthPage && <BackgroundParticles />}
+          {!isAuthPage && <EditModeToggle />}
+          {!isAuthPage && <Navbar />}
       
       <main className="flex-grow w-full relative z-10">
         <AnimatePresence mode="wait">
@@ -142,9 +143,10 @@ function App() {
         </AnimatePresence>
       </main>
       
-        <Footer />
-        <Toaster />
-      </div>
+          {!isAuthPage && <Footer />}
+          <Toaster />
+        </div>
+      </AuthGuard>
     </EditModeProvider>
   );
 }
