@@ -46,7 +46,7 @@ const CharacterCard = ({ character, delay = 0 }: CharacterCardProps) => {
 
   return (
     <motion.div 
-      className="bg-gray-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
+      className="bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
       ref={ref}
       variants={cardVariants}
       initial="hidden"
@@ -56,51 +56,50 @@ const CharacterCard = ({ character, delay = 0 }: CharacterCardProps) => {
         <img 
           src={character.image} 
           alt={`${character.name} character`} 
-          className="w-full h-64 object-cover"
+          className="w-full h-48 object-cover"
         />
         <div 
-          className="absolute top-0 right-0 m-4 px-3 py-1 rounded-full" 
+          className="absolute top-2 right-2 px-2 py-1 rounded text-xs text-white" 
           style={{ backgroundColor: character.tribeColor }}
         >
-          <span className="text-white text-xs font-tech">{character.tribe}</span>
+          {character.tribe}
         </div>
       </div>
       
-      <div className="p-6 bg-[#568564] rounded-b-xl">
-        <div className="flex items-center mb-4">
+      <div className="p-4">
+        <div className="flex items-center mb-3">
           <div 
-            className="w-12 h-12 rounded-full flex items-center justify-center mr-4" 
+            className="w-8 h-8 rounded-full flex items-center justify-center mr-3" 
             style={{ backgroundColor: character.tribeColor }}
           >
             {renderTribeIcon()}
           </div>
-          <h3 className="font-display text-2xl text-white">{character.name}</h3>
+          <h3 className="font-display text-xl text-white">{character.name}</h3>
         </div>
         
-        <p className="text-gray-400 mb-6 line-clamp-3">
+        <p className="text-gray-400 mb-4 text-sm line-clamp-2">
           {character.description}
         </p>
         
-        <div className="flex justify-between items-center">
-          <div>
-            {character.traits.map((trait, index) => (
-              <span 
-                key={index} 
-                className="inline-block bg-gray-700 rounded-full px-3 py-1 text-sm font-tech text-gray-300 mr-2 mb-2"
-              >
-                {trait}
-              </span>
-            ))}
-          </div>
-          <Link href={`/characters/${character._id || character.id}`}>
-            <button 
-              className="text-white font-display"
-              style={{ color: character.tribeColor }}
+        <div className="flex flex-wrap gap-1 mb-4">
+          {character.traits.slice(0, 2).map((trait, index) => (
+            <span 
+              key={index} 
+              className="inline-block bg-gray-700 rounded px-2 py-1 text-xs text-gray-300"
             >
-              VOIR PLUS
-            </button>
-          </Link>
+              {trait}
+            </span>
+          ))}
         </div>
+        
+        <Link href={`/characters/${character._id || character.id}`}>
+          <button 
+            className="text-sm font-medium hover:underline"
+            style={{ color: character.tribeColor }}
+          >
+            VOIR PLUS →
+          </button>
+        </Link>
       </div>
     </motion.div>
   );

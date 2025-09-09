@@ -1,26 +1,15 @@
-import { useState, useEffect, useRef } from "react";
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "framer-motion";
-import CharacterCard from "@/components/ui/CharacterCard.tsx";
+import { useState, useEffect } from "react";
+import { Link } from "wouter";
 import SmartEditable from "@/components/admin/SmartEditable";
 
 const CharactersSection = () => {
   const [filter, setFilter] = useState("all");
   const [characters, setCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
-  const controls = useAnimation();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
   
   useEffect(() => {
     fetchCharacters();
   }, []);
-
-  useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    }
-  }, [controls, isInView]);
 
   const fetchCharacters = async () => {
     try {
@@ -35,62 +24,42 @@ const CharactersSection = () => {
       setLoading(false);
     }
   };
-  
-  const fadeIn = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 }
-    }
-  };
 
   const filteredCharacters = filter === "all" 
     ? characters 
     : characters.filter(character => character.tribe === filter);
 
+
+
   return (
-    <section id="characters" className="py-24 "style={{ backgroundColor: 'rgb(35, 35, 35)' }} ref={ref}>
-      <div className="container mx-auto px-0 sm:px-4">
-        <motion.h2 
-          className="font-display text-5xl mb-6 text-center text-white text-[#64afd6]"
-          variants={fadeIn}
-          initial="hidden"
-          animate={controls}
-        >
+    <div className="min-h-screen p-6" style={{ 
+      background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)'
+    }}>
+      <header className="text-center mb-12">
+        <h1 className="text-white text-5xl font-bold mb-4" style={{
+          textShadow: '0 0 20px rgba(100, 175, 214, 0.8), 0 0 40px rgba(100, 175, 214, 0.4)'
+        }}>
           <SmartEditable
             contentKey="characters.title"
             type="text"
             page="characters"
             section="header"
-            defaultValue="PERSONNAGES"
+            defaultValue="CHARACTERS"
           />
-        </motion.h2>
-        <motion.p 
-          className="text-gray-400 max-w-3xl mx-auto text-center mb-16"
-          variants={fadeIn}
-          initial="hidden"
-          animate={controls}
-          transition={{ delay: 0.2 }}
-        >
+        </h1>
+        <p className="text-gray-400 max-w-3xl mx-auto text-center mb-8">
           <SmartEditable
             contentKey="characters.description"
             type="text"
             page="characters"
             section="header"
-            defaultValue="Des héros et survivants dans un monde post-apocalyptique, chacun avec sa propre histoire et ses motivations uniques."
+            defaultValue="Heroes and survivors in a post-apocalyptic world, each with their own unique story and motivations."
             multiline={true}
           />
-        </motion.p>
+        </p>
         
-        {/* Character filter buttons */}
-        <motion.div 
-          className="flex flex-wrap justify-center mb-12 gap-3"
-          variants={fadeIn}
-          initial="hidden"
-          animate={controls}
-          transition={{ delay: 0.3 }}
-        >
+        {/* Filter buttons */}
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
           <button 
             className={`px-4 py-2 rounded-full font-display transition-colors ${
               filter === "all" 
@@ -99,7 +68,7 @@ const CharactersSection = () => {
             }`}
             onClick={() => setFilter("all")}
           >
-            Tous
+            All
           </button>
           <button 
             className={`px-4 py-2 rounded-full font-display transition-colors ${
@@ -109,7 +78,7 @@ const CharactersSection = () => {
             }`}
             onClick={() => setFilter("Nomades")}
           >
-            Nomades
+            Nomads
           </button>
           <button 
             className={`px-4 py-2 rounded-full font-display transition-colors ${
@@ -119,7 +88,7 @@ const CharactersSection = () => {
             }`}
             onClick={() => setFilter("Anciens")}
           >
-            Anciens
+            Former
           </button>
           <button 
             className={`px-4 py-2 rounded-full font-display transition-colors ${
@@ -131,24 +100,87 @@ const CharactersSection = () => {
           >
             Technos
           </button>
-        </motion.div>
+        </div>
         
-        {/* Characters grid */}
+        <div className="w-32 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto rounded"></div>
+      </header>
+
+      <main className="max-w-7xl mx-auto">
+        {/* Trading Cards Grid */}
         {loading ? (
-          <div className="text-center text-white">Loading characters...</div>
+          <div className="flex flex-col items-center justify-center mb-12">
+            <img 
+              src="/attached_assets/kab.png" 
+              alt="Loading..." 
+              className="w-32 h-32 mb-5"
+              style={{ 
+                imageRendering: 'auto',
+                animation: 'spin 2s linear infinite',
+                animationDelay: '0s',
+                willChange: 'transform'
+              }}
+              onLoad={(e) => {
+                e.target.style.opacity = '1';
+              }}
+            />
+            <div className="text-white text-xl">Loading characters...</div>
+          </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 mb-12">
             {filteredCharacters.map((character, index) => (
-              <CharacterCard 
-                key={character._id}
-                character={character}
-                delay={0.4 + (index * 0.1)}
-              />
+            <div 
+              key={character._id} 
+              className="relative group cursor-pointer"
+            >
+              {/* Card */}
+              <div className="relative bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-2xl p-4 border-2 border-gray-600 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:scale-110 hover:-rotate-1 transition-all duration-500 transform">
+                
+                {/* Holographic effect */}
+                <div className="absolute inset-0 rounded-2xl opacity-20 bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 group-hover:opacity-40 transition-opacity duration-500"></div>
+                
+                {/* Character Image */}
+                <div className="relative z-10 mb-4 overflow-visible">
+                  <img
+                    src={character.image}
+                    alt={character.name}
+                    className="w-full h-32 object-contain transition-all duration-700 ease-out hover:scale-[2.5] hover:z-50 relative"
+                    style={{
+                      filter: 'drop-shadow(3px 6px 8px black)',
+                      transformOrigin: 'center'
+                    }}
+                  />
+                </div>
+                
+                {/* Character Info */}
+                <div className="relative z-10 text-center">
+                  <h3 className="text-white font-bold text-lg mb-2">{character.name}</h3>
+                  <div 
+                    className="inline-block px-3 py-1 rounded-full text-xs font-bold text-white mb-3"
+                    style={{ backgroundColor: character.tribeColor }}
+                  >
+                    {character.tribe}
+                  </div>
+                  
+                  <Link href={`/characters/${character._id}`}>
+                    <button 
+                      className="w-full py-2 rounded-lg font-bold text-white text-sm transition-all duration-300 hover:scale-105"
+                      style={{ backgroundColor: character.tribeColor }}
+                    >
+                      VIEW DETAILS
+                    </button>
+                  </Link>
+                </div>
+                
+
+              </div>
+            </div>
             ))}
           </div>
         )}
-      </div>
-    </section>
+
+
+      </main>
+    </div>
   );
 };
 

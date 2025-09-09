@@ -98,17 +98,9 @@ const PageTransition = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
   const [location] = useLocation();
-  const [isLoading, setIsLoading] = useState(false);
+
   
-  // Handle page transition loading state
-  useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-    
-    return () => clearTimeout(timer);
-  }, [location]);
+
   
   return (
     <EditModeProvider>
@@ -119,41 +111,24 @@ function App() {
       
       <main className="flex-grow w-full relative z-10">
         <AnimatePresence mode="wait">
-          {isLoading ? (
-            <motion.div 
-              key="loader"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50"
-            >
-              <div className="relative">
-                <div className="h-16 w-16 rounded-full border-4 border-t-transparent border-primary animate-spin"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="h-10 w-10 rounded-full bg-primary opacity-30 animate-pulse"></div>
-                </div>
-              </div>
-            </motion.div>
-          ) : (
-            <PageTransition key={location}>
-              <Switch>
-                <Route path="/" component={Home} />
-                <Route path="/world" component={World} />
-                <Route path="/characters" component={CharactersPage} />
-                <Route path="/characters/:id" component={CharacterDetail} />
-                <Route path="/map" component={Map} />
-                <Route path="/tribes" component={Tribes} />
-                <Route path="/legends" component={Legends} />
-                <Route path="/artifacts" component={Artifacts} />
-                <Route path="/game" component={Game} />
-                <Route path="/login" component={LoginPage} />
-                <Route path="/register" component={RegisterPage} />
-                <Route path="/verify-email" component={VerifyEmailPage} />
-                <Route path="/admin" component={AdminPage} />
-                <Route component={NotFound} />
-              </Switch>
-            </PageTransition>
-          )}
+          <PageTransition key={location}>
+            <Switch>
+              <Route path="/" component={Home} />
+              <Route path="/world" component={World} />
+              <Route path="/characters" component={CharactersPage} />
+              <Route path="/characters/:id" component={CharacterDetail} />
+              <Route path="/map" component={Map} />
+              <Route path="/tribes" component={Tribes} />
+              <Route path="/legends" component={Legends} />
+              <Route path="/artifacts" component={Artifacts} />
+              <Route path="/game" component={Game} />
+              <Route path="/login" component={LoginPage} />
+              <Route path="/register" component={RegisterPage} />
+              <Route path="/verify-email" component={VerifyEmailPage} />
+              <Route path="/admin" component={AdminPage} />
+              <Route component={NotFound} />
+            </Switch>
+          </PageTransition>
         </AnimatePresence>
       </main>
       

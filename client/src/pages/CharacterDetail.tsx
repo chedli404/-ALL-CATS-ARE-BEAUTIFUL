@@ -57,12 +57,13 @@ const CharacterDetail = () => {
   return (
     <div className="min-h-screen bg-gray-900 py-24">
       <div className="container mx-auto px-4">
-        <Link href="/characters">
-          <button className="flex items-center text-white mb-12 hover:underline">
-            <ArrowLeft className="mr-2 h-5 w-5" />
-            Retour aux personnages
-          </button>
-        </Link>
+        <button 
+          onClick={() => window.history.back()}
+          className="flex items-center text-white mb-12 hover:underline"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Retour aux personnages
+        </button>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <motion.div
