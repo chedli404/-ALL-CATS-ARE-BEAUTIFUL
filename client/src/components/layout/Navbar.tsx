@@ -326,93 +326,67 @@ const Navbar = () => {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
             <div className="px-4 py-3 space-y-2 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 90px)' }}>
-              {getNavLinks().map((link, index) => (
+              {/* Home Link */}
+              <motion.div
+                custom={0}
+                variants={menuItemVariants}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+              >
+                <Link href="/" className="block relative overflow-hidden rounded-md text-base md:text-lg font-medium transition-all duration-200 flex items-center" onClick={toggleMenu}>
+                  <motion.div className="w-full px-4 py-4 z-10 relative" whileHover={{ x: 5 }} style={{ color: location === "/" ? "white" : "rgb(209, 213, 219)" }}>Accueil</motion.div>
+                </Link>
+              </motion.div>
+              
+              {/* ACAB Section */}
+              <motion.div custom={1} variants={menuItemVariants} initial="hidden" animate="visible" exit="hidden">
+                <div className="text-gray-400 px-4 py-2 text-sm font-semibold">ACAB</div>
+                <Link href="/tribes" className="block px-8 py-3 text-gray-300 hover:text-white" onClick={toggleMenu}>Tribus</Link>
+                <Link href="/characters" className="block px-8 py-3 text-gray-300 hover:text-white" onClick={toggleMenu}>Personnages</Link>
+                <Link href="/map" className="block px-8 py-3 text-gray-300 hover:text-white" onClick={toggleMenu}>Carte</Link>
+                <Link href="/legends" className="block px-8 py-3 text-gray-300 hover:text-white" onClick={toggleMenu}>Légendes</Link>
+                <Link href="/world" className="block px-8 py-3 text-gray-300 hover:text-white" onClick={toggleMenu}>Monde</Link>
+              </motion.div>
+              
+              {/* Kabila Section */}
+              <motion.div custom={2} variants={menuItemVariants} initial="hidden" animate="visible" exit="hidden">
+                <div className="text-gray-400 px-4 py-2 text-sm font-semibold">Kabila</div>
+                <Link href="/ecologie" className="block px-8 py-3 text-gray-300 hover:text-white" onClick={toggleMenu}>Écologie</Link>
+                <Link href="/histoire" className="block px-8 py-3 text-gray-300 hover:text-white" onClick={toggleMenu}>Histoire</Link>
+                <Link href="/humanite" className="block px-8 py-3 text-gray-300 hover:text-white" onClick={toggleMenu}>Humanité</Link>
+                <Link href="/economie" className="block px-8 py-3 text-gray-300 hover:text-white" onClick={toggleMenu}>Économie</Link>
+                <Link href="/politique" className="block px-8 py-3 text-gray-300 hover:text-white" onClick={toggleMenu}>Politique</Link>
+              </motion.div>
+              
+              {/* Other Links */}
+              {getNavLinks().filter(link => !["Tribus","Personnages","Carte","Légendes","Monde","Accueil"].includes(link.label)).map((link, index) => (
                 <motion.div
                   key={link.href}
-                  custom={index}
+                  custom={index + 3}
                   variants={menuItemVariants}
                   initial="hidden"
                   animate="visible"
                   exit="hidden"
                 >
-                  <Link
-                    href={link.href}
-                    className={`block relative overflow-hidden rounded-md text-base md:text-lg font-medium transition-all duration-200 flex items-center`}
-                    onClick={toggleMenu}
-                  >
-                    <motion.div
-                      className="w-full px-4 py-4 z-10 relative"
-                      whileHover={{ x: 5 }}
-                      style={{
-                        color: location === link.href ? "white" : "rgb(209, 213, 219)"
-                      }}
-                    >
-                      {link.label}
-                    </motion.div>
-                    
-                    {/* Background indicator */}
-                    <motion.div 
-                      className="absolute inset-0 z-0"
-                      initial={{ x: "-100%" }}
-                      animate={{ 
-                        x: location === link.href ? 0 : "-100%" 
-                      }}
-                      style={{ 
-                        backgroundColor: getNavAccentColor(link.href),
-                        opacity: 0.15
-                      }}
-                    />
-                    
-                    {/* Left border indicator */}
-                    {location === link.href && (
-                      <motion.div 
-                        className="absolute left-0 top-0 bottom-0 w-1 z-0"
-                        initial={{ height: 0 }}
-                        animate={{ height: "100%" }}
-                        style={{ backgroundColor: getNavAccentColor(link.href) }}
-                      />
-                    )}
+                  <Link href={link.href} className="block relative overflow-hidden rounded-md text-base md:text-lg font-medium transition-all duration-200 flex items-center" onClick={toggleMenu}>
+                    <motion.div className="w-full px-4 py-4 z-10 relative" whileHover={{ x: 5 }} style={{ color: location === link.href ? "white" : "rgb(209, 213, 219)" }}>{link.label}</motion.div>
                   </Link>
                 </motion.div>
               ))}
               
               {/* Mobile admin link */}
               {user && user.level >= 9 && (
-                <motion.div
-                  custom={getNavLinks().length}
-                  variants={menuItemVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="hidden"
-                >
-                  <Link
-                    href="/admin"
-                    className={`block relative overflow-hidden rounded-md text-base md:text-lg font-medium transition-all duration-200 flex items-center`}
-                    onClick={toggleMenu}
-                  >
-                    <motion.div
-                      className="w-full px-4 py-4 z-10 relative"
-                      whileHover={{ x: 5 }}
-                      style={{
-                        color: location === '/admin' ? "white" : "rgb(209, 213, 219)"
-                      }}
-                    >
-                      Admin
-                    </motion.div>
+                <motion.div custom={10} variants={menuItemVariants} initial="hidden" animate="visible" exit="hidden">
+                  <Link href="/admin" className="block relative overflow-hidden rounded-md text-base md:text-lg font-medium transition-all duration-200 flex items-center" onClick={toggleMenu}>
+                    <motion.div className="w-full px-4 py-4 z-10 relative" whileHover={{ x: 5 }} style={{ color: location === '/admin' ? "white" : "rgb(209, 213, 219)" }}>Admin</motion.div>
                   </Link>
                 </motion.div>
               )}
               
               {/* Mobile user info and logout */}
               {user && (
-                <motion.div
-                  custom={getNavLinks().length + (user.level === 9 ? 1 : 0)}
-                  variants={menuItemVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="hidden"
-                  className="border-t border-gray-700 pt-2 mt-2"
-                >
+                <motion.div custom={11} variants={menuItemVariants} initial="hidden" animate="visible" exit="hidden" className="border-t border-gray-700 pt-2 mt-2">
                   <div className="px-4 py-2 text-gray-300">
                     {user.username} {user.level >= 5 && (
                       user.level >= 10 ? '(Developer)' :
@@ -422,13 +396,7 @@ const Navbar = () => {
                       '(Staff)'
                     )}
                   </div>
-                  <button
-                    onClick={() => {
-                      handleLogout();
-                      toggleMenu();
-                    }}
-                    className="w-full text-left px-4 py-4 text-gray-300 hover:text-white flex items-center space-x-2"
-                  >
+                  <button onClick={() => { handleLogout(); toggleMenu(); }} className="w-full text-left px-4 py-4 text-gray-300 hover:text-white flex items-center space-x-2">
                     <LogOut className="h-4 w-4" />
                     <span>Logout</span>
                   </button>
