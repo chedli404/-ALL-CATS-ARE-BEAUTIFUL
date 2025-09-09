@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { NAV_LINKS } from "@/lib/constants.ts";
-import { Menu, X, LogOut } from "lucide-react";
+import { Menu, X, LogOut, ChevronDown } from "lucide-react";
 import logo9abila from "@assets/logo9abila.svg";
 import './logo.css';
 
@@ -12,6 +12,7 @@ const Navbar = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [user, setUser] = useState<any>(null);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   // Handle scroll position for visual effects
   useEffect(() => {
@@ -32,6 +33,17 @@ const Navbar = () => {
       setUser(parsedUser);
     }
   }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (openDropdown && !(event.target as Element).closest('.dropdown-container')) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [openDropdown]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -118,37 +130,108 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden lg:block relative">
             <div className="flex items-center space-x-6 xl:space-x-10">
-              {getNavLinks().map((link) => (
-                <motion.div
-                  key={link.href}
-                  onHoverStart={() => setHoveredLink(link.href)}
-                  onHoverEnd={() => setHoveredLink(null)}
-                  className="relative"
-                  whileHover={{ y: -2 }}
-                  transition={{ type: "spring", stiffness: 500, damping: 15 }}
+              {/* Accueil link */}
+              <motion.div
+                key="/"
+                onHoverStart={() => setHoveredLink("/")}
+                onHoverEnd={() => setHoveredLink(null)}
+                className="relative"
+                whileHover={{ y: -2 }}
+                transition={{ type: "spring", stiffness: 500, damping: 15 }}
+              >
+                <Link 
+                  href="/"
+                  className={`${location === "/" 
+                    ? "text-white font-bold" 
+                    : "text-gray-300 hover:text-white"}
+                    px-3 py-2 font-medium transition-all duration-200 text-sm md:text-base xl:text-lg inline-block`}
                 >
-                  <Link 
-                    href={link.href}
-                    className={`${location === link.href 
-                      ? "text-white font-bold" 
-                      : "text-gray-300 hover:text-white"}
-                      px-3 py-2 font-medium transition-all duration-200 text-sm md:text-base xl:text-lg inline-block`}
+                  Accueil
+                </Link>
+                <motion.div 
+                  className="absolute -bottom-1 left-0 h-[2px] rounded-full"
+                  style={{ backgroundColor: getNavAccentColor("/") }}
+                  initial={{ width: location === "/" ? "100%" : 0 }}
+                  animate={{ 
+                    width: (location === "/" || hoveredLink === "/") ? "100%" : 0,
+                  }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                />
+              </motion.div>
+              {/* ACAB Dropdown */}
+              <div className="relative dropdown-container">
+                <button 
+                  onClick={() => setOpenDropdown(openDropdown === 'acab' ? null : 'acab')}
+                  className="px-3 py-2 font-medium text-gray-300 hover:text-white text-sm md:text-base xl:text-lg inline-block focus:outline-none flex items-center space-x-1"
+                >
+                  <span>ACAB</span>
+                  <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${openDropdown === 'acab' ? 'rotate-180' : ''}`} />
+                </button>
+                {openDropdown === 'acab' && (
+                  <div className="absolute left-0 mt-2 w-48 bg-[rgba(20,20,20,0.98)] rounded shadow-lg border border-gray-800 z-50">
+                    <div className="flex flex-col py-2">
+                      <Link href="/tribes" onClick={() => setOpenDropdown(null)} className="px-4 py-3 hover:bg-gray-800 text-gray-300 hover:text-white transition-colors duration-200">Tribus</Link>
+                      <Link href="/characters" onClick={() => setOpenDropdown(null)} className="px-4 py-3 hover:bg-gray-800 text-gray-300 hover:text-white transition-colors duration-200">Personnages</Link>
+                      <Link href="/map" onClick={() => setOpenDropdown(null)} className="px-4 py-3 hover:bg-gray-800 text-gray-300 hover:text-white transition-colors duration-200">Carte</Link>
+                      <Link href="/legends" onClick={() => setOpenDropdown(null)} className="px-4 py-3 hover:bg-gray-800 text-gray-300 hover:text-white transition-colors duration-200">Légendes</Link>
+                      <Link href="/world" onClick={() => setOpenDropdown(null)} className="px-4 py-3 hover:bg-gray-800 text-gray-300 hover:text-white transition-colors duration-200">Monde</Link>
+                    </div>
+                  </div>
+                )}
+              </div>
+              {/* Kabila Dropdown */}
+              <div className="relative dropdown-container">
+                <button 
+                  onClick={() => setOpenDropdown(openDropdown === 'kabila' ? null : 'kabila')}
+                  className="px-3 py-2 font-medium text-gray-300 hover:text-white text-sm md:text-base xl:text-lg inline-block focus:outline-none flex items-center space-x-1"
+                >
+                  <span>Kabila</span>
+                  <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${openDropdown === 'kabila' ? 'rotate-180' : ''}`} />
+                </button>
+                {openDropdown === 'kabila' && (
+                  <div className="absolute left-0 mt-2 w-48 bg-[rgba(20,20,20,0.98)] rounded shadow-lg border border-gray-800 z-50">
+                    <div className="flex flex-col py-2">
+                      <Link href="/ecologie" onClick={() => setOpenDropdown(null)} className="px-4 py-3 hover:bg-gray-800 text-gray-300 hover:text-white transition-colors duration-200">Écologie</Link>
+                      <Link href="/histoire" onClick={() => setOpenDropdown(null)} className="px-4 py-3 hover:bg-gray-800 text-gray-300 hover:text-white transition-colors duration-200">Histoire</Link>
+                      <Link href="/humanite" onClick={() => setOpenDropdown(null)} className="px-4 py-3 hover:bg-gray-800 text-gray-300 hover:text-white transition-colors duration-200">Humanité</Link>
+                      <Link href="/economie" onClick={() => setOpenDropdown(null)} className="px-4 py-3 hover:bg-gray-800 text-gray-300 hover:text-white transition-colors duration-200">Économie</Link>
+                      <Link href="/politique" onClick={() => setOpenDropdown(null)} className="px-4 py-3 hover:bg-gray-800 text-gray-300 hover:text-white transition-colors duration-200">Politique</Link>
+                    </div>
+                  </div>
+                )}
+              </div>
+              {/* Other links (Login, Register, etc.) */}
+              {getNavLinks()
+                .filter(link => !["Tribus","Personnages","Carte","Légendes","Monde","Accueil"].includes(link.label))
+                .map((link) => (
+                  <motion.div
+                    key={link.href}
+                    onHoverStart={() => setHoveredLink(link.href)}
+                    onHoverEnd={() => setHoveredLink(null)}
+                    className="relative"
+                    whileHover={{ y: -2 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 15 }}
                   >
-                    {link.label}
-                  </Link>
-                  
-                  {/* Animated underline */}
-                  <motion.div 
-                    className="absolute -bottom-1 left-0 h-[2px] rounded-full"
-                    style={{ backgroundColor: getNavAccentColor(link.href) }}
-                    initial={{ width: location === link.href ? "100%" : 0 }}
-                    animate={{ 
-                      width: (location === link.href || hoveredLink === link.href) ? "100%" : 0,
-                    }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  />
-                </motion.div>
-              ))}
+                    <Link 
+                      href={link.href}
+                      className={`${location === link.href 
+                        ? "text-white font-bold" 
+                        : "text-gray-300 hover:text-white"}
+                        px-3 py-2 font-medium transition-all duration-200 text-sm md:text-base xl:text-lg inline-block`}
+                    >
+                      {link.label}
+                    </Link>
+                    <motion.div 
+                      className="absolute -bottom-1 left-0 h-[2px] rounded-full"
+                      style={{ backgroundColor: getNavAccentColor(link.href) }}
+                      initial={{ width: location === link.href ? "100%" : 0 }}
+                      animate={{ 
+                        width: (location === link.href || hoveredLink === link.href) ? "100%" : 0,
+                      }}
+                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    />
+                  </motion.div>
+                ))}
               
               {/* Admin link */}
               {user && user.level >= 9 && (

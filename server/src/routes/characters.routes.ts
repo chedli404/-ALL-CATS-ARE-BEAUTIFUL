@@ -5,8 +5,10 @@ const router = Router();
 
 router.get("/characters", async (req, res) => {
   try {
+    const limit = parseInt(req.query.limit as string) || 100;
     const characters = await storage.getAllCharacters();
-    res.json(characters);
+    const limitedCharacters = characters.slice(0, limit);
+    res.json(limitedCharacters);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch characters" });
   }

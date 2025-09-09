@@ -22,6 +22,15 @@ const Tribes = () => {
   }, []);
 
   const fetchTribes = async () => {
+    // Check cache first
+    const cached = localStorage.getItem('tribes');
+    const cacheTime = localStorage.getItem('tribes_time');
+    if (cached && Date.now() - parseInt(cacheTime) < 300000) {
+      setTribes(JSON.parse(cached));
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const [tribesRes, imagesRes] = await Promise.all([
         fetch('/api/tribes'),
@@ -30,21 +39,21 @@ const Tribes = () => {
       
       if (tribesRes.ok) {
         const tribesData = await tribesRes.json();
-        console.log('Fetched tribes:', tribesData);
         
         let tribeImages = [];
         if (imagesRes.ok) {
           tribeImages = await imagesRes.json();
-          console.log('Fetched tribe images:', tribeImages);
         }
         
-        // Merge tribes with their images
         const tribesWithImages = tribesData.map(tribe => {
           const tribeImage = tribeImages.find(img => img.tribeId === tribe._id);
           return { ...tribe, image: tribeImage?.imageData };
         });
         
         setTribes(tribesWithImages);
+        // Cache for 5 minutes
+        localStorage.setItem('tribes', JSON.stringify(tribesWithImages));
+        localStorage.setItem('tribes_time', Date.now().toString());
       }
     } catch (error) {
       console.error('Failed to fetch tribes:', error);
@@ -54,11 +63,21 @@ const Tribes = () => {
   };
 
   const fetchCharacters = async () => {
+    // Check cache first
+    const cached = localStorage.getItem('characters');
+    const cacheTime = localStorage.getItem('characters_time');
+    if (cached && Date.now() - parseInt(cacheTime) < 300000) {
+      setCharacters(JSON.parse(cached));
+      return;
+    }
+
     try {
-      const res = await fetch('/api/characters');
+      const res = await fetch('/api/characters?limit=50');
       if (res.ok) {
         const data = await res.json();
         setCharacters(data);
+        localStorage.setItem('characters', JSON.stringify(data));
+        localStorage.setItem('characters_time', Date.now().toString());
       }
     } catch (error) {
       console.error('Failed to fetch characters:', error);
@@ -131,7 +150,7 @@ const Tribes = () => {
                     {characters.filter(char => char.tribe === selectedTribe).map((character) => (
                       <div key={character._id} className="bg-gray-800 rounded-lg p-6 border border-gray-700">
                         {character.image && (
-                          <img src={character.image} alt={character.name} className="w-full h-48 object-cover rounded mb-4" />
+                          <img src={character.image} alt={character.name} loading="lazy" className="w-full h-48 object-cover rounded mb-4" />
                         )}
                         <h4 className="text-xl font-semibold text-white mb-2">{character.name}</h4>
                         <p className="text-gray-300 mb-3">{character.description}</p>

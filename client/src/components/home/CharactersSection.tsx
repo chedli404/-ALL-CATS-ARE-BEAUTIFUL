@@ -12,11 +12,23 @@ const CharactersSection = () => {
   }, []);
 
   const fetchCharacters = async () => {
+    // Check cache first
+    const cached = localStorage.getItem('characters');
+    const cacheTime = localStorage.getItem('characters_time');
+    if (cached && Date.now() - parseInt(cacheTime) < 300000) {
+      setCharacters(JSON.parse(cached));
+      setLoading(false);
+      return;
+    }
+
     try {
-      const res = await fetch('/api/characters');
+      const res = await fetch('/api/characters?limit=50');
       if (res.ok) {
         const data = await res.json();
         setCharacters(data);
+        // Cache for 5 minutes
+        localStorage.setItem('characters', JSON.stringify(data));
+        localStorage.setItem('characters_time', Date.now().toString());
       }
     } catch (error) {
       console.error('Failed to fetch characters:', error);
@@ -143,6 +155,7 @@ const CharactersSection = () => {
                   <img
                     src={character.image}
                     alt={character.name}
+                    loading="lazy"
                     className="w-full h-32 object-contain transition-all duration-700 ease-out hover:scale-[2.5] hover:z-50 relative"
                     style={{
                       filter: 'drop-shadow(3px 6px 8px black)',

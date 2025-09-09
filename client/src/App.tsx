@@ -20,6 +20,11 @@ import RegisterPage from "@/pages/RegisterPage";
 import AdminPage from "@/pages/AdminPage.tsx";
 import World from "@/pages/world.tsx";
 import VerifyEmailPage from "@/pages/VerifyEmailPage";
+import Ecologie from "@/pages/Ecologie.tsx";
+import Histoire from "@/pages/Histoire.tsx";
+import Humanite from "@/pages/Humanite.tsx";
+import Economie from "@/pages/Economie.tsx";
+import Politique from "@/pages/Politique.tsx";
 
 // Kabila background particles component
 const BackgroundParticles = () => {
@@ -126,6 +131,11 @@ function App() {
               <Route path="/register" component={RegisterPage} />
               <Route path="/verify-email" component={VerifyEmailPage} />
               <Route path="/admin" component={AdminPage} />
+              <Route path="/ecologie" component={Ecologie} />
+              <Route path="/histoire" component={Histoire} />
+              <Route path="/humanite" component={Humanite} />
+              <Route path="/economie" component={Economie} />
+              <Route path="/politique" component={Politique} />
               <Route component={NotFound} />
             </Switch>
           </PageTransition>
