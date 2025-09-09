@@ -32,13 +32,21 @@ export const sendVerificationEmail = async (email: string, username: string, tok
         <h2 style="color: #64afd6;">Welcome to Kabila, ${username}!</h2>
         <p>Thank you for registering. Please verify your email address to complete your registration.</p>
         <div style="text-align: center; margin: 30px 0;">
+<<<<<<< HEAD
           <a href="${verificationUrl}" 
+=======
+        <a href="${verificationUrl}" 
+>>>>>>> 34b45b1bdfed71e4847a3dfd0a7b4757029da7c4
    target="_blank"
    style="display: inline-block; background-color: #64afd6; color: white; padding: 12px 24px; 
           border-radius: 5px; font-weight: bold; text-decoration: none; cursor: pointer;">
   Verify Email Address
+<<<<<<< HEAD
 </a>
        </div>
+=======
+</a>   </div>
+>>>>>>> 34b45b1bdfed71e4847a3dfd0a7b4757029da7c4
         <p>If the button doesn't work, copy this link:</p>
         <p><a href="${verificationUrl}" style="color: #64afd6; text-decoration: underline;">${verificationUrl}</a></p>
         <p style="color: #666; font-size: 12px;">This link will expire in 24 hours.</p>
