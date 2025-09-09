@@ -15,7 +15,7 @@ export const generateVerificationToken = (): string => {
 };
 
 export const sendVerificationEmail = async (email: string, username: string, token: string) => {
-  const verificationUrl = `${process.env.CLIENT_URL || 'http://localhost:5000'}/verify/${token}`;
+  const verificationUrl = `${process.env.CLIENT_URL || 'http://kabila.art'}/verify/${token}`;
   console.log('Verification URL:', verificationUrl);
   console.log('Email config:', {
     user: process.env.EMAIL_USER,
@@ -37,7 +37,7 @@ export const sendVerificationEmail = async (email: string, username: string, tok
   onclick="window.location.href='${verificationUrl}'">
   Verify Email Address
 </button>        </div>
-        <p>If the button doesn't work, click this link:</p>
+        <p>If the button doesn't work, copy this link:</p>
         <p><a href="${verificationUrl}" style="color: #64afd6; text-decoration: underline;">${verificationUrl}</a></p>
         <p style="color: #666; font-size: 12px;">This link will expire in 24 hours.</p>
       </div>
