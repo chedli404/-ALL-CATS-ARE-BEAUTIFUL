@@ -15,7 +15,7 @@ export const generateVerificationToken = (): string => {
 };
 
 export const sendVerificationEmail = async (email: string, username: string, token: string) => {
-  const verificationUrl = `${process.env.CLIENT_URL || 'http://localhost:5000'}/verify-email?token=${token}`;
+  const verificationUrl = `${process.env.CLIENT_URL || 'http://localhost:5000'}/verify/${token}`;
   console.log('Verification URL:', verificationUrl);
   console.log('Email config:', {
     user: process.env.EMAIL_USER,
@@ -32,13 +32,13 @@ export const sendVerificationEmail = async (email: string, username: string, tok
         <h2 style="color: #64afd6;">Welcome to Kabila, ${username}!</h2>
         <p>Thank you for registering. Please verify your email address to complete your registration.</p>
         <div style="text-align: center; margin: 30px 0;">
-          <a href="${verificationUrl}" 
-             style="background-color: #64afd6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block;">
-            Verify Email Address
-          </a>
-        </div>
-        <p>Or copy and paste this link in your browser:</p>
-        <p style="word-break: break-all; color: #666;">${verificationUrl}</p>
+          <button 
+  style="background-color: #64afd6; color: white; padding: 12px 24px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;"
+  onclick="window.location.href='${verificationUrl}'">
+  Verify Email Address
+</button>        </div>
+        <p>If the button doesn't work, click this link:</p>
+        <p><a href="${verificationUrl}" style="color: #64afd6; text-decoration: underline;">${verificationUrl}</a></p>
         <p style="color: #666; font-size: 12px;">This link will expire in 24 hours.</p>
       </div>
     `

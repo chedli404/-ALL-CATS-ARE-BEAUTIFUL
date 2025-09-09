@@ -3,49 +3,36 @@ import { useLocation } from 'wouter';
 
 const VerifyEmailPage = () => {
   const [, setLocation] = useLocation();
-  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
+  const [status, setStatus] = useState('loading');
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    let hasRun = false;
-    
     const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
     const token = urlParams.get('token');
-
-    if (!token) {
-      setStatus('error');
-      setMessage('No verification token provided');
-      return;
-    }
-
-    const verifyEmail = async () => {
-      if (hasRun) return;
-      hasRun = true;
+    const userParam = urlParams.get('user');
+    
+    if (status === 'success' && token && userParam) {
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', decodeURIComponent(userParam));
+      setStatus('success');
+      setMessage('Email verified! Logging you in...');
       
-      try {
-        const response = await fetch(`/api/verify-email?token=${token}`);
-        const data = await response.json();
-
-        console.log('Verification response:', response.status, data);
-        
-        if (response.ok && response.status === 200) {
-          setStatus('success');
-          setMessage(data.message || 'Email verified successfully! You can now log in.');
-          // Redirect to login after 3 seconds
-          setTimeout(() => {
-            setLocation('/login');
-          }, 3000);
-        } else {
-          setStatus('error');
-          setMessage(data.error || data.message || 'Verification failed');
-        }
-      } catch (error) {
-        setStatus('error');
-        setMessage('Network error occurred');
-      }
-    };
-
-    verifyEmail();
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 2000);
+    } else if (status) {
+      const message = urlParams.get('message');
+      setStatus(status as any);
+      setMessage(message ? decodeURIComponent(message) : 'Verification failed');
+      
+      setTimeout(() => {
+        setLocation('/login');
+      }, 3000);
+    } else {
+      setStatus('error');
+      setMessage('No verification status found');
+    }
   }, [setLocation]);
 
   return (
@@ -73,7 +60,7 @@ const VerifyEmailPage = () => {
 
         {status === 'success' && (
           <p className="text-sm text-gray-400">
-            Redirecting to login page in 3 seconds...
+            Redirecting to home page in 2 seconds...
           </p>
         )}
 

@@ -618,14 +618,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Email verification endpoint
-  app.get('/api/verify-email', async (req, res) => {
+  // Email verification redirect (for Gmail compatibility)
+  app.get('/verify/:token', async (req, res) => {
     try {
-      const { token } = req.query;
-      
-      if (!token) {
-        return res.status(400).json({ error: 'Verification token is required' });
-      }
+      const { token } = req.params;
       
       const { User } = await import('../shared/mongoSchema');
       const user = await User.findOne({ 
@@ -634,7 +630,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
       
       if (!user) {
-        return res.status(400).json({ error: 'Invalid or expired verification token' });
+        return res.redirect('/verify-email?status=error&message=Invalid or expired token');
       }
       
       user.isVerified = true;
@@ -642,12 +638,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       user.verificationExpires = undefined;
       await user.save();
       
-      res.json({ message: 'Email verified successfully! You can now log in.' });
+      // Generate login token
+      const loginToken = jwt.sign(
+        { id: user._id, username: user.username, email: user.email, level: user.level },
+        JWT_SECRET,
+        { expiresIn: '7d' }
+      );
+      
+      res.redirect(`/verify-email?status=success&token=${loginToken}&user=${encodeURIComponent(JSON.stringify({ id: user._id, username: user.username, email: user.email, level: user.level }))}`);
     } catch (error) {
       console.error('Email verification error:', error);
-      res.status(500).json({ error: 'Failed to verify email' });
+      res.redirect('/verify-email?status=error&message=Verification failed');
     }
   });
+
+
 
   // Voting system routes
   app.get("/api/polls", async (req, res) => {
