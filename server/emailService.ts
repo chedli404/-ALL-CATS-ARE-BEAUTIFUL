@@ -28,28 +28,33 @@ export const sendVerificationEmail = async (email: string, username: string, tok
     to: email,
     subject: 'Verify Your Email - Kabila',
     html: `
-      <div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif;">
-        <h2 style="color: #64afd6;">Welcome to Kabila, ${username}!</h2>
-        <p>Thank you for registering. Please verify your email address to complete your registration.</p>
-        <div style="text-align: center; margin: 30px 0;">
-<<<<<<< HEAD
+      <div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; background-color: #1a1a1a; color: #ffffff; padding: 20px; border-radius: 10px;">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <h1 style="color: #64afd6; font-size: 28px; margin-bottom: 10px;">Welcome to Kabila!</h1>
+          <h2 style="color: #ffffff; font-size: 20px; margin-bottom: 0;">Hello ${username},</h2>
+        </div>
+        
+        <p style="color: #cccccc; font-size: 16px; line-height: 1.6; margin-bottom: 30px;">Thank you for joining our post-apocalyptic world! Please verify your email address to complete your registration and start your journey.</p>
+        
+        <div style="text-align: center; margin: 40px 0;">
           <a href="${verificationUrl}" 
-=======
-        <a href="${verificationUrl}" 
->>>>>>> 34b45b1bdfed71e4847a3dfd0a7b4757029da7c4
-   target="_blank"
-   style="display: inline-block; background-color: #64afd6; color: white; padding: 12px 24px; 
-          border-radius: 5px; font-weight: bold; text-decoration: none; cursor: pointer;">
-  Verify Email Address
-<<<<<<< HEAD
-</a>
-       </div>
-=======
-</a>   </div>
->>>>>>> 34b45b1bdfed71e4847a3dfd0a7b4757029da7c4
-        <p>If the button doesn't work, copy this link:</p>
-        <p><a href="${verificationUrl}" style="color: #64afd6; text-decoration: underline;">${verificationUrl}</a></p>
-        <p style="color: #666; font-size: 12px;">This link will expire in 24 hours.</p>
+             target="_blank"
+             style="display: inline-block; background: linear-gradient(135deg, #64afd6 0%, #4a9bc7 100%); color: white; padding: 15px 30px; border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 16px; box-shadow: 0 4px 15px rgba(100, 175, 214, 0.3); transition: all 0.3s ease;">
+            🔓 Verify Email Address
+          </a>
+        </div>
+        
+        <div style="background-color: #2a2a2a; padding: 20px; border-radius: 8px; margin: 30px 0;">
+          <p style="color: #cccccc; margin-bottom: 10px; font-size: 14px;">If the button doesn't work, copy and paste this link:</p>
+          <p style="word-break: break-all; background-color: #333333; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 12px;">
+            <a href="${verificationUrl}" style="color: #64afd6; text-decoration: none;">${verificationUrl}</a>
+          </p>
+        </div>
+        
+        <div style="border-top: 1px solid #333333; padding-top: 20px; margin-top: 30px; text-align: center;">
+          <p style="color: #888888; font-size: 12px; margin-bottom: 5px;">This verification link will expire in 24 hours.</p>
+          <p style="color: #888888; font-size: 12px;">Welcome to the world of Kabila - where survival meets adventure!</p>
+        </div>
       </div>
     `
   };
