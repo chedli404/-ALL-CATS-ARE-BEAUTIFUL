@@ -1,0 +1,48 @@
+Animated infographics explaining the four cat clans (Écologistes, Technologistes, Traditionnalistes, Nomades)
+Background story with illustrations about how cats became the dominant species
+"Philosophy" subsection explaining the themes and messages of the ACAB universe
+Contact Page
+Stylized contact form with cat-themed design elements
+Team profiles with avatar illustrations in the ACAB art style
+FAQ section answering common questions about the project
+Social media links with custom cat-themed icons
+Game Card Section
+Digital version of the card game with simplified mechanics for online play
+Tutorial mode explaining how to play with animated demonstrations
+Collectible card gallery showing all available cards with their abilities and lore
+Matchmaking system for playing against other website visitors
+Episodes/Seasons Section
+Comic reader with page-turning animations
+Episode guide with thumbnails, summaries, and release dates
+Character spotlights for each episode highlighting development
+Behind-the-scenes content showing the creative process
+Shop
+Digital products (wallpapers, digital comics, art books)
+Physical merchandise (printed comics, card game sets, posters, t-shirts)
+Limited edition collector items from the ACAB universe
+Bundle deals combining digital and physical items
+Characters Page
+Interactive character profiles with backstories, clan affiliations, and relationships
+Character development arcs showing how they change throughout the seasons
+Voice actor information (if it's an animated series)
+Fan art showcase section (with submission guidelines)
+Map
+Interactive world map of the post-apocalyptic Earth
+Clickable locations revealing details about cat clan territories
+Historical landmarks showing remnants of human civilization
+Timeline feature showing how territories changed over time
+Voting System
+Season concept pitches with artwork and synopsis
+Voting mechanism with visual feedback (progress bars, etc.)
+Comments section for fans to discuss ideas
+"Previously voted" archive showing past voting results
+Visual Design Ideas
+Post-apocalyptic aesthetic with nature reclaiming urban environments
+Color schemes based on the four cat clans
+Parallax scrolling effects with cat silhouettes moving across ruins
+Loading animations featuring playful cats
+Interactive Elements
+Clan personality quiz ("Which ACAB clan do you belong to?")
+Simple mini-games based on clan activities
+Interactive lore encyclopedia
+Community art and story submission portal

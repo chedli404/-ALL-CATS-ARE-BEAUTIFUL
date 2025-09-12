@@ -1,0 +1,119 @@
+.auth-bold-line {
+  height: 4px;
+  background: linear-gradient(90deg, #ff6b35, #2ec4b6);
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.auth-window {
+  position: relative;
+  background: rgba(26, 26, 26, 0.9);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 3rem;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.auth-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(46, 196, 182, 0.05));
+  pointer-events: none;
+}
+
+.auth-content {
+  position: relative;
+  z-index: 1;
+}
+
+.auth-welcome {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #f5f5f5;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+  color: #b0b0b0;
+  text-align: center;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.auth-input-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.auth-input-line {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: #f5f5f5;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.auth-input-line:focus {
+  outline: none;
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.auth-input-line::placeholder {
+  color: #b0b0b0;
+}
+
+.auth-ghost-round {
+  background: transparent;
+  border: 2px solid #ff6b35;
+  border-radius: 8px;
+  color: #ff6b35;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 0.5rem;
+}
+
+.auth-ghost-round:hover {
+  background: #ff6b35;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.auth-full-width {
+  width: 100%;
+}
+
+.auth-highlight {
+  color: #2ec4b6;
+  font-weight: 500;
+}
+
+.auth-spacing {
+  margin: 1rem 0;
+  text-align: center;
+  color: #b0b0b0;
+}
